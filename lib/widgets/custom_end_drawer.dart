@@ -124,6 +124,7 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                               Switch(value: isLeft, onChanged:(value){
                                 setState(() {
                                   isLeft = value;
+                                  setLanguage();
                                   Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(

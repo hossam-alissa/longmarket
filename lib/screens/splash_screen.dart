@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:longmarket/config/config.dart';
 import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
 
@@ -10,7 +11,11 @@ class MainSplashScreen extends StatefulWidget {
 }
 
 class _MainSplashScreenState extends State<MainSplashScreen> {
-
+  @override
+  void initState() {
+    getLanguage();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
