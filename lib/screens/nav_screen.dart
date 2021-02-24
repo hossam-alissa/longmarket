@@ -44,12 +44,7 @@ class _NavScreenState extends State<NavScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-              // if (Provider.of<UserInformation>(context, listen: false).token !=
-              //     null)
               onTapped(2);
-              // else
-              //   toastShow(
-              //       getTranslated(context, "Please SingUp or SingIn"), context);
           },
           shape: _CustomBorder(),
           backgroundColor: _selectedIndexScreen == 2
@@ -66,7 +61,7 @@ class _NavScreenState extends State<NavScreen> {
         bottomNavigationBar: BottomAppBar(
           color: Colors.white,
           child: Container(
-            height: 60.0,
+            height: 50.0,
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(1.0),
