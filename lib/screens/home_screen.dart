@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:longmarket/config/config.dart';
-import 'package:longmarket/widgets/widgets.dart';
+import '../config/config.dart';
+import '../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

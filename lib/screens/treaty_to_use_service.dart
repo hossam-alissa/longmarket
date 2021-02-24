@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:longmarket/config/config.dart';
-import 'package:longmarket/widgets/widgets.dart';
+import '../config/config.dart';
+import '../widgets/widgets.dart';
 
 class TreatyToUseService extends StatelessWidget {
   final String laws = "البند الأول : لكونك مستخدم فأنك توافق على الالتزام بكل ما يرد بهذه الاتفاقية في حال استخدامك التطبيق او في حال الوصول اليه او في حالة التسجيل في الخدمة. يحق لإدارة التطبيق السوق الطويل أو تطبيق السوق الطويل التعديل على هذه الاتفاقية في أي وقت وتعتبر ملزمة لجميع الأطراف بعد الإعلان عن التحديث في التطبيق أو في أي وسيلة آخرى. " +

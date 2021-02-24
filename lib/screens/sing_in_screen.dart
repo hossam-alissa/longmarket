@@ -12,6 +12,7 @@ class _SingInScreenState extends State<SingInScreen> {
   TextEditingController emailUserName = new TextEditingController();
   TextEditingController passwordUser = new TextEditingController();
   bool _secureText = true;
+  bool _resetPassword = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +26,15 @@ class _SingInScreenState extends State<SingInScreen> {
               Expanded(
                 child: Padding(
                   padding:
-                  EdgeInsets.only(top: 10, right: 0, left: 0, bottom: 4),
+                      EdgeInsets.only(top: 10, right: 0, left: 0, bottom: 4),
                   child: Text(
-                    isLeft ? 'Sing In' : "تسجيل الدخول",
+                    _resetPassword
+                        ? isLeft
+                            ? "Reset Password"
+                            : "إستعادة الرقم السري"
+                        : isLeft
+                            ? 'Sing In'
+                            : "تسجيل الدخول",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 25,
@@ -63,48 +70,55 @@ class _SingInScreenState extends State<SingInScreen> {
               ),
             ],
           ), //End Text Field Email
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
-                  child: TextField(
-                    maxLength: 25,
-                    controller: passwordUser,
-                    decoration: InputDecoration(
-                      labelText: (isLeft ? 'Password : ' : "الرقم السري :"),
-                      alignLabelWithHint: true,
-                      suffixIcon: IconButton(
-                        icon: Icon(_secureText
-                            ? Icons.remove_red_eye
-                            : Icons.security),
-                        onPressed: () {
-                          setState(() {
-                            _secureText = !_secureText;
-                          });
-                        },
+          _resetPassword
+              ? SizedBox()
+              : Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                        child: TextField(
+                          maxLength: 25,
+                          controller: passwordUser,
+                          decoration: InputDecoration(
+                            labelText:
+                                (isLeft ? 'Password : ' : "الرقم السري :"),
+                            alignLabelWithHint: true,
+                            suffixIcon: IconButton(
+                              icon: Icon(_secureText
+                                  ? Icons.remove_red_eye
+                                  : Icons.security),
+                              onPressed: () {
+                                setState(() {
+                                  _secureText = !_secureText;
+                                });
+                              },
+                            ),
+                          ),
+                          obscureText: _secureText,
+                        ),
                       ),
                     ),
-                    obscureText: _secureText,
-                  ),
-                ),
-              ),
-            ],
-          ), //End Text Field Password
+                  ],
+                ), //End Text Field Password
           Row(
             children: <Widget>[
               Expanded(
-                child: Padding(
+                child: Container(
+                  alignment:
+                      isLeft ? Alignment.centerLeft : Alignment.centerRight,
                   padding:
-                  EdgeInsets.only(top: 15, right: 15, left: 15, bottom: 2),
+                      EdgeInsets.only(top: 15, right: 15, left: 15, bottom: 2),
                   child: InkWell(
                     onTap: () {
                       setState(() {
-                        // _currentIndex++;
+                        _resetPassword = !_resetPassword;
+                        print("reset password");
                       });
                     },
                     child: Text(
-                      isLeft ? 'Reset password !' : "إستعادة الرقم السري",
+                      isLeft ? 'Reset password !' : "! إستعادة الرقم السري",
                       style: TextStyle(
                           fontSize: 13,
                           color: Colors.lightBlueAccent,
@@ -120,45 +134,67 @@ class _SingInScreenState extends State<SingInScreen> {
               Expanded(
                 child: Padding(
                   padding:
-                  EdgeInsets.only(top: 15, bottom: 20, left: 25, right: 25),
+                      EdgeInsets.only(top: 15, bottom: 20, left: 25, right: 25),
                   child: ElevatedButton(
                     child: Text(
-                      isLeft ? 'Sing In' : "تسجيل الدخول",
+                      _resetPassword
+                          ? isLeft
+                              ? "Reset Password"
+                              : "إستعادة الرقم السري"
+                          : isLeft
+                              ? 'Sing In'
+                              : "تسجيل الدخول",
                       textScaleFactor: 1.5,
                     ),
                     onPressed: () async {
                       FocusScope.of(context).unfocus();
-                      if (emailUserName.text != "") {
-                        if (passwordUser.text != "") {
-                          if (passwordUser.text.length >= 8) {
-                            print("Sing IN");
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      MyApp()),
-                              ModalRoute.withName('/'),
-                            );
+                      if (_resetPassword == true) {
+                        if (emailUserName.text != "") {
+                          print("reset Password");
+                          toastShow(
+                              isLeft
+                                  ? "Done, Send message to email address"
+                                  : "تم إرسال رسالة إلى بريدك الإلكتروني",
+                              context);
+                        } else {
+                          toastShow(
+                              isLeft
+                                  ? "Enter you Email"
+                                  : "قم بإدخال البريد الإلكتروني",
+                              context);
+                        }
+                      } else {
+                        if (emailUserName.text != "") {
+                          if (passwordUser.text != "") {
+                            if (passwordUser.text.length >= 8) {
+                              print("Sing IN");
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) => MyApp()),
+                                ModalRoute.withName('/'),
+                              );
+                            } else {
+                              toastShow(
+                                  isLeft
+                                      ? "Password not accept"
+                                      : "الرقم السري غير صحيح",
+                                  context);
+                            }
                           } else {
                             toastShow(
                                 isLeft
-                                    ? "Password not accept"
-                                    : "الرقم السري غير صحيح",
+                                    ? "Entre you Password"
+                                    : "قم بإدخال الرقم السري",
                                 context);
                           }
                         } else {
                           toastShow(
                               isLeft
-                                  ? "Entre you Password"
-                                  : "قم بإدخال الرقم السري",
+                                  ? "Enter you Email"
+                                  : "قم بإدخال البريد الإلكتروني",
                               context);
                         }
-                      } else {
-                        toastShow(
-                            isLeft
-                                ? "Enter you Email"
-                                : "قم بإدخال البريد الإلكتروني",
-                            context);
                       }
                     },
                   ),

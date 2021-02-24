@@ -172,6 +172,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                           textScaleFactor: 1.5,
                         ),
                         onPressed: () async {
+                          FocusScope.of(context).unfocus();
                           if (emailUserName.text != "") {
                             if (passwordUser.text != "") {
                               if (passwordUserValidation.text != "") {
