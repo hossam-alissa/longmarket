@@ -3,6 +3,8 @@ import 'package:longmarket/config/config.dart';
 import 'package:longmarket/screens/screens.dart';
 import 'package:longmarket/widgets/widgets_tools.dart';
 
+import '../main.dart';
+
 class CustomEndDrawer extends StatefulWidget {
   @override
   _CustomEndDrawerState createState() => _CustomEndDrawerState();
@@ -115,6 +117,25 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                           buildListTile(context,
                               isLeft ? "Call Us" : "إتصل بنا", CallUsScreen()),
                           myDivider(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("العربية"),
+                              Switch(value: isLeft, onChanged:(value){
+                                setState(() {
+                                  isLeft = value;
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            MyApp()),
+                                    ModalRoute.withName('/'),
+                                  );
+                                });
+                              }),
+                              Text("English"),
+                            ],
+                          ),
                         ],
                       ),
                     ),
