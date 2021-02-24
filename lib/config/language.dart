@@ -1,1 +1,1 @@
-bool isLeft = true;
+bool isLeft = false;

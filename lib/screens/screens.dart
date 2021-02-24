@@ -5,3 +5,6 @@ export 'message_screen.dart';
 export 'explore_screen.dart';
 export 'add_advertising_screen.dart';
 export 'splash_screen.dart';
+export 'treaty_to_use_service.dart';
+export 'call_us_screen.dart';
+export 'sing_up_screen.dart';
