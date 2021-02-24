@@ -91,16 +91,6 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                           buildListTile(
                               context,
                               isLeft
-                                  ? "Treaty to use service"
-                                  : "معاهدة الإستخدام",
-                              TreatyToUseService()),
-                          myDivider(),
-                          buildListTile(context,
-                              isLeft ? "Call Us" : "إتصل بنا", CallUsScreen()),
-                          myDivider(),
-                          buildListTile(
-                              context,
-                              isLeft
                                   ? "SingUp Create New Account"
                                   : "إنشاء حساب جديد",
                               SingUpScreen()),
@@ -108,12 +98,22 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                           buildListTile(
                               context,
                               isLeft ? "Sing In" : "تسجيل الدخول",
-                              SingUpScreen()),
+                              SingInScreen()),
                           myDivider(),
                           buildListTile(
                               context,
                               isLeft ? "Log out" : "تسجيل الخروج",
                               SingUpScreen()),
+                          myDivider(),
+                          buildListTile(
+                              context,
+                              isLeft
+                                  ? "Treaty to use service"
+                                  : "معاهدة الإستخدام",
+                              TreatyToUseService()),
+                          myDivider(),
+                          buildListTile(context,
+                              isLeft ? "Call Us" : "إتصل بنا", CallUsScreen()),
                           myDivider(),
                         ],
                       ),
