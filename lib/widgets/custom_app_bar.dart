@@ -14,7 +14,7 @@ AppBar customAppBarMobile (){
         padding: isLeft
             ? EdgeInsets.all(7.0)
             : EdgeInsets.only(bottom: 1.0, left: 5.0, right: 9.0),
-        height: 80.0,
+        height: 103.0,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -23,48 +23,46 @@ AppBar customAppBarMobile (){
             ],
           ),
         ),
-        child: SafeArea(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                isLeft ? "long market" : "السوق الطويل",
-                style: TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black,
-                      blurRadius: 3.0,
-                      offset: Offset(1, 1),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: SizedBox(
-                    width: double.maxFinite,
-                  )),
-              Padding(
-                padding: isLeft
-                    ? EdgeInsets.only(bottom: 5.0)
-                    : EdgeInsets.only(bottom: 10.0),
-                child: InkWell(
-                  child: Icon(
-                    Icons.notifications_outlined,
-                    size: 30.0,
-                    color: Colors.white,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              isLeft ? "long market" : "السوق الطويل",
+              style: TextStyle(
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
+                shadows: [
+                  Shadow(
+                    color: Colors.black,
+                    blurRadius: 3.0,
+                    offset: Offset(1, 1),
                   ),
-                  onTap: () async {
-                    print("notifications");
-                    print(Provider.of<Advertisement>(providerContext,listen: false).listAdvertising.length.toString());
-
-                  },
-                ),
+                ],
               ),
-              SizedBox(width: 38.0),
-            ],
-          ),
+            ),
+            Expanded(
+                child: SizedBox(
+                  width: double.maxFinite,
+                )),
+            Padding(
+              padding: isLeft
+                  ? EdgeInsets.only(bottom: 5.0)
+                  : EdgeInsets.only(bottom: 10.0),
+              child: InkWell(
+                child: Icon(
+                  Icons.notifications_outlined,
+                  size: 30.0,
+                  color: Colors.white,
+                ),
+                onTap: () async {
+                  print("notifications");
+                  print(Provider.of<Advertisement>(providerContext,listen: false).listAdvertising.length.toString());
+
+                },
+              ),
+            ),
+            SizedBox(width: 38.0),
+          ],
         ),
       ),
     ),

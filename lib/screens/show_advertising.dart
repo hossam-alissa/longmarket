@@ -145,81 +145,86 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                     ],
                   ), //Images View
                   myDivider(),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Icon(Icons.person_rounded),
-                              Expanded(
-                                  child: Text(
-                                userName.toString(),
-                                overflow: TextOverflow.ellipsis,
-                              ))
-                            ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 13.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Icon(Icons.person_rounded),
+                                Expanded(
+                                    child: Text(
+                                  userName.toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                ))
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Icon(Icons.add_location),
-                              Text(
-                                city.toString(),
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            ],
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Icon(Icons.add_location),
+                                Text(
+                                  city.toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ), //End Information publisher
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Expanded(
-                        flex: 5,
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Icon(Icons.phone_android),
-                              Expanded(
-                                  child: Text(
-                                mobileNumber,
-                                overflow: TextOverflow.ellipsis,
-                              ))
-                            ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 13.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          flex: 5,
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Icon(Icons.phone_android),
+                                Expanded(
+                                    child: Text(
+                                  mobileNumber,
+                                  overflow: TextOverflow.ellipsis,
+                                ))
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Icon(Icons.access_time),
-                              Expanded(
-                                  child: Text(
-                                (timeAgo).toString(),
-                                overflow: TextOverflow.ellipsis,
-                              ))
-                            ],
+                        Expanded(
+                          flex: 3,
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Icon(Icons.access_time),
+                                Expanded(
+                                    child: Text(
+                                  (timeAgo).toString(),
+                                  overflow: TextOverflow.ellipsis,
+                                ))
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ), //End Information publisher
                   myDivider(),
-                  buildRowTitleAndDetails(isLeft ? "Title :" : "العنوان :", title),
+                  _buildRowTitleAndDetails(isLeft ? "Title :" : "العنوان :", title),
                   //End Advertising Title
-                  buildRowTitleAndDetails(
+                  _buildRowTitleAndDetails(
                       isLeft ? "Details :" : "التفاصيل :", details),
                   //End Advertising Details
                   myDivider(),
@@ -432,7 +437,7 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
     );
   }
 
-  Row buildRowTitleAndDetails(String txtTitle, String txtDetails) {
+  Row _buildRowTitleAndDetails(String txtTitle, String txtDetails) {
     return Row(
       children: [
         Expanded(
@@ -441,14 +446,13 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.all(9),
-                  //       height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 15 , vertical: 9),
                   child: Row(
                     children: [Text(txtTitle)],
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(9),
+                  padding: const EdgeInsets.symmetric(horizontal: 15 , vertical: 9),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
