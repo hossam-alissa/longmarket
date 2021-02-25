@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "442058357078",
+    "firebase_url": "https://long-market-default-rtdb.firebaseio.com",
+    "project_id": "long-market",
+    "storage_bucket": "long-market.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442058357078:android:a62a00632d3bff07317ef7",
+        "android_client_info": {
+          "package_name": "com.example.longmarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "442058357078-4bcvgegfl0lbkfan92q1nia1pcibr1qd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.longmarket",
+            "certificate_hash": "4f3d02448f7f88660e3e30f2f320f7b391541d0a"
+          }
+        },
+        {
+          "client_id": "442058357078-p68a70mb4n5k3elvs1f7bm5dlcq0sc70.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkl99CFnTxwgSiGUKETra_c-qdQBchEWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "442058357078-p68a70mb4n5k3elvs1f7bm5dlcq0sc70.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "442058357078-bjdq423nusba3bdkevoh7rp78uo26cv4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.longmarket"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
