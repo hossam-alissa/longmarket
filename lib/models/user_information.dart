@@ -2,10 +2,10 @@
 // import 'dart:async';
 
 // import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 // import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:http/http.dart' as http;
@@ -45,7 +45,7 @@ class UserInformation with ChangeNotifier {
     @required String passwordUser,
   }) async {
     try {
-      Firebase.initializeApp();
+      // Firebase.initializeApp();
       // final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
       //   email: 'an email',
       //   password: 'a password',
@@ -67,11 +67,10 @@ class UserInformation with ChangeNotifier {
       // print('++++++++++++');
       // print(json.decode(res.body)['name']);
 
-      var _res = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: passwordUser);
+      // var _res = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: passwordUser);
 
       try {
-        _res.user.sendEmailVerification();
+        // _res.user.sendEmailVerification();
         print("+++++ +++++ Done in user information sendEmailVerification");
       } catch (error) {
         print("+++++ +++++ error in user information sendEmailVerification");
@@ -79,17 +78,17 @@ class UserInformation with ChangeNotifier {
       }
 
       // print(_res.user.getIdToken().then((value) => (value.token.toString())));
-      print( await _res.user.getIdToken());
-      this.idInDataBase = _res.user.uid;
-      this.email = email;
-      this._passwordUserName = passwordUser;
-      this.username = "New User";
-      this.mobileNumber = '0000000000';
-      this.firstName = "New User F";
-      this.secondName = 'New User S';
-      this.lastName = 'New User L';
-      this.city = city;
-      this._token = await _res.user.getIdToken();
+      // print( await _res.user.getIdToken());
+      // this.idInDataBase = _res.user.uid;
+      // this.email = email;
+      // this._passwordUserName = passwordUser;
+      // this.username = "New User";
+      // this.mobileNumber = '0000000000';
+      // this.firstName = "New User F";
+      // this.secondName = 'New User S';
+      // this.lastName = 'New User L';
+      // this.city = city;
+      // this._token = await _res.user.getIdToken();
 
       // ((await _res.user.getIdToken().then((value) => (value.token))).toString());
       this._expiryDate =
