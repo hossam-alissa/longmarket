@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../config/config.dart';
 import '../main.dart';
 import '../widgets/widgets.dart';
-
+import '../models/models.dart';
 class SingUpScreen extends StatefulWidget {
   @override
   _SingUpScreenState createState() => _SingUpScreenState();
@@ -179,9 +181,19 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                 if (passwordUser.text ==
                                     passwordUserValidation.text) {
                                   if (lawsCheckBox == true) {
-                                    if(passwordUser.text.length >=8){
+                                    if (passwordUser.text.length >= 8) {
                                       print("Sing Up");
+                                      try {
 
+                                        Provider.of<UserInformation>(providerContext,
+                                                listen: false)
+                                            .singUpInDataBase(
+                                                email: emailUserName.text,
+                                                passwordUser:
+                                                    passwordUser.text);
+                                      } catch (e) {
+                                        print(e.toString());
+                                      }
                                       Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
@@ -189,7 +201,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                                 MyApp()),
                                         ModalRoute.withName('/'),
                                       );
-                                    }else{
+                                    } else {
                                       toastShow(
                                           isLeft
                                               ? "You\'r password in short"

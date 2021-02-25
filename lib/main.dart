@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
 import '../config/config.dart';
 import '../screens/screens.dart';
-
-import 'screens/nav_screen.dart';
+import '../screens/nav_screen.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
   runApp(MainSplashScreen());
 }
 
