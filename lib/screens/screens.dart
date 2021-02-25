@@ -9,3 +9,4 @@ export 'treaty_to_use_service.dart';
 export 'call_us_screen.dart';
 export 'sing_up_screen.dart';
 export 'sing_in_screen.dart';
+export 'show_advertising.dart';
