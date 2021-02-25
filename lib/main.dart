@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../config/config.dart';
 import '../screens/screens.dart';
 import '../screens/nav_screen.dart';
+import 'models/models.dart';
 
 void main()  async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,19 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // Future getFireBase()async{
-  //   // WidgetsFlutterBinding.ensureInitialized();
-  //   // await Firebase.initializeApp();
-  // }
-  @override
-  void initState() {
-    setState(() {
-      providerContext = context;
-    });
-
-    // getFireBase();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +29,22 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: NavScreen(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<UserInformation>(
+              create: (_) => UserInformation()),
+          // ChangeNotifierProvider<MyProvider>(create: (_) => MyProvider()),
+          ChangeNotifierProxyProvider<UserInformation, Advertisement>(
+              create: (_) => Advertisement(),
+              update: (ctx, valueUI, valueAdv) =>
+              valueAdv..getDataAuthToken(authToken: valueUI.token)),
+          ChangeNotifierProxyProvider<UserInformation, Comments>(
+              create: (_) => Comments(),
+              update: (ctx, valueUI, valueCom) =>
+              valueCom..getDataAuthToken(authToken: valueUI.token)),
+        ],
+        child:  NavScreen(),
+      ),
     );
   }
 }

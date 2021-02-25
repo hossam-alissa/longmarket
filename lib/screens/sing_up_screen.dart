@@ -4,6 +4,7 @@ import '../config/config.dart';
 import '../main.dart';
 import '../widgets/widgets.dart';
 import '../models/models.dart';
+
 class SingUpScreen extends StatefulWidget {
   @override
   _SingUpScreenState createState() => _SingUpScreenState();
@@ -183,22 +184,24 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                     if (passwordUser.text.length >= 8) {
                                       print("Sing Up");
                                       try {
-                                        Provider.of<UserInformation>(providerContext,
+                                        await Provider.of<UserInformation>(
+                                                providerContext,
                                                 listen: false)
                                             .singUpInDataBase(
                                                 email: emailUserName.text,
                                                 passwordUser:
                                                     passwordUser.text);
+
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  MyApp()),
+                                          ModalRoute.withName('/'),
+                                        );
                                       } catch (e) {
                                         print(e.toString());
                                       }
-                                      // Navigator.pushAndRemoveUntil(
-                                      //   providerContext,
-                                      //   MaterialPageRoute(
-                                      //       builder: (BuildContext context) =>
-                                      //           MyApp()),
-                                      //   ModalRoute.withName('/'),
-                                      // );
                                     } else {
                                       toastShow(
                                           isLeft

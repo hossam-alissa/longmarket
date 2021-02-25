@@ -35,6 +35,14 @@ class _NavScreenState extends State<NavScreen> {
     //   toastShow(getTranslated(context, "Please SingUp or SingIn"), context);
     // }
   }
+
+  @override
+  void initState() {
+    setState(() {
+      providerContext = context;
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Directionality(
