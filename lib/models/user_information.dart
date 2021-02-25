@@ -3,6 +3,8 @@
 
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -45,6 +47,12 @@ class UserInformation with ChangeNotifier {
     @required String passwordUser,
   }) async {
     try {
+        UserCredential userCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: passwordUser,
+        );
+
       // Firebase.initializeApp();
       // final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
       //   email: 'an email',
@@ -66,36 +74,34 @@ class UserInformation with ChangeNotifier {
       // );
       // print('++++++++++++');
       // print(json.decode(res.body)['name']);
-
       // var _res = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: passwordUser);
 
-      try {
-        // _res.user.sendEmailVerification();
-        print("+++++ +++++ Done in user information sendEmailVerification");
-      } catch (error) {
-        print("+++++ +++++ error in user information sendEmailVerification");
-        print(error);
-      }
+      // try {
+      //   userCredential.user.sendEmailVerification();
+      //   print("+++++ +++++ Done in user information sendEmailVerification");
+      // } catch (error) {
+      //   print("+++++ +++++ error in user information sendEmailVerification");
+      //   print(error);
+      // }
 
       // print(_res.user.getIdToken().then((value) => (value.token.toString())));
-      // print( await _res.user.getIdToken());
-      // this.idInDataBase = _res.user.uid;
-      // this.email = email;
-      // this._passwordUserName = passwordUser;
-      // this.username = "New User";
-      // this.mobileNumber = '0000000000';
-      // this.firstName = "New User F";
-      // this.secondName = 'New User S';
-      // this.lastName = 'New User L';
-      // this.city = city;
-      // this._token = await _res.user.getIdToken();
+      print( await userCredential.user.getIdToken());
 
-      // ((await _res.user.getIdToken().then((value) => (value.token))).toString());
-      this._expiryDate =
-          DateTime.now().add(Duration(seconds: int.parse("3600")));
+      this.idInDataBase = userCredential.user.uid;
+      this.email = email;
+      this._passwordUserName = passwordUser;
+      this.username = "New User";
+      this.mobileNumber = '0000000000';
+      this.firstName = "New User F";
+      this.secondName = 'New User S';
+      this.lastName = 'New User L';
+      this.city = "New User city";
+      this._token = await userCredential.user.getIdToken();
+      this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
 
-      SharedPreferences _userInfoInSharedPref =
-          await SharedPreferences.getInstance();
+        // ((await _res.user.getIdToken().then((value) => (value.token))).toString());
+
+      SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
       _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
       _userInfoInSharedPref.setString('email', email);
       _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
@@ -116,7 +122,7 @@ class UserInformation with ChangeNotifier {
       throw error;
     }
   }
-//
+
 // Future<void> singInInDataBase(
 //     {@required String emailUserName, @required String passwordUser}) async {
 //   try {
@@ -188,45 +194,45 @@ class UserInformation with ChangeNotifier {
 //   }
 // }
 
-// Future<void> startApp() async {
-//   SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
-//   try{
-//     if (_userInfoInSharedPref.getString('expiryDate').isNotEmpty) {
-//       try {
-//         idInDataBase = _userInfoInSharedPref.getString('idInDataBase');
-//         email = _userInfoInSharedPref.getString('email');
-//         _passwordUserName = _userInfoInSharedPref.getString('passwordUser');
-//         username = _userInfoInSharedPref.getString('username');
-//         mobileNumber = _userInfoInSharedPref.getString('mobileNumber');
-//         firstName = _userInfoInSharedPref.getString('firstName');
-//         secondName = _userInfoInSharedPref.getString('secondName');
-//         lastName = _userInfoInSharedPref.getString('lastName');
-//         city = _userInfoInSharedPref.getString('city');
-//         _token = _userInfoInSharedPref.getString('Token');
-//         _expiryDate = DateTime.tryParse(_userInfoInSharedPref.getString('expiryDate'));
-//
-//         if (_expiryDate.isBefore(DateTime.now())) {
-//           print(_passwordUserName);
-//           AuthResult _res = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: _passwordUserName);
-//
-//           this._token = ((await _res.user.getIdToken().then((value) => (value.token))).toString());
-//           this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
-//           _userInfoInSharedPref.setString('Token', _token);
-//           _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
-//         }
-//         notifyListeners();
-//         print('+++++ +++++ Done Start App');
-//       } catch (error) {
-//         print('+++++ +++++  Error Start App');
-//         print(error);
-//         throw error;
-//       }
-//     }
-//   }catch(errorSharedPref){
-//     print("+++ user information expiry date empty");
-//     // print(errorSharedPref.toString());
-//   }
-// }
+Future<void> startApp() async {
+  SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
+  try{
+    if (_userInfoInSharedPref.getString('expiryDate').isNotEmpty) {
+      try {
+        idInDataBase = _userInfoInSharedPref.getString('idInDataBase');
+        email = _userInfoInSharedPref.getString('email');
+        _passwordUserName = _userInfoInSharedPref.getString('passwordUser');
+        username = _userInfoInSharedPref.getString('username');
+        mobileNumber = _userInfoInSharedPref.getString('mobileNumber');
+        firstName = _userInfoInSharedPref.getString('firstName');
+        secondName = _userInfoInSharedPref.getString('secondName');
+        lastName = _userInfoInSharedPref.getString('lastName');
+        city = _userInfoInSharedPref.getString('city');
+        _token = _userInfoInSharedPref.getString('Token');
+        _expiryDate = DateTime.tryParse(_userInfoInSharedPref.getString('expiryDate'));
+
+        if (_expiryDate.isBefore(DateTime.now())) {
+          print(_passwordUserName);
+          UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: _passwordUserName);
+
+          this._token = await userCredential.user.getIdToken();
+          this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
+          _userInfoInSharedPref.setString('Token', _token);
+          _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
+        }
+        notifyListeners();
+        print('+++++ +++++ Done Start App');
+      } catch (error) {
+        print('+++++ +++++  Error Start App');
+        print(error);
+        throw error;
+      }
+    }
+  }catch(errorSharedPref){
+    print("+++ user information expiry date empty");
+    // print(errorSharedPref.toString());
+  }
+}
 
 // logOutUserInformation() async {
 //   await FirebaseAuth.instance.signOut();

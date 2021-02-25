@@ -183,7 +183,6 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                     if (passwordUser.text.length >= 8) {
                                       print("Sing Up");
                                       try {
-
                                         Provider.of<UserInformation>(providerContext,
                                                 listen: false)
                                             .singUpInDataBase(
@@ -193,13 +192,13 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                       } catch (e) {
                                         print(e.toString());
                                       }
-                                      Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                MyApp()),
-                                        ModalRoute.withName('/'),
-                                      );
+                                      // Navigator.pushAndRemoveUntil(
+                                      //   providerContext,
+                                      //   MaterialPageRoute(
+                                      //       builder: (BuildContext context) =>
+                                      //           MyApp()),
+                                      //   ModalRoute.withName('/'),
+                                      // );
                                     } else {
                                       toastShow(
                                           isLeft
