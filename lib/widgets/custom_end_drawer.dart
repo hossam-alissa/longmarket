@@ -110,6 +110,8 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                             onTap: ()  async{
                               try{
                                 await Provider.of<UserInformation>(providerContext,listen: false).logOutUserInformation();
+                                toastShow(isLeft ? "Done, Log out" : "تم تسجيل الخروج", context);
+                                Navigator.pop(context);
                               }catch(e){
                                 print(e.toString());
                               }

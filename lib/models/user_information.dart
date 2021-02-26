@@ -70,15 +70,14 @@ class UserInformation with ChangeNotifier {
       // print(json.decode(res.body)['name']);
       // var _res = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: passwordUser);
 
-      // try {
-      //   userCredential.user.sendEmailVerification();
-      //   print("+++++ +++++ Done in user information sendEmailVerification");
-      // } catch (error) {
-      //   print("+++++ +++++ error in user information sendEmailVerification");
-      //   print(error);
-      // }
+      try {
+        userCredential.user.sendEmailVerification();
+        print("+++++ +++++ Done in user information sendEmailVerification");
+      } catch (error) {
+        print("+++++ +++++ error in user information sendEmailVerification");
+        print(error);
+      }
 
-      // print(_res.user.getIdToken().then((value) => (value.token.toString())));
       print(await userCredential.user.getIdToken());
 
       this.idInDataBase = userCredential.user.uid;
@@ -89,12 +88,10 @@ class UserInformation with ChangeNotifier {
       this.firstName = "New User F";
       this.secondName = 'New User S';
       this.lastName = 'New User L';
-      this.city = "New User city";
+      this.city = "New User City";
       this._token = await userCredential.user.getIdToken();
-      this._expiryDate =
-          DateTime.now().add(Duration(seconds: int.parse("3600")));
+      this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
 
-      // ((await _res.user.getIdToken().then((value) => (value.token))).toString());
 
       SharedPreferences _userInfoInSharedPref =
           await SharedPreferences.getInstance();
@@ -117,11 +114,16 @@ class UserInformation with ChangeNotifier {
       print(error);
       throw error;
     }
-  }
+  }//End Sing UP
 
   Future<void> singInInDataBase(
       {@required String emailUserName, @required String passwordUser}) async {
     try {
+      UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailUserName,
+        password: passwordUser,
+      );
       // await Firebase.initializeApp();
       // var _res = await FirebaseAuth.instance.signInWithEmailAndPassword(
       //   email: emailUserName,
@@ -135,12 +137,6 @@ class UserInformation with ChangeNotifier {
       // currentUser.getIdToken().then((id){
       //   print(  id.token);
       // }) ;
-
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailUserName,
-        password: passwordUser,
-      );
 
       try {
         // final String url = 'https://long-market-default-rtdb.firebaseio.com/users.json';
@@ -159,20 +155,22 @@ class UserInformation with ChangeNotifier {
         //     this.city = value['city'];
         //   }
         // });
+
+        this.idInDataBase = userCredential.user.uid;
+        this.email  = emailUserName;
+        this._passwordUserName = passwordUser;
         this._token = await userCredential.user.getIdToken();
-        print(_token);
         this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
-        SharedPreferences _userInfoInSharedPref =
-            await SharedPreferences.getInstance();
+        SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
         _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
         _userInfoInSharedPref.setString('email', email);
         _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
-        _userInfoInSharedPref.setString('username', username);
-        _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
-        _userInfoInSharedPref.setString('firstName', firstName);
-        _userInfoInSharedPref.setString('secondName', secondName);
-        _userInfoInSharedPref.setString('lastName', lastName);
-        _userInfoInSharedPref.setString('city', city);
+        _userInfoInSharedPref.setString('username', 'New User');
+        _userInfoInSharedPref.setString('mobileNumber', '000000000');
+        _userInfoInSharedPref.setString('firstName', 'New User F');
+        _userInfoInSharedPref.setString('secondName', 'New User S');
+        _userInfoInSharedPref.setString('lastName', 'New User L');
+        _userInfoInSharedPref.setString('city', 'New User City');
         _userInfoInSharedPref.setString('Token', _token);
         _userInfoInSharedPref.setString(
             'expiryDate', _expiryDate.toIso8601String());
@@ -187,7 +185,7 @@ class UserInformation with ChangeNotifier {
       print(error);
       throw error;
     }
-  }
+  }//End Sing In
 
   Future<void> startApp() async {
     SharedPreferences _userInfoInSharedPref =
@@ -231,9 +229,9 @@ class UserInformation with ChangeNotifier {
       }
     } catch (errorSharedPref) {
       print("+++ user information expiry date empty");
-      // print(errorSharedPref.toString());
+      print(errorSharedPref.toString());
     }
-  }
+  }//End Start App
 
   logOutUserInformation() async {
     try {
@@ -257,7 +255,7 @@ class UserInformation with ChangeNotifier {
       throw e;
     }
     notifyListeners();
-  }
+  }//ِend Log OUT
 
 // Future<Map<String, String>> getAllUserInformation() async {
 //   SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
