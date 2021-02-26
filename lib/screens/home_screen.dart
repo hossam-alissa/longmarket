@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:longmarket/models/models.dart';
 import 'package:longmarket/screens/screens.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     Provider.of<Advertisement>(providerContext, listen: false).fetchData();
+    Provider.of<UserInformation>(providerContext, listen: false).startApp();
     super.initState();
   }
 

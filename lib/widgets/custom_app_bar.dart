@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:longmarket/models/models.dart';
 import '../models/advertising.dart';
 import 'package:provider/provider.dart';
 import '../config/config.dart';
@@ -57,7 +58,7 @@ AppBar customAppBarMobile (){
                 onTap: () async {
                   print("notifications");
                   print(Provider.of<Advertisement>(providerContext,listen: false).listAdvertising.length.toString());
-
+                  print(Provider.of<UserInformation>(providerContext,listen: false).email);
                 },
               ),
             ),

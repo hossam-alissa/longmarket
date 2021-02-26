@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:longmarket/config/config.dart';
+import 'package:longmarket/models/models.dart';
 import 'package:longmarket/screens/screens.dart';
 import 'package:longmarket/widgets/widgets_tools.dart';
+import 'package:provider/provider.dart';
 
 import '../main.dart';
 
@@ -102,10 +104,17 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                               isLeft ? "Sing In" : "تسجيل الدخول",
                               SingInScreen()),
                           myDivider(),
-                          buildListTile(
-                              context,
-                              isLeft ? "Log out" : "تسجيل الخروج",
-                              SingUpScreen()),
+                          ListTile(
+                            title: myText(isLeft ? "Log out" : "تسجيل الخروج"),
+                            trailing: Icon(Icons.navigate_next),
+                            onTap: ()  async{
+                              try{
+                                await Provider.of<UserInformation>(providerContext,listen: false).logOutUserInformation();
+                              }catch(e){
+                                print(e.toString());
+                              }
+                            },
+                          ),
                           myDivider(),
                           buildListTile(
                               context,
@@ -121,19 +130,21 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text("العربية"),
-                              Switch(value: isLeft, onChanged:(value){
-                                setState(() {
-                                  isLeft = value;
-                                  setLanguage();
-                                  Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            MyApp()),
-                                    ModalRoute.withName('/'),
-                                  );
-                                });
-                              }),
+                              Switch(
+                                  value: isLeft,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isLeft = value;
+                                      setLanguage();
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                MyApp()),
+                                        ModalRoute.withName('/'),
+                                      );
+                                    });
+                                  }),
                               Text("English"),
                             ],
                           ),

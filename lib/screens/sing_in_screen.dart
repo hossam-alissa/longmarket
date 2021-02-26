@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:longmarket/models/models.dart';
+import 'package:provider/provider.dart';
 import '../config/config.dart';
 import '../main.dart';
 import '../widgets/widgets.dart';
@@ -168,12 +170,24 @@ class _SingInScreenState extends State<SingInScreen> {
                           if (passwordUser.text != "") {
                             if (passwordUser.text.length >= 8) {
                               print("Sing IN");
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) => MyApp()),
-                                ModalRoute.withName('/'),
-                              );
+
+                              try {
+                                await Provider.of<UserInformation>(
+                                        providerContext,
+                                        listen: false)
+                                    .singInInDataBase(
+                                        emailUserName: emailUserName.text,
+                                        passwordUser: passwordUser.text);
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          MyApp()),
+                                  ModalRoute.withName('/'),
+                                );
+                              } catch (e) {
+                                print(e);
+                              }
                             } else {
                               toastShow(
                                   isLeft
