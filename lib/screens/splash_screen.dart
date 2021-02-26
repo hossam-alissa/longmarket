@@ -1,11 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:longmarket/config/config.dart';
-import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
-
+import '../config/config.dart';
 import '../main.dart';
-import '../models/models.dart';
+
 class MainSplashScreen extends StatefulWidget {
   @override
   _MainSplashScreenState createState() => _MainSplashScreenState();

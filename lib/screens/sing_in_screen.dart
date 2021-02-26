@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:longmarket/models/models.dart';
 import 'package:provider/provider.dart';
+
 import '../config/config.dart';
 import '../main.dart';
 import '../widgets/widgets.dart';
+import '../models/models.dart';
 
 class SingInScreen extends StatefulWidget {
   @override

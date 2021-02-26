@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+
 class ChatMessage{
   Key key;
   String textMessage;

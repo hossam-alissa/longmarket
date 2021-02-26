@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:longmarket/models/models.dart';
-import 'package:longmarket/screens/screens.dart';
 import 'package:provider/provider.dart';
 
+import '../models/models.dart';
+import '../screens/screens.dart';
 import '../widgets/widgets.dart';
 import '../config/config.dart';
 import '../helper/helper.dart';

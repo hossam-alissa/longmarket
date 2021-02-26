@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:longmarket/widgets/widgets.dart';
+import '../widgets/widgets.dart';
 
 class CallUsScreen extends StatelessWidget {
   @override

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:longmarket/config/config.dart';
-import 'package:longmarket/models/models.dart';
-import 'package:longmarket/screens/screens.dart';
-import 'package:longmarket/widgets/widgets_tools.dart';
 import 'package:provider/provider.dart';
+
+import '../config/config.dart';
+import '../models/models.dart';
+import '../screens/screens.dart';
+import '../widgets/widgets_tools.dart';
 
 import '../main.dart';
 
