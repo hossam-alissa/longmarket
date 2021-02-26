@@ -58,7 +58,7 @@ AppBar customAppBarMobile (){
                 onTap: () async {
                   print("notifications");
                   print(Provider.of<Advertisement>(providerContext,listen: false).listAdvertising.length.toString());
-                  print(Provider.of<UserInformation>(providerContext,listen: false).email);
+                  print(Provider.of<UserInformation>(providerContext,listen: false).token);
                 },
               ),
             ),

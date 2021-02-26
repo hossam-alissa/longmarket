@@ -93,31 +93,44 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                       child: ListView(
                         padding: EdgeInsets.zero,
                         children: <Widget>[
-                          buildListTile(
-                              context,
-                              isLeft
-                                  ? "SingUp Create New Account"
-                                  : "إنشاء حساب جديد",
-                              SingUpScreen()),
-                          myDivider(),
-                          buildListTile(
-                              context,
-                              isLeft ? "Sing In" : "تسجيل الدخول",
-                              SingInScreen()),
-                          myDivider(),
-                          ListTile(
-                            title: myText(isLeft ? "Log out" : "تسجيل الخروج"),
-                            trailing: Icon(Icons.navigate_next),
-                            onTap: ()  async{
-                              try{
-                                await Provider.of<UserInformation>(providerContext,listen: false).logOutUserInformation();
-                                toastShow(isLeft ? "Done, Log out" : "تم تسجيل الخروج", context);
-                                Navigator.pop(context);
-                              }catch(e){
-                                print(e.toString());
-                              }
-                            },
-                          ),
+                          if (Provider.of<UserInformation>(providerContext, listen: true).token == null)
+                            buildListTile(
+                                context,
+                                isLeft
+                                    ? "SingUp Create New Account"
+                                    : "إنشاء حساب جديد",
+                                SingUpScreen()),
+                          if (Provider.of<UserInformation>(providerContext, listen: true).token == null)
+                            myDivider(),
+                          Provider.of<UserInformation>(providerContext,
+                                          listen: true)
+                                      .token ==
+                                  null
+                              ? buildListTile(
+                                  context,
+                                  isLeft ? "Sing In" : "تسجيل الدخول",
+                                  SingInScreen())
+                              : ListTile(
+                                  title: myText(
+                                      isLeft ? "Log out" : "تسجيل الخروج"),
+                                  trailing: Icon(Icons.navigate_next),
+                                  onTap: () async {
+                                    try {
+                                      await Provider.of<UserInformation>(
+                                              providerContext,
+                                              listen: false)
+                                          .logOutUserInformation();
+                                      toastShow(
+                                          isLeft
+                                              ? "Done, Log out"
+                                              : "تم تسجيل الخروج",
+                                          context);
+                                      Navigator.pop(context);
+                                    } catch (e) {
+                                      print(e.toString());
+                                    }
+                                  },
+                                ),
                           myDivider(),
                           buildListTile(
                               context,

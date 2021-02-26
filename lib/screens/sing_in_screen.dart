@@ -156,15 +156,15 @@ class _SingInScreenState extends State<SingInScreen> {
                           print("reset Password");
                           try{
                             await Provider.of<UserInformation>(providerContext,listen: false).resetPassword(email: emailUserName.text);
-                            toastShow(isLeft ? "Done, Send email message to your email, Open the Link and change Password" : "تم إسال رسالة الى بريدك الإلكتروني", context);
+                            toastShow(
+                                isLeft
+                                    ? "Done, Send message to email address, Open the Link to change your Password"
+                                    : "تم إرسال رسالة إلى بريدك الإلكتروني،قم بفتح الرابط وقم بتغير كلمة السر",
+                                context);
                           }catch(e){
                             print(e);
                           }
-                          toastShow(
-                              isLeft
-                                  ? "Done, Send message to email address"
-                                  : "تم إرسال رسالة إلى بريدك الإلكتروني،قم بفتح الرابط وقم بتغير كلمة السر",
-                              context);
+
                         } else {
                           toastShow(
                               isLeft
