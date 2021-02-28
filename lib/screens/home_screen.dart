@@ -14,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String sortBy = "All";
+
   @override
   void initState() {
     Provider.of<Advertisement>(providerContext, listen: false).fetchData();
@@ -24,9 +26,66 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBarMobile(),
+      appBar: customAppBarMobile(context),
       endDrawer: CustomEndDrawer(),
-      body: myBigList("All"),
+      body: Column(
+        children: [
+          mainBarButton(),
+          Expanded(child: myBigList(sortBy)),
+        ],
+      ),
+    );
+  }
+  Widget mainBarButton() {
+    return Container(
+      height: 35,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.white, Colors.grey.withOpacity(0.4)],
+        ),
+      ),
+      padding: EdgeInsets.only(top: 1, bottom: 1),
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          circleButton(isLeft ? 'All' : "الجميع"),
+          circleButton(isLeft ?  'Cars' :'سيارات'),
+          circleButton(isLeft ? 'Home' : 'عقارات'),
+          circleButton(isLeft ? 'Mobile' : 'موبايلات'),
+          circleButton(isLeft ?  'Furniture' : 'مفروشات'),
+          circleButton(isLeft ? 'Electron' : 'الكترونيات'),
+          circleButton(isLeft ?  'Other' : 'آخرى'),
+        ],
+      ),
+    );
+  }
+
+  Widget circleButton(String nameBtn) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          sortBy = nameBtn;
+          print(nameBtn);
+        });
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 3),
+        alignment: Alignment.center,
+        height: 30,
+        width: 75,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Text(
+          nameBtn,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
   }
 

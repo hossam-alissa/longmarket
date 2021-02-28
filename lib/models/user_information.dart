@@ -254,44 +254,6 @@ class UserInformation with ChangeNotifier {
     notifyListeners();
   }//ِend Log OUT
 
-// Future<Map<String, String>> getAllUserInformation() async {
-//   SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
-//   Map<String, String> userInfoList = {
-//     'idInDataBase': (_userInfoInSharedPref.getString('idInDataBase') == null
-//             ? ""
-//             : _userInfoInSharedPref.getString('idInDataBase'))
-//         .toString(),
-//     'email': (_userInfoInSharedPref.getString('email') == null
-//         ? ""
-//         : _userInfoInSharedPref.getString('email').toString()),
-//     'username': (_userInfoInSharedPref.getString('username') == null
-//             ? ""
-//             : _userInfoInSharedPref.getString('username'))
-//         .toString(),
-//     'mobileNumber': (_userInfoInSharedPref.getString('mobileNumber') == null
-//             ? ""
-//             : _userInfoInSharedPref.getString('mobileNumber'))
-//         .toString(),
-//     'firstName': (_userInfoInSharedPref.getString('firstName') == null
-//             ? ""
-//             : _userInfoInSharedPref.getString('firstName'))
-//         .toString(),
-//     'secondName': (_userInfoInSharedPref.getString('secondName') == null
-//             ? ""
-//             : _userInfoInSharedPref.getString('secondName'))
-//         .toString(),
-//     'lastName': (_userInfoInSharedPref.getString('lastName') == null
-//             ? ""
-//             : _userInfoInSharedPref.getString('lastName'))
-//         .toString(),
-//     'city': (_userInfoInSharedPref.getString('city') == null
-//             ? ""
-//             : _userInfoInSharedPref.getString('city'))
-//         .toString(),
-//   };
-//   notifyListeners();
-//   return userInfoList;
-// }
   resetPassword({@required String email}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);

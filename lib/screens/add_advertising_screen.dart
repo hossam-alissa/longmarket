@@ -4,9 +4,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:longmarket/models/models.dart';
 import 'package:provider/provider.dart';
-
+import '../models/models.dart';
 import '../config/config.dart';
 import '../widgets/widgets.dart';
 import '../helper/tools.dart';
@@ -92,7 +91,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBarMobile(),
+      appBar: customAppBarMobile(context),
       endDrawer: CustomEndDrawer(),
       body: CustomScrollView(
         slivers: [

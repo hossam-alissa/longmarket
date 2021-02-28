@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -61,7 +63,8 @@ class Advertisement with ChangeNotifier {
   }
 
   fetchData() async {
-    final String url = 'https://long-market-default-rtdb.firebaseio.com/advertising.json';
+    final String url =
+        'https://long-market-default-rtdb.firebaseio.com/advertising.json';
     try {
       http.Response res = await http.get(url);
       final Map<String, dynamic> extractedData =
@@ -138,7 +141,7 @@ class Advertisement with ChangeNotifier {
             'department': department.toString(),
             'category': category.toString(),
             'date': date.toString(),
-            'imgUrl': '',
+            'imgUrl': 'new',
             'userNameAddedAdvertising': userNameAddedAdvertising.toString(),
             'mobileNumber': mobileNumber.toString(),
           },
@@ -152,7 +155,13 @@ class Advertisement with ChangeNotifier {
       // StorageUploadTask x = refImage.putFile(imageFile);
       // String newUrlImage = (await (await x.onComplete).ref.getDownloadURL()).toString();
 
-      String newUrlImage = "new" ;
+      final Reference ref = FirebaseStorage.instance
+          .ref()
+          .child('advertisingPhoto')
+          .child('${json.decode(res.body)['name']}.jpg');
+      TaskSnapshot x =  await ref.putFile(imageFile);
+      // String newUrlImage = await ref.getDownloadURL().toString();
+      String newUrlImage =  (await x.ref.getDownloadURL()).toString();
 
       try {
         final String urlUpdate =
@@ -183,19 +192,21 @@ class Advertisement with ChangeNotifier {
               userNameAddedAdvertising: userNameAddedAdvertising,
               mobileNumber: mobileNumber,
             ));
-        listAdvertisingForUser.insert(0,
-            Advertising(
-          idAdvertising: json.decode(res.body)['name'],
-          idAddedAdvertising: idAddedAdvertising,
-          title: title,
-          details: details,
-          city: city,
-          department: department,
-          category: category,
-          date: date,
-          imgUrl: newUrlImage,
-          userNameAddedAdvertising: userNameAddedAdvertising,
-          mobileNumber: mobileNumber),);
+        listAdvertisingForUser.insert(
+          0,
+          Advertising(
+              idAdvertising: json.decode(res.body)['name'],
+              idAddedAdvertising: idAddedAdvertising,
+              title: title,
+              details: details,
+              city: city,
+              department: department,
+              category: category,
+              date: date,
+              imgUrl: newUrlImage,
+              userNameAddedAdvertising: userNameAddedAdvertising,
+              mobileNumber: mobileNumber),
+        );
       }
       notifyListeners();
       print("+++++ +++++ Done in Add Advertising models");
