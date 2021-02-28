@@ -78,8 +78,6 @@ class UserInformation with ChangeNotifier {
         print(error);
       }
 
-      print(await userCredential.user.getIdToken());
-
       this.idInDataBase = userCredential.user.uid;
       this.email = email;
       this._passwordUserName = passwordUser;
@@ -93,8 +91,7 @@ class UserInformation with ChangeNotifier {
       this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
 
 
-      SharedPreferences _userInfoInSharedPref =
-          await SharedPreferences.getInstance();
+      SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
       _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
       _userInfoInSharedPref.setString('email', email);
       _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
