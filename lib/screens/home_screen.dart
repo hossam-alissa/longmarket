@@ -18,16 +18,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    Provider.of<Advertisement>(providerContext, listen: false).fetchData();
-    Provider.of<UserInformation>(providerContext, listen: false).startApp();
+    try{
+      Provider.of<Advertisement>(providerContext, listen: false).fetchData();
+      Provider.of<UserInformation>(providerContext, listen: false).startApp();
+    }catch(e){
+
+    }
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBarMobile(context),
-      endDrawer: CustomEndDrawer(),
       body: Column(
         children: [
           mainBarButton(),
