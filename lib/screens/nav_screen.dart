@@ -90,38 +90,35 @@ class _NavScreenState extends State<NavScreen> {
                     ),
                   ),
                   Expanded(child: SizedBox(width: double.maxFinite)),
-                  Padding(
-                    padding: isLeft
-                        ? EdgeInsets.only(bottom: 5.0)
-                        : EdgeInsets.only(bottom: 10.0),
-                    child: InkWell(
-                      child: Icon(
-                        Icons.notifications_outlined,
-                        size: 30.0,
-                        color: Colors.white,
-                      ),
-                      onTap: () async {
-                        AlertDialog aDI = AlertDialog(
-                          insetPadding: EdgeInsets.symmetric(vertical: 30),
-                          backgroundColor: Colors.white70.withOpacity(0.1),
-                          elevation: double.maxFinite,
-                          contentPadding: EdgeInsets.all(0),
-                          content: NotificationsScreen(),
-                        );
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          barrierColor: Colors.black.withOpacity(0.6),
-                          builder: (context) => aDI,
-                        );
-                        print("notifications");
-                        MyBuildAlertDialog(context, NotificationsScreen());
-
-
-                        // Navigator.push(ctxScaffold, MaterialPageRoute(builder: (BuildContext context) => NotificationsScreen()));
-                      },
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: isLeft
+                  //       ? EdgeInsets.only(bottom: 5.0)
+                  //       : EdgeInsets.only(bottom: 10.0),
+                  //   child: InkWell(
+                  //     child: Icon(
+                  //       Icons.notifications_outlined,
+                  //       size: 30.0,
+                  //       color: Colors.white,
+                  //     ),
+                  //     onTap: () async {
+                  //       AlertDialog aDI = AlertDialog(
+                  //         insetPadding: EdgeInsets.symmetric(vertical: 30),
+                  //         backgroundColor: Colors.white70.withOpacity(0.1),
+                  //         elevation: double.maxFinite,
+                  //         contentPadding: EdgeInsets.all(0),
+                  //         content: NotificationsScreen(),
+                  //       );
+                  //       showDialog(
+                  //         context: context,
+                  //         barrierDismissible: false,
+                  //         barrierColor: Colors.black.withOpacity(0.6),
+                  //         builder: (context) => aDI,
+                  //       );
+                  //       print("notifications");
+                  //       MyBuildAlertDialog(context, NotificationsScreen());
+                  //     },
+                  //   ),
+                  // ),
                   SizedBox(width: 38.0),
                 ],
               ),
@@ -172,27 +169,27 @@ class _NavScreenState extends State<NavScreen> {
                     0,
                   ),
                 ),
-                Expanded(
-                  flex: 2,
-                  child: columnX(
-                    _selectedIndexScreen == 1 ? Icons.explore : Icons.explore_outlined,
-                   isLeft ? "Explore" : "المستكشف",
-                    1,
-                  ),
-                ),
+                // Expanded(
+                //   flex: 2,
+                //   child: columnX(
+                //     _selectedIndexScreen == 1 ? Icons.explore : Icons.explore_outlined,
+                //    isLeft ? "Explore" : "المستكشف",
+                //     1,
+                //   ),
+                // ),
                 //Location Floating Action Button
                 Expanded(
                   flex: 1,
                   child: SizedBox(width: 1),
                 ),
-                Expanded(
-                  flex: 2,
-                  child: columnX(
-                    _selectedIndexScreen == 3 ? Icons.message : Icons.message_outlined,
-                  isLeft ? "Message" : "الرسائل",
-                    3,
-                  ),
-                ),
+                // Expanded(
+                //   flex: 2,
+                //   child: columnX(
+                //     _selectedIndexScreen == 3 ? Icons.message : Icons.message_outlined,
+                //   isLeft ? "Message" : "الرسائل",
+                //     3,
+                //   ),
+                // ),
                 Expanded(
                   flex: 2,
                   child: columnX(

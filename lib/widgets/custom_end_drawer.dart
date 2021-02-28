@@ -93,14 +93,21 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                       child: ListView(
                         padding: EdgeInsets.zero,
                         children: <Widget>[
-                          if (Provider.of<UserInformation>(providerContext, listen: true).token == null)
+                          if (Provider.of<UserInformation>(providerContext,
+                                      listen: true)
+                                  .token ==
+                              null)
                             buildListTile(
                                 context,
                                 isLeft
                                     ? "SingUp Create New Account"
                                     : "إنشاء حساب جديد",
+                                Icons.create_outlined,
                                 SingUpScreen()),
-                          if (Provider.of<UserInformation>(providerContext, listen: true).token == null)
+                          if (Provider.of<UserInformation>(providerContext,
+                                      listen: true)
+                                  .token ==
+                              null)
                             myDivider(),
                           Provider.of<UserInformation>(providerContext,
                                           listen: true)
@@ -109,11 +116,12 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                               ? buildListTile(
                                   context,
                                   isLeft ? "Sing In" : "تسجيل الدخول",
+                                  Icons.login,
                                   SingInScreen())
                               : ListTile(
                                   title: myText(
                                       isLeft ? "Log out" : "تسجيل الخروج"),
-                                  trailing: Icon(Icons.navigate_next),
+                                  trailing: Icon(Icons.directions_run),
                                   onTap: () async {
                                     try {
                                       await Provider.of<UserInformation>(
@@ -137,10 +145,14 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                               isLeft
                                   ? "Treaty to use service"
                                   : "معاهدة الإستخدام",
+                              Icons.sd_card_outlined,
                               TreatyToUseService()),
                           myDivider(),
-                          buildListTile(context,
-                              isLeft ? "Call Us" : "إتصل بنا", CallUsScreen()),
+                          buildListTile(
+                              context,
+                              isLeft ? "Call Us" : "إتصل بنا",
+                              Icons.call,
+                              CallUsScreen()),
                           myDivider(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -178,10 +190,11 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
   }
 }
 
-ListTile buildListTile(BuildContext context, String title, Widget nextPage) {
+ListTile buildListTile(
+    BuildContext context, String title, IconData icon, Widget nextPage) {
   return ListTile(
     title: myText(title),
-    trailing: Icon(Icons.navigate_next),
+    trailing: Icon(icon),
     onTap: () {
       AlertDialog aDI = AlertDialog(
         insetPadding: EdgeInsets.all(20),
