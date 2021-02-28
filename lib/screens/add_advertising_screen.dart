@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:longmarket/models/models.dart';
+import 'package:provider/provider.dart';
 
 import '../config/config.dart';
 import '../widgets/widgets.dart';
@@ -164,7 +166,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
                                   ),
                                 ],
                               )
-                            : Text(""),
+                            : Expanded(child: Image.asset("images/download_image.png",height: 300,width: 400,)),
                       ],
                     ),
                     // Row(
@@ -564,61 +566,61 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
                                                 _isLoading = true;
                                               });
                                               try {
-                                                // Provider.of<Advertisement>(providerContext, listen: false).addAdvertising(
-                                                //     idAddedAdvertising:
-                                                //         Provider.of<UserInformation>(
-                                                //                 context,
-                                                //                 listen: false)
-                                                //             .idInDataBase,
-                                                //     title:
-                                                //         aaTitle.text.toString(),
-                                                //     details: aaDetails.text
-                                                //         .toString(),
-                                                //     city: selectedCityValue
-                                                //         .toString(),
-                                                //     department:
-                                                //         selectedDepartmentOne,
-                                                //     category: selectedCategory,
-                                                //     date: DateTime.now()
-                                                //         .toIso8601String(),
-                                                //     imageFile: image,
-                                                //     userNameAddedAdvertising:
-                                                //         Provider.of<UserInformation>(
-                                                //                 context,
-                                                //                 listen: false)
-                                                //             .username,
-                                                //     mobileNumber: aaMobileNumber
-                                                //         .text
-                                                //         .toString());
-                                                //
-                                                // setState(
-                                                //   () {
-                                                //     image = null;
-                                                //     aaTitle.text = "";
-                                                //     aaDetails.text = "";
-                                                //     selectedDepartmentOne =
-                                                //         departmentOne[0];
-                                                //     selectedCategory =
-                                                //         category[0];
-                                                //     aaMobileNumber.text = '';
-                                                //     selectedCityValue =
-                                                //         cityUser[0];
-                                                //
-                                                //     chBox = [
-                                                //       false,
-                                                //       false,
-                                                //       false,
-                                                //       false,
-                                                //       false
-                                                //     ];
-                                                //     _isLoading = false;
-                                                //   },
-                                                // );
-                                                // toastShow(
-                                                //     isLeft
-                                                //         ? "Done added and share"
-                                                //         : "تم إضافة الإعلان بنجاح",
-                                                //     context);
+                                              await  Provider.of<Advertisement>(providerContext, listen: false).addAdvertising(
+                                                    idAddedAdvertising:
+                                                        Provider.of<UserInformation>(
+                                                                context,
+                                                                listen: false)
+                                                            .idInDataBase,
+                                                    title:
+                                                        aaTitle.text.toString(),
+                                                    details: aaDetails.text
+                                                        .toString(),
+                                                    city: selectedCityValue
+                                                        .toString(),
+                                                    department:
+                                                        selectedDepartmentOne,
+                                                    category: selectedCategory,
+                                                    date: DateTime.now()
+                                                        .toIso8601String(),
+                                                    imageFile: image,
+                                                    userNameAddedAdvertising:
+                                                        Provider.of<UserInformation>(
+                                                                context,
+                                                                listen: false)
+                                                            .username,
+                                                    mobileNumber: aaMobileNumber
+                                                        .text
+                                                        .toString());
+
+                                                setState(
+                                                  () {
+                                                    image = null;
+                                                    aaTitle.text = "";
+                                                    aaDetails.text = "";
+                                                    selectedDepartmentOne =
+                                                        departmentOne[0];
+                                                    selectedCategory =
+                                                        category[0];
+                                                    aaMobileNumber.text = '';
+                                                    selectedCityValue =
+                                                        cityUser[0];
+
+                                                    chBox = [
+                                                      false,
+                                                      false,
+                                                      false,
+                                                      false,
+                                                      false
+                                                    ];
+                                                    _isLoading = false;
+                                                  },
+                                                );
+                                                toastShow(
+                                                    isLeft
+                                                        ? "Done added and share"
+                                                        : "تم إضافة الإعلان بنجاح",
+                                                    context);
                                               } catch (error) {
                                                 setState(() {
                                                   _isLoading = false;

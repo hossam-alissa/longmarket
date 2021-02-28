@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../screens/screens.dart';
 import '../screens/nav_screen.dart';
 import '../models/models.dart';
+import 'config/config.dart';
 
 void main()  async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Long Market',
+      title: isLeft ? 'Long Market' : "السوق الطويل",
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
