@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:longmarket/helper/helper.dart';
 import 'package:provider/provider.dart';
 
 import '../config/config.dart';
@@ -162,6 +163,7 @@ class _SingInScreenState extends State<SingInScreen> {
                                     : "تم إرسال رسالة إلى بريدك الإلكتروني،قم بفتح الرابط وقم بتغير كلمة السر",
                                 context);
                           }catch(e){
+                            toastShow(errorExceptionFireBase(e.toString()), context);
                             print(e);
                           }
 
@@ -177,7 +179,6 @@ class _SingInScreenState extends State<SingInScreen> {
                           if (passwordUser.text != "") {
                             if (passwordUser.text.length >= 8) {
                               print("Sing IN");
-
                               try {
                                 await Provider.of<UserInformation>(
                                         providerContext,
@@ -193,6 +194,7 @@ class _SingInScreenState extends State<SingInScreen> {
                                   ModalRoute.withName('/'),
                                 );
                               } catch (e) {
+                                toastShow(errorExceptionFireBase(e.toString()), context);
                                 print(e);
                               }
                             } else {

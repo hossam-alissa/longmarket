@@ -4,6 +4,7 @@ import '../config/config.dart';
 import '../main.dart';
 import '../widgets/widgets.dart';
 import '../models/models.dart';
+import '../helper/helper.dart';
 
 class SingUpScreen extends StatefulWidget {
   @override
@@ -200,6 +201,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                           ModalRoute.withName('/'),
                                         );
                                       } catch (e) {
+                                        toastShow(errorExceptionFireBase(e.toString()), context);
                                         print(e.toString());
                                       }
                                     } else {

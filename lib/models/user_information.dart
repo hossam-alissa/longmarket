@@ -76,6 +76,7 @@ class UserInformation with ChangeNotifier {
       } catch (error) {
         print("+++++ +++++ error in user information sendEmailVerification");
         print(error);
+        throw error;
       }
 
       this.idInDataBase = userCredential.user.uid;

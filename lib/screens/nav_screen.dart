@@ -1,9 +1,6 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:longmarket/screens/notifications_screen.dart';
-import 'package:longmarket/widgets/widgets.dart';
 
+import '../widgets/widgets.dart';
 import '../screens/screens.dart';
 import '../config/config.dart';
 
