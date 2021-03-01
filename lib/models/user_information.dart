@@ -16,6 +16,7 @@ class UserInformation with ChangeNotifier {
   String secondName;
   String lastName;
   String city;
+  bool validation;
   String _token;
   DateTime _expiryDate;
 
@@ -88,6 +89,7 @@ class UserInformation with ChangeNotifier {
       this.secondName = 'New User S';
       this.lastName = 'New User L';
       this.city = "New User City";
+      this.validation = false;
       this._token = await userCredential.user.getIdToken();
       this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
 
@@ -101,6 +103,7 @@ class UserInformation with ChangeNotifier {
       _userInfoInSharedPref.setString('firstName', firstName);
       _userInfoInSharedPref.setString('secondName', secondName);
       _userInfoInSharedPref.setString('lastName', lastName);
+      _userInfoInSharedPref.setBool("validation", validation);
       _userInfoInSharedPref.setString('city', city);
       _userInfoInSharedPref.setString('Token', _token);
       _userInfoInSharedPref.setString(
@@ -157,6 +160,7 @@ class UserInformation with ChangeNotifier {
         this.idInDataBase = userCredential.user.uid;
         this.email  = emailUserName;
         this._passwordUserName = passwordUser;
+        this.validation =  userCredential.user.emailVerified;
         this._token = await userCredential.user.getIdToken();
         this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
         SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
@@ -169,6 +173,7 @@ class UserInformation with ChangeNotifier {
         _userInfoInSharedPref.setString('secondName', 'New User S');
         _userInfoInSharedPref.setString('lastName', 'New User L');
         _userInfoInSharedPref.setString('city', 'New User City');
+        _userInfoInSharedPref.setBool("validation", validation);
         _userInfoInSharedPref.setString('Token', _token);
         _userInfoInSharedPref.setString(
             'expiryDate', _expiryDate.toIso8601String());
@@ -200,6 +205,7 @@ class UserInformation with ChangeNotifier {
           secondName = _userInfoInSharedPref.getString('secondName');
           lastName = _userInfoInSharedPref.getString('lastName');
           city = _userInfoInSharedPref.getString('city');
+          validation = _userInfoInSharedPref.getBool("validation");
           _token = _userInfoInSharedPref.getString('Token');
           _expiryDate =
               DateTime.tryParse(_userInfoInSharedPref.getString('expiryDate'));
@@ -245,6 +251,7 @@ class UserInformation with ChangeNotifier {
       city = null;
       _token = null;
       _expiryDate = null;
+      validation = null;
 
       SharedPreferences _userInfoInSharedPref =
           await SharedPreferences.getInstance();
