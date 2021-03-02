@@ -133,7 +133,13 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                                               ? "Done, Log out"
                                               : "تم تسجيل الخروج",
                                           context);
-                                      Navigator.pop(context);
+                                      Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                MyApp()),
+                                        ModalRoute.withName('/'),
+                                      );
                                     } catch (e) {
                                       print(e.toString());
                                     }

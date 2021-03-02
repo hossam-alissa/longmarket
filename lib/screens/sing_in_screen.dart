@@ -186,13 +186,16 @@ class _SingInScreenState extends State<SingInScreen> {
                                     .singInInDataBase(
                                         emailUserName: emailUserName.text,
                                         passwordUser: passwordUser.text);
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          MyApp()),
-                                  ModalRoute.withName('/'),
-                                );
+                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        MyApp()) , (route) => false);
+                                // Navigator.pushAndRemoveUntil(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (BuildContext context) =>
+                                //           MyApp()),
+                                //   ModalRoute.withName('/'),
+                                // );
                               } catch (e) {
                                 toastShow(errorExceptionFireBase(e.toString()), context);
                                 print(e);

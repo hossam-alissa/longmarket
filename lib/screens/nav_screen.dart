@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:longmarket/models/models.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/widgets.dart';
 import '../screens/screens.dart';
 import '../config/config.dart';
-
 
 class NavScreen extends StatefulWidget {
   @override
@@ -19,11 +20,24 @@ class _NavScreenState extends State<NavScreen> {
     MessageScreen(),
     AccountScreen(),
   ];
+
   onTapped(int index) async {
-    // if (index == 0) {
+    if (index == 0) {
       setState(() {
         _selectedIndexScreen = index;
       });
+    } else if (index >= 2 && index <= 4 && Provider.of<UserInformation>(providerContext, listen: false).isAuth == true) {
+        setState(() {
+          _selectedIndexScreen = index;
+        });
+    }
+       else {
+        toastShow(isLeft ? 'Please SingUp or SingIn' : 'قم بستجيل الدخول أو إنشاء حساب جديد', context);
+
+    }
+
+    // if (index == 0) {
+
     //   await Provider.of<UserInformation>(context, listen: false).startApp();
     // } else if (Provider.of<UserInformation>(context, listen: false).token != null) {
     //   setState(() {
@@ -44,6 +58,7 @@ class _NavScreenState extends State<NavScreen> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -87,35 +102,43 @@ class _NavScreenState extends State<NavScreen> {
                     ),
                   ),
                   Expanded(child: SizedBox(width: double.maxFinite)),
-                  Padding(
-                    padding: isLeft
-                        ? EdgeInsets.only(bottom: 5.0)
-                        : EdgeInsets.only(bottom: 10.0),
-                    child: InkWell(
-                      child: Icon(
-                        Icons.notifications_outlined,
-                        size: 30.0,
-                        color: Colors.white,
-                      ),
-                      onTap: () async {
-                        AlertDialog aDI = AlertDialog(
-                          insetPadding: EdgeInsets.only(top: 52.0),
-                          backgroundColor: Colors.white70.withOpacity(0.1),
-                          elevation: double.maxFinite,
-                          contentPadding: EdgeInsets.all(0),
-                          content: NotificationsScreen(),
-                        );
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          barrierColor: Colors.black.withOpacity(0.6),
-                          builder: (context) => aDI,
-                        );
-                        print("notifications");
-                        // MyBuildAlertDialog(context, NotificationsScreen());
-                      },
-                    ),
-                  ),
+                  // if (Provider.of<UserInformation>(providerContext,
+                  //             listen: true)
+                  //         .isAuth ==
+                  //     true)
+                  //   Padding(
+                  //     padding: isLeft
+                  //         ? EdgeInsets.only(bottom: 5.0)
+                  //         : EdgeInsets.only(bottom: 10.0),
+                  //     child: InkWell(
+                  //       child: Icon(
+                  //         Icons.notifications_outlined,
+                  //         size: 30.0,
+                  //         color: Colors.white,
+                  //       ),
+                  //       onTap: () async {
+                  //         AlertDialog aDI = AlertDialog(
+                  //           insetPadding: EdgeInsets.only(top: 50.0),
+                  //           backgroundColor: Colors.white70.withOpacity(0.1),
+                  //           elevation: double.maxFinite,
+                  //           contentPadding: EdgeInsets.all(0),
+                  //           content: NotificationsScreen(),
+                  //         );
+                  //         showDialog(
+                  //           context: context,
+                  //           barrierDismissible: false,
+                  //           barrierColor: Colors.black.withOpacity(0.6),
+                  //           builder: (context) => aDI,
+                  //         );
+                  //         print("notifications" +
+                  //             Provider.of<UserInformation>(providerContext,
+                  //                     listen: false)
+                  //                 .isAuth
+                  //                 .toString());
+                  //         // MyBuildAlertDialog(context, NotificationsScreen());
+                  //       },
+                  //     ),
+                  //   ),
                   SizedBox(width: 46.0),
                 ],
               ),
@@ -126,7 +149,7 @@ class _NavScreenState extends State<NavScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-              onTapped(2);
+            onTapped(2);
           },
           shape: _CustomBorder(),
           backgroundColor: _selectedIndexScreen == 2
@@ -161,8 +184,10 @@ class _NavScreenState extends State<NavScreen> {
                 Expanded(
                   flex: 2,
                   child: columnX(
-                    _selectedIndexScreen == 0 ? Icons.home : Icons.home_outlined,
-                      isLeft ? "Home": "الرئيسية",
+                    _selectedIndexScreen == 0
+                        ? Icons.home
+                        : Icons.home_outlined,
+                    isLeft ? "Home" : "الرئيسية",
                     0,
                   ),
                 ),
@@ -190,8 +215,10 @@ class _NavScreenState extends State<NavScreen> {
                 Expanded(
                   flex: 2,
                   child: columnX(
-                    _selectedIndexScreen == 4 ? Icons.person : Icons.person_outline,
-                    isLeft ? "Account": "حسابك",
+                    _selectedIndexScreen == 4
+                        ? Icons.person
+                        : Icons.person_outline,
+                    isLeft ? "Account" : "حسابك",
                     4,
                   ),
                 ),
@@ -202,6 +229,7 @@ class _NavScreenState extends State<NavScreen> {
       ),
     );
   }
+
   InkWell columnX(iconType, String name, int screenNumber) {
     return InkWell(
       onTap: () => onTapped(screenNumber),

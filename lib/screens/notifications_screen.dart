@@ -10,7 +10,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.red,
-      height: 800,
       width: double.maxFinite,
       );
   }
