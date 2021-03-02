@@ -87,36 +87,36 @@ class _NavScreenState extends State<NavScreen> {
                     ),
                   ),
                   Expanded(child: SizedBox(width: double.maxFinite)),
-                  // Padding(
-                  //   padding: isLeft
-                  //       ? EdgeInsets.only(bottom: 5.0)
-                  //       : EdgeInsets.only(bottom: 10.0),
-                  //   child: InkWell(
-                  //     child: Icon(
-                  //       Icons.notifications_outlined,
-                  //       size: 30.0,
-                  //       color: Colors.white,
-                  //     ),
-                  //     onTap: () async {
-                  //       AlertDialog aDI = AlertDialog(
-                  //         insetPadding: EdgeInsets.symmetric(vertical: 30),
-                  //         backgroundColor: Colors.white70.withOpacity(0.1),
-                  //         elevation: double.maxFinite,
-                  //         contentPadding: EdgeInsets.all(0),
-                  //         content: NotificationsScreen(),
-                  //       );
-                  //       showDialog(
-                  //         context: context,
-                  //         barrierDismissible: false,
-                  //         barrierColor: Colors.black.withOpacity(0.6),
-                  //         builder: (context) => aDI,
-                  //       );
-                  //       print("notifications");
-                  //       MyBuildAlertDialog(context, NotificationsScreen());
-                  //     },
-                  //   ),
-                  // ),
-                  SizedBox(width: 38.0),
+                  Padding(
+                    padding: isLeft
+                        ? EdgeInsets.only(bottom: 5.0)
+                        : EdgeInsets.only(bottom: 10.0),
+                    child: InkWell(
+                      child: Icon(
+                        Icons.notifications_outlined,
+                        size: 30.0,
+                        color: Colors.white,
+                      ),
+                      onTap: () async {
+                        AlertDialog aDI = AlertDialog(
+                          insetPadding: EdgeInsets.only(top: 52.0),
+                          backgroundColor: Colors.white70.withOpacity(0.1),
+                          elevation: double.maxFinite,
+                          contentPadding: EdgeInsets.all(0),
+                          content: NotificationsScreen(),
+                        );
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          barrierColor: Colors.black.withOpacity(0.6),
+                          builder: (context) => aDI,
+                        );
+                        print("notifications");
+                        // MyBuildAlertDialog(context, NotificationsScreen());
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 46.0),
                 ],
               ),
             ),

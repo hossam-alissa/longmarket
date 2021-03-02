@@ -13,7 +13,7 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  List<Advertising> items =
+  List<Advertising> advertisingList =
       Provider.of<Advertisement>(providerContext, listen: false)
           .listAdvertisingForUser;
 
@@ -31,204 +31,15 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
-        itemCount: items.length + 2,
+        itemCount: advertisingList.length + 2,
         scrollDirection: Axis.vertical,
         itemBuilder: (ctx, index) {
           if (index == 0)
-            return Container(
-              height: 70.0,
-              width: double.maxFinite,
-              color: Colors.red,
-              child: Row(
-                children: [],
-              ),
-            );
-          else if (index < items.length + 1)
-            return GestureDetector(
-              onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      ShowAdvertisingScreen(advertising: items[index - 1]),
-                ),
-              ),
-              child: Container(
-                height: 350.0,
-                margin: EdgeInsets.only(bottom: 7.0),
-                // color: Colors.green,
-                child: Column(
-                  children: [
-                    Container(
-                      height: 220.0,
-                      width: double.maxFinite,
-                      margin: const EdgeInsets.fromLTRB(17.0, 10, 17.0, 0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        border: Border.all(color: Colors.black45, width: 1.5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            offset: Offset(0, 2),
-                            blurRadius: 6.0,
-                          ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          13.0,
-                        ),
-                        child: Hero(
-                          tag: items[index - 1].idAdvertising,
-                          child: Image.network(
-                            items[index - 1].imgUrl,
-                            height: 120.0,
-                            width: 120.0,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 32.0),
-                      padding:
-                      EdgeInsets.symmetric(horizontal: 15, vertical: 4.0),
-                      height: 110.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(0),
-                          topRight: Radius.circular(0),
-                          bottomLeft: Radius.circular(15.0),
-                          bottomRight: Radius.circular(15.0),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            offset: Offset(0, 2),
-                            blurRadius: 6.0,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                items[index - 1].title,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          myDivider(),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Text(
-                                  items[index - 1].userNameAddedAdvertising,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                Expanded(child: SizedBox()),
-                                // VerticalDivider(color: Colors.black54,),
-                                Container(
-                                  color: Colors.white,
-                                  height: 20.0,
-                                  width: 70.0,
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.add_location,
-                                        size: 14,
-                                      ),
-                                      Text(
-                                        "${items[index - 1].city.toString()}",
-                                        overflow: TextOverflow.visible,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // Text(getTranslated(context, "city")),
-                              ],
-                            ),
-                          ),
-                          myDivider(),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Container(
-                                  color: Colors.white,
-                                  height: 20.0,
-                                  width: 80,
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.article, size: 14),
-                                      Expanded(
-                                        child: Text(
-                                          "${items[index - 1].department}",
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                VerticalDivider(
-                                  color: Colors.black54,
-                                ),
-                                Container(
-                                  color: Colors.white,
-                                  height: 20.0,
-                                  width: 80,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Icons.article_outlined, size: 14),
-                                      Expanded(
-                                        child: Text(
-                                          "${items[index - 1].category}",
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                VerticalDivider(
-                                  color: Colors.black54,
-                                ),
-                                Container(
-                                  color: Colors.white,
-                                  height: 20.0,
-                                  width: 70,
-                                  child: Row(
-                                    children: [
-                                      Icon(Icons.access_time, size: 14),
-                                      Expanded(
-                                        child: Text(
-                                          "${TimeAgo.timeAgoSinceDate(items[index - 1].date).toString()}",
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          else
+            return _CustomHeader();
+          else if (index < advertisingList.length + 1) {
+            final Advertising advertising = advertisingList[index - 1];
+            return _CustomBody(advertising: advertising);
+          } else
             return Container(
               height: 70.0,
               width: double.maxFinite,
@@ -239,218 +50,292 @@ class _AccountScreenState extends State<AccountScreen> {
             );
         },
       ),
-      // Column(
-      //   children: [
-      //     Container(
-      //       height: 70.0,
-      //       width: double.maxFinite,
-      //       color: Colors.red,
-      //       child: Row(
-      //         children: [
-      //         ],
-      //       ),
-      //     ),
-      //     Expanded(
-      //       child: Container(
-      //         height: 1000,
-      //           child: _myBigList()),
-      //     ),
-      //   ],
-      // ),
     );
   }
+}
 
-// Widget _myBigList() {
-//   // List<Advertising> items = Provider.of<Advertisement>(providerContext, listen: false).listAdvertisingForUser;
-//   var listView;
-//   listView = ListView.builder(
-//     itemCount: items.length,
-//     scrollDirection: Axis.vertical,
-//     itemBuilder: (ctx, countNum) {
-//       return GestureDetector(
-//         onTap: () => Navigator.push(
-//           context,
-//           MaterialPageRoute(
-//             builder: (_) =>
-//                 ShowAdvertisingScreen(advertising: items[countNum]),
-//           ),
-//         ),
-//         child: Container(
-//           height: 350.0,
-//           margin: EdgeInsets.only(bottom: 7.0),
-//           // color: Colors.green,
-//           child: Column(
-//             children: [
-//               Container(
-//                 height: 220.0,
-//                 width: double.maxFinite,
-//                 margin: const EdgeInsets.fromLTRB(17.0, 10, 17.0, 0),
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.circular(15.0),
-//                   border: Border.all(color: Colors.black45, width: 1.5),
-//                   boxShadow: [
-//                     BoxShadow(
-//                       color: Colors.black12,
-//                       offset: Offset(0, 2),
-//                       blurRadius: 6.0,
-//                     ),
-//                   ],
-//                 ),
-//                 child: ClipRRect(
-//                   borderRadius: BorderRadius.circular(
-//                     13.0,
-//                   ),
-//                   child: Hero(
-//                     tag: items[countNum].idAdvertising,
-//                     child: Image.network(
-//                       items[countNum].imgUrl,
-//                       height: 120.0,
-//                       width: 120.0,
-//                       fit: BoxFit.cover,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               Container(
-//                 margin: const EdgeInsets.symmetric(horizontal: 32.0),
-//                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4.0),
-//                 height: 110.0,
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.only(
-//                     topLeft: Radius.circular(0),
-//                     topRight: Radius.circular(0),
-//                     bottomLeft: Radius.circular(15.0),
-//                     bottomRight: Radius.circular(15.0),
-//                   ),
-//                   boxShadow: [
-//                     BoxShadow(
-//                       color: Colors.black12,
-//                       offset: Offset(0, 2),
-//                       blurRadius: 6.0,
-//                     ),
-//                   ],
-//                 ),
-//                 child: Column(
-//                   children: [
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.start,
-//                       children: [
-//                         Text(
-//                           items[countNum].title,
-//                           overflow: TextOverflow.ellipsis,
-//                           style: TextStyle(
-//                             fontSize: 16.0,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                     myDivider(),
-//                     Expanded(
-//                       child: Row(
-//                         children: [
-//                           Text(
-//                             items[countNum].userNameAddedAdvertising,
-//                             overflow: TextOverflow.ellipsis,
-//                             style: TextStyle(
-//                                 fontSize: 14.0, fontWeight: FontWeight.w500),
-//                           ),
-//                           Expanded(child: SizedBox()),
-//                           // VerticalDivider(color: Colors.black54,),
-//                           Container(
-//                             color: Colors.white,
-//                             height: 20.0,
-//                             width: 70.0,
-//                             child: Row(
-//                               children: [
-//                                 Icon(
-//                                   Icons.add_location,
-//                                   size: 14,
-//                                 ),
-//                                 Text(
-//                                   "${items[countNum].city.toString()}",
-//                                   overflow: TextOverflow.visible,
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                           // Text(getTranslated(context, "city")),
-//                         ],
-//                       ),
-//                     ),
-//                     myDivider(),
-//                     Expanded(
-//                       child: Row(
-//                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                         children: [
-//                           Container(
-//                             color: Colors.white,
-//                             height: 20.0,
-//                             width: 80,
-//                             child: Row(
-//                               children: [
-//                                 Icon(Icons.article, size: 14),
-//                                 Expanded(
-//                                   child: Text(
-//                                     "${items[countNum].department}",
-//                                     overflow: TextOverflow.ellipsis,
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                           VerticalDivider(
-//                             color: Colors.black54,
-//                           ),
-//                           Container(
-//                             color: Colors.white,
-//                             height: 20.0,
-//                             width: 80,
-//                             child: Row(
-//                               mainAxisAlignment: MainAxisAlignment.center,
-//                               children: [
-//                                 Icon(Icons.article_outlined, size: 14),
-//                                 Expanded(
-//                                   child: Text(
-//                                     "${items[countNum].category}",
-//                                     overflow: TextOverflow.ellipsis,
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                           VerticalDivider(
-//                             color: Colors.black54,
-//                           ),
-//                           Container(
-//                             color: Colors.white,
-//                             height: 20.0,
-//                             width: 70,
-//                             child: Row(
-//                               children: [
-//                                 Icon(Icons.access_time, size: 14),
-//                                 Expanded(
-//                                   child: Text(
-//                                     "${TimeAgo.timeAgoSinceDate(items[countNum].date).toString()}",
-//                                     overflow: TextOverflow.ellipsis,
-//                                   ),
-//                                 ),
-//                               ],
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       );
-//     },
-//   );
-//   return listView;
-// }
+class _CustomHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(left: 16.0, right: 16.0),
+      height: 80.0,
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.9),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            offset: Offset(2, 2),
+            blurRadius: 1.0,
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 67.0,
+            width: 67.0,
+            alignment: Alignment.center,
+           decoration: BoxDecoration(
+             color: Colors.white,
+             borderRadius: BorderRadius.circular(40.0),
+             boxShadow: [BoxShadow(
+               color: Colors.lightBlueAccent,
+               blurRadius: 4.0,
+             )],
+           ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(40.0,),
+              child: Image(
+                  height: 67.0,
+                  width: 67.0,
+                  image: AssetImage('images/profile_image.png'),
+                  fit: BoxFit.cover),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    Provider.of<UserInformation>(providerContext, listen: false)
+                        .username,
+                    style:
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  // Text(
+                  //   "Rate",
+                  //   style:
+                  //   TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                ],
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.settings),
+            iconSize: 30.0,
+            onPressed: () {
+              print("Setting");
+
+                AlertDialog aDI = AlertDialog(
+                  insetPadding: EdgeInsets.all(20),
+                  backgroundColor: Colors.white70.withOpacity(0.1),
+                  elevation: double.maxFinite,
+                  contentPadding: EdgeInsets.all(0),
+                  content: EditUserInformation(),
+                );
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  barrierColor: Colors.black.withOpacity(0.6),
+                  builder: (context) => aDI,
+                );
+
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CustomBody extends StatelessWidget {
+  final Advertising advertising;
+
+  _CustomBody({
+    @required this.advertising,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ShowAdvertisingScreen(advertising: advertising),
+        ),
+      ),
+      child: Container(
+        height: 350.0,
+        margin: EdgeInsets.only(bottom: 7.0),
+        // color: Colors.green,
+        child: Column(
+          children: [
+            Container(
+              height: 220.0,
+              width: double.maxFinite,
+              margin: const EdgeInsets.fromLTRB(17.0, 10, 17.0, 0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15.0),
+                border: Border.all(color: Colors.black45, width: 1.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0, 2),
+                    blurRadius: 6.0,
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  13.0,
+                ),
+                child: Hero(
+                  tag: advertising.idAdvertising,
+                  child: Image.network(
+                    advertising.imgUrl,
+                    height: 120.0,
+                    width: 120.0,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 32.0),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4.0),
+              height: 110.0,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(0),
+                  topRight: Radius.circular(0),
+                  bottomLeft: Radius.circular(15.0),
+                  bottomRight: Radius.circular(15.0),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0, 2),
+                    blurRadius: 6.0,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        advertising.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  myDivider(),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Text(
+                          advertising.userNameAddedAdvertising,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 14.0, fontWeight: FontWeight.w500),
+                        ),
+                        Expanded(child: SizedBox()),
+                        // VerticalDivider(color: Colors.black54,),
+                        Container(
+                          color: Colors.white,
+                          height: 20.0,
+                          width: 70.0,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.add_location,
+                                size: 14,
+                              ),
+                              Text(
+                                "${advertising.city.toString()}",
+                                overflow: TextOverflow.visible,
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Text(getTranslated(context, "city")),
+                      ],
+                    ),
+                  ),
+                  myDivider(),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          height: 20.0,
+                          width: 80,
+                          child: Row(
+                            children: [
+                              Icon(Icons.article, size: 14),
+                              Expanded(
+                                child: Text(
+                                  "${advertising.department}",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        VerticalDivider(
+                          color: Colors.black54,
+                        ),
+                        Container(
+                          color: Colors.white,
+                          height: 20.0,
+                          width: 80,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.article_outlined, size: 14),
+                              Expanded(
+                                child: Text(
+                                  "${advertising.category}",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        VerticalDivider(
+                          color: Colors.black54,
+                        ),
+                        Container(
+                          color: Colors.white,
+                          height: 20.0,
+                          width: 70,
+                          child: Row(
+                            children: [
+                              Icon(Icons.access_time, size: 14),
+                              Expanded(
+                                child: Text(
+                                  "${TimeAgo.timeAgoSinceDate(advertising.date).toString()}",
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
