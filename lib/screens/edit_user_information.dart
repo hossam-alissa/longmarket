@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:longmarket/models/models.dart';
 import 'package:provider/provider.dart';
 import '../config/config.dart';
 import '../helper/helper.dart';
 import '../widgets/widgets.dart';
+import '../models/models.dart';
 
 class EditUserInformation extends StatefulWidget {
   @override
@@ -11,7 +11,6 @@ class EditUserInformation extends StatefulWidget {
 }
 
 class _EditUserInformationState extends State<EditUserInformation> {
-
   TextEditingController userName = new TextEditingController();
   TextEditingController mobileNumber = new TextEditingController();
   TextEditingController firstName = new TextEditingController();
@@ -24,11 +23,17 @@ class _EditUserInformationState extends State<EditUserInformation> {
 
   @override
   void initState() {
-    userName.text = Provider.of<UserInformation>(providerContext,listen: false).username;
-    mobileNumber.text = Provider.of<UserInformation>(providerContext,listen: false).mobileNumber;
-    firstName.text = Provider.of<UserInformation>(providerContext,listen: false).firstName;
-    secondName.text = Provider.of<UserInformation>(providerContext,listen: false).secondName;
-    lastName.text = Provider.of<UserInformation>(providerContext,listen: false).lastName;
+    userName.text =
+        Provider.of<UserInformation>(providerContext, listen: false).username;
+    mobileNumber.text =
+        Provider.of<UserInformation>(providerContext, listen: false)
+            .mobileNumber;
+    firstName.text =
+        Provider.of<UserInformation>(providerContext, listen: false).firstName;
+    secondName.text =
+        Provider.of<UserInformation>(providerContext, listen: false).secondName;
+    lastName.text =
+        Provider.of<UserInformation>(providerContext, listen: false).lastName;
     super.initState();
   }
 
@@ -217,6 +222,24 @@ class _EditUserInformationState extends State<EditUserInformation> {
                         ),
                         onPressed: () async {
                           print("Save Information");
+                          try{
+                            await Provider.of<UserInformation>(providerContext,
+                                listen: false)
+                                .editInformation(
+                              idInDataBase: Provider.of<UserInformation>(providerContext,listen: false).idInDataBase,
+                              userName: userName.text.toString(),
+                              mobileNumber: mobileNumber.text.toString(),
+                              firstName: firstName.text.toString(),
+                              secondName: secondName.text.toString(),
+                              lastName: lastName.text.toString(),
+                              city: selectedCityValue.toString(),
+                            );
+                            toastShow(isLeft ? "Done edit information" : "تم تعديل المعلومات", context);
+                          }catch(error){
+                            toastShow(isLeft ? "error" : "خطا", context);
+                            print(error);
+                          }
+
                         },
                       ),
                     ),

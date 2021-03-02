@@ -41,9 +41,8 @@ class _AccountScreenState extends State<AccountScreen> {
             return _CustomBody(advertising: advertising);
           } else
             return Container(
-              height: 70.0,
+              height: 27.0,
               width: double.maxFinite,
-              color: Colors.greenAccent,
               child: Row(
                 children: [],
               ),
@@ -77,16 +76,20 @@ class _CustomHeader extends StatelessWidget {
             height: 67.0,
             width: 67.0,
             alignment: Alignment.center,
-           decoration: BoxDecoration(
-             color: Colors.white,
-             borderRadius: BorderRadius.circular(40.0),
-             boxShadow: [BoxShadow(
-               color: Colors.lightBlueAccent,
-               blurRadius: 4.0,
-             )],
-           ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(40.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.lightBlueAccent,
+                  blurRadius: 4.0,
+                )
+              ],
+            ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(40.0,),
+              borderRadius: BorderRadius.circular(
+                40.0,
+              ),
               child: Image(
                   height: 67.0,
                   width: 67.0,
@@ -125,20 +128,19 @@ class _CustomHeader extends StatelessWidget {
             onPressed: () {
               print("Setting");
 
-                AlertDialog aDI = AlertDialog(
-                  insetPadding: EdgeInsets.all(20),
-                  backgroundColor: Colors.white70.withOpacity(0.1),
-                  elevation: double.maxFinite,
-                  contentPadding: EdgeInsets.all(0),
-                  content: EditUserInformation(),
-                );
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  barrierColor: Colors.black.withOpacity(0.6),
-                  builder: (context) => aDI,
-                );
-
+              AlertDialog aDI = AlertDialog(
+                insetPadding: EdgeInsets.all(20),
+                backgroundColor: Colors.white70.withOpacity(0.1),
+                elevation: double.maxFinite,
+                contentPadding: EdgeInsets.all(0),
+                content: EditUserInformation(),
+              );
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                barrierColor: Colors.black.withOpacity(0.6),
+                builder: (context) => aDI,
+              );
             },
           ),
         ],
@@ -224,13 +226,27 @@ class _CustomBody extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        advertising.title,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          advertising.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
+                      ),
+                      Container(
+                        height: 28,
+                        width: 28,
+                        child: IconButton(
+                          padding: const EdgeInsets.all(0.0),
+                            icon: Icon(Icons.delete_forever_outlined),
+                            color: Colors.red,
+                            iconSize: 32,
+                            onPressed: () {
+                              print("Delete ADV");
+                            }),
                       ),
                     ],
                   ),
