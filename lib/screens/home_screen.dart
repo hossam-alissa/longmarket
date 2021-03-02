@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Column(
         children: [
-          mainBarButton(),
           Expanded(child: myBigList(sortBy)),
         ],
       ),
@@ -93,46 +92,49 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget myBigList(String sort) {
-    List<Advertising> items;
+    List<Advertising> advertisingList;
     if (sort == "All" || sort == "الجميع") {
-      items = Provider.of<Advertisement>(context, listen: true).listAdvertising;
+      advertisingList = Provider.of<Advertisement>(context, listen: true).listAdvertising;
     }
     if (sort == "Cars" || sort == "سيارات") {
-      items = Provider.of<Advertisement>(context, listen: false)
+      advertisingList = Provider.of<Advertisement>(context, listen: false)
           .getListAdvertisingBySort("Cars", "سيارات");
     }
     if (sort == "Home" || sort == "عقارات") {
-      items = Provider.of<Advertisement>(context, listen: false)
+      advertisingList = Provider.of<Advertisement>(context, listen: false)
           .getListAdvertisingBySort("Home", "عقارات");
     }
     if (sort == "Mobile" || sort == "موبايلات") {
-      items = Provider.of<Advertisement>(context, listen: false)
+      advertisingList = Provider.of<Advertisement>(context, listen: false)
           .getListAdvertisingBySort("Mobile", "موبايلات");
     }
     if (sort == "Furniture" || sort == "مفروشات") {
-      items = Provider.of<Advertisement>(context, listen: false)
+      advertisingList = Provider.of<Advertisement>(context, listen: false)
           .getListAdvertisingBySort("Furniture", "مفروشات");
     }
     if (sort == "Electron" || sort == "الكترونيات") {
-      items = Provider.of<Advertisement>(context, listen: false)
+      advertisingList = Provider.of<Advertisement>(context, listen: false)
           .getListAdvertisingBySort("Electron", "الكترونيات");
     }
     if (sort == "Other" || sort == "آخرى") {
-      items = Provider.of<Advertisement>(context, listen: false)
+      advertisingList = Provider.of<Advertisement>(context, listen: false)
           .getListAdvertisingBySort("Other", "آخرى");
     }
 
     var listView;
     listView = ListView.builder(
-      itemCount: items.length,
+      itemCount: advertisingList.length + 1,
       scrollDirection: Axis.vertical,
-      itemBuilder: (ctx, countNum) {
+      itemBuilder: (ctx, index) {
+        if(index == 0 ){
+         return mainBarButton();
+        }
         return GestureDetector(
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) =>
-                  ShowAdvertisingScreen(advertising: items[countNum]),
+                  ShowAdvertisingScreen(advertising: advertisingList[index - 1]),
             ),
           ),
           child: Container(
@@ -161,9 +163,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       13.0,
                     ),
                     child: Hero(
-                      tag: items[countNum].idAdvertising,
+                      tag: advertisingList[index - 1].idAdvertising,
                       child: Image.network(
-                        items[countNum].imgUrl,
+                        advertisingList[index - 1].imgUrl,
                         height: 120.0,
                         width: 120.0,
                         fit: BoxFit.cover,
@@ -197,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            items[countNum].title,
+                            advertisingList[index - 1].title,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 16.0,
@@ -211,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             Text(
-                              items[countNum].userNameAddedAdvertising,
+                              advertisingList[index - 1].userNameAddedAdvertising,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 14.0, fontWeight: FontWeight.w500),
@@ -228,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Icons.add_location,
                                     size: 14,
                                   ),
-                                  Text("${items[countNum].city.toString()}",overflow: TextOverflow.visible,),
+                                  Text("${advertisingList[index - 1].city.toString()}",overflow: TextOverflow.visible,),
                                 ],
                               ),
                             ),
@@ -250,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Icon(Icons.article, size: 14),
                                   Expanded(
                                     child: Text(
-                                      "${items[countNum].department}",
+                                      "${advertisingList[index - 1].department}",
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -271,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Icon(Icons.article_outlined, size: 14),
                                   Expanded(
                                     child: Text(
-                                      "${items[countNum].category}",
+                                      "${advertisingList[index - 1].category}",
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -290,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Icon(Icons.access_time, size: 14),
                                   Expanded(
                                     child: Text(
-                                      "${TimeAgo.timeAgoSinceDate(items[countNum].date).toString()}",
+                                      "${TimeAgo.timeAgoSinceDate(advertisingList[index - 1].date).toString()}",
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
