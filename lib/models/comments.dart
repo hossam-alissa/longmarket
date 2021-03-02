@@ -177,11 +177,11 @@ class Comments with ChangeNotifier {
   }
 
   double sizeContainerBox() {
-    if (commentList.length == 1) return 60.0;
-    if (commentList.length == 2) return 120.0;
-    if (commentList.length == 3) return 180.0;
+    if (commentList.length == 1) return 63.0;
+    if (commentList.length == 2) return 127.0;
+    if (commentList.length == 3) return 190.0;
     if (commentList.length >= 4)
-      return 240.0;
+      return 255.0;
     else
       return 0.0;
   }

@@ -37,7 +37,7 @@ class Advertisement with ChangeNotifier {
   List<Advertising> listAdvertising = [];
   List<Advertising> listAdvertisingForUser = [];
 
-  void getData(String userID) {
+  void getAdvertisingForUser(String userID) {
     listAdvertisingForUser.clear();
     listAdvertising.forEach((element) {
       if (element.idAddedAdvertising == userID) {
@@ -160,7 +160,6 @@ class Advertisement with ChangeNotifier {
           .child('advertisingPhoto')
           .child('${json.decode(res.body)['name']}.jpg');
       TaskSnapshot x =  await ref.putFile(imageFile);
-      // String newUrlImage = await ref.getDownloadURL().toString();
       String newUrlImage =  (await x.ref.getDownloadURL()).toString();
 
       try {

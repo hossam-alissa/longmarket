@@ -29,15 +29,14 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
   String timeAgo = "";
   String mobileNumber = "";
 
-  getData() async {
+  _getData() async {
     try {
-      Provider.of<Comments>(providerContext, listen: false).commentList.clear();
-      await Provider.of<Comments>(providerContext, listen: false)
-          .fetchData(idAdvertising: widget.advertising.idAdvertising);
+        Provider.of<Comments>(providerContext, listen: false).commentList.clear();
+        await Provider.of<Comments>(providerContext, listen: false).fetchData(idAdvertising: widget.advertising.idAdvertising);
+        setState(() {
 
+        });
       // await Provider.of<UserInformation>(providerContext, listen: false).startApp();
-
-
     } catch (e) {
       toastShow(
           isLeft
@@ -59,8 +58,9 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
       imgUrlList.clear();
       imgUrlList.add(widget.advertising.imgUrl.toString());
       mobileNumber = widget.advertising.mobileNumber;
+
     });
-    getData();
+    _getData();
     super.initState();
   }
 
@@ -236,7 +236,7 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                               Provider.of<Comments>(providerContext, listen: true)
                                   .sizeContainerBox(),
                           width: double.maxFinite,
-                          child: myBigList(),
+                          child: _myBigList(),
                         ),
                       ),
                     ],
@@ -499,7 +499,7 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
     return items;
   }
 
-  Widget myBigList() {
+  Widget _myBigList() {
     int lengthOfList =
         Provider.of<Comments>(providerContext, listen: true).commentList.length;
     List<Comment> listComments =
