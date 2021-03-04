@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:longmarket/screens/notifications_screen.dart';
 import 'package:longmarket/widgets/widgets.dart';
-import 'package:provider/provider.dart';
-import '../models/models.dart';
-import '../models/advertising.dart';
 import '../config/config.dart';
 
 AppBar customAppBarMobile(BuildContext ctxScaffold) {
