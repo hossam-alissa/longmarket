@@ -278,6 +278,7 @@ class _EditUserInformationState extends State<EditUserInformation> {
                                                   ? "Done edit information"
                                                   : "تم تعديل المعلومات",
                                               context);
+                                          Navigator.pop(context);
                                         } catch (error) {
                                           toastShow(isLeft ? "error" : "خطا", context);
                                           print(error);
