@@ -34,6 +34,34 @@ class _EditUserInformationState extends State<EditUserInformation> {
         Provider.of<UserInformation>(providerContext, listen: false).secondName;
     lastName.text =
         Provider.of<UserInformation>(providerContext, listen: false).lastName;
+
+    var city = Provider.of<UserInformation>(providerContext, listen: false).city;
+
+    if (city == "Damascus" || city == "دمشق")
+        selectedCityValue = cityUser[1];
+    else if(city == "Aleppo" || city == "حلب")
+      selectedCityValue = cityUser[2];
+    else if(city == "Hama" || city == "حماه")
+      selectedCityValue = cityUser[3];
+    else if(city == "Homs" || city == "حمص")
+      selectedCityValue = cityUser[4];
+    else if(city == "Latakia" || city == "الاذقية")
+      selectedCityValue = cityUser[4];
+    else if(city == "Tartous" || city == "طرطوس")
+      selectedCityValue = cityUser[5];
+    else if(city == "Jablah" || city == "جبلة")
+      selectedCityValue = cityUser[6];
+    else if(city == "Damascus Countryside" || city == "ريف دمشق")
+      selectedCityValue = cityUser[7];
+    else if(city == "Daraa" || city == "درعا")
+      selectedCityValue = cityUser[8];
+    else if(city == "Kenitra" || city == "القنيطره")
+      selectedCityValue = cityUser[9];
+    else if(city == "Endosperm" || city == "السويداء")
+      selectedCityValue = cityUser[10];
+
+    setState(() {});
+
     super.initState();
   }
 
@@ -221,25 +249,60 @@ class _EditUserInformationState extends State<EditUserInformation> {
                           textScaleFactor: 1.5,
                         ),
                         onPressed: () async {
-                          print("Save Information");
-                          try{
-                            await Provider.of<UserInformation>(providerContext,
-                                listen: false)
-                                .editInformation(
-                              idInDataBase: Provider.of<UserInformation>(providerContext,listen: false).idInDataBase,
-                              userName: userName.text.toString(),
-                              mobileNumber: mobileNumber.text.toString(),
-                              firstName: firstName.text.toString(),
-                              secondName: secondName.text.toString(),
-                              lastName: lastName.text.toString(),
-                              city: selectedCityValue.toString(),
-                            );
-                            toastShow(isLeft ? "Done edit information" : "تم تعديل المعلومات", context);
-                          }catch(error){
-                            toastShow(isLeft ? "error" : "خطا", context);
-                            print(error);
+                          FocusScope.of(context).unfocus();
+                          if(userName.text != ""){
+                            if(mobileNumber.text != ""){
+                              if(mobileNumber.text.length == 10){
+                                if(firstName.text != ""){
+                                  if(secondName.text != ""){
+                                    if(lastName.text != ""){
+                                      if(selectedCityValue != cityUser[0]){
+                                        print("Save Information");
+                                        try {
+                                          await Provider.of<UserInformation>(providerContext,
+                                              listen: false)
+                                              .editInformation(
+                                            idInDataBase: Provider.of<UserInformation>(
+                                                providerContext,
+                                                listen: false)
+                                                .idInDataBase,
+                                            userName: userName.text.toString(),
+                                            mobileNumber: mobileNumber.text.toString(),
+                                            firstName: firstName.text.toString(),
+                                            secondName: secondName.text.toString(),
+                                            lastName: lastName.text.toString(),
+                                            city: selectedCityValue.toString(),
+                                          );
+                                          toastShow(
+                                              isLeft
+                                                  ? "Done edit information"
+                                                  : "تم تعديل المعلومات",
+                                              context);
+                                        } catch (error) {
+                                          toastShow(isLeft ? "error" : "خطا", context);
+                                          print(error);
+                                        }
+                                      }else {
+                                        toastShow(isLeft ? "Entry your City." : ".قم بإدخال اسم مدينتك", context);
+                                      }
+                                    }else {
+                                      toastShow(isLeft ? "Entry your last name." : ".قم بإدخال اسم العائلة", context);
+                                    }
+                                  }else {
+                                    toastShow(isLeft ? "Entry your second name." : ".قم بإدخال اسمك الثاني", context);
+                                  }
+                                }else {
+                                  toastShow(isLeft ? "Entry your first name." : ".قم بإدخال اسمك الأول", context);
+                                }
+                              }else{
+                                toastShow(isLeft ? "Entry your mobile number." : ".قم بإدخال رقم موبايل صحيح غير مكتمل", context);
+                              }
+                            }else {
+                              toastShow(isLeft ? "Mobile number is empty." : ".قم بإدخال رقم موبايل, حقل رقم الموبايل فارغ", context);
+                            }
+                          }else {
+                            toastShow(isLeft ? "User Name is Empty." : ".قم بإدخال اسم المستخدم. اسم المستخدم فارغ", context);
                           }
-
                         },
                       ),
                     ),

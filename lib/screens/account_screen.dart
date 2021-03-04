@@ -106,7 +106,7 @@ class _CustomHeader extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    Provider.of<UserInformation>(providerContext, listen: false)
+                    Provider.of<UserInformation>(providerContext, listen: true)
                         .username,
                     style:
                         TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -126,8 +126,6 @@ class _CustomHeader extends StatelessWidget {
             icon: Icon(Icons.settings),
             iconSize: 30.0,
             onPressed: () {
-              print("Setting");
-
               AlertDialog aDI = AlertDialog(
                 insetPadding: EdgeInsets.all(20),
                 backgroundColor: Colors.white70.withOpacity(0.1),

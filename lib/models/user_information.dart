@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class UserInformation with ChangeNotifier {
+  String uidUserInformation;
   String idInDataBase;
   String email;
   String _passwordUserName;
@@ -91,11 +92,40 @@ class UserInformation with ChangeNotifier {
       this.city = "New User City";
       this.validation = false;
       this._token = await userCredential.user.getIdToken();
-      this._expiryDate =
-          DateTime.now().add(Duration(seconds: int.parse("3600")));
+      this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
 
-      SharedPreferences _userInfoInSharedPref =
-          await SharedPreferences.getInstance();
+      final String url = 'https://long-market-default-rtdb.firebaseio.com/users.json?auth=$_token';
+      try {
+        http.Response res = await http.post(url,
+            body: json.encode({
+              'uid': idInDataBase,
+              'userName': username,
+              'mobileNumber': mobileNumber,
+              'firstName': firstName,
+              'secondName': secondName,
+              'lastName': lastName,
+              'city': city,
+            }));
+
+        if (json.decode(res.body)['name'] != null) {
+          print(json.decode(res.body)['name']);
+          this.uidUserInformation = json.decode(res.body)['name'];
+          this.username = username;
+          this.mobileNumber = mobileNumber;
+          this.firstName = firstName;
+          this.secondName = secondName;
+          this.lastName = lastName;
+          this.city = city;
+        }
+        notifyListeners();
+        print("+++ Done Edit user Information");
+      } catch (error) {
+        print("+++ Error Edit user Information" + error.toString());
+        throw (error);
+      }
+
+      SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
+      _userInfoInSharedPref.setString('uidUserInformation', uidUserInformation);
       _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
       _userInfoInSharedPref.setString('email', email);
       _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
@@ -107,8 +137,7 @@ class UserInformation with ChangeNotifier {
       _userInfoInSharedPref.setBool("validation", validation);
       _userInfoInSharedPref.setString('city', city);
       _userInfoInSharedPref.setString('Token', _token);
-      _userInfoInSharedPref.setString(
-          'expiryDate', _expiryDate.toIso8601String());
+      _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
       notifyListeners();
       print('+++++ +++++  Done SingUp');
     } catch (error) {
@@ -140,46 +169,45 @@ class UserInformation with ChangeNotifier {
       //   print(  id.token);
       // }) ;
 
+
+
       try {
-        // final String url = 'https://long-market-default-rtdb.firebaseio.com/users.json';
-        // final http.Response res = await http.get(url);
-        // final Map<String, dynamic> extractedData = json.decode(res.body) as Map<String, dynamic>;
-        // extractedData.forEach((idDatabase, value) {
-        //   if (value['uid'] == _res.user.uid) {
-        //     this.idInDataBase = value['uid'];
-        //     this.email = value['email'];
-        //     this._passwordUserName = passwordUser;
-        //     this.username = value['username'];
-        //     this.mobileNumber = value['mobileNumber'];
-        //     this.firstName = value['firstName'];
-        //     this.secondName = value['secondName'];
-        //     this.lastName = value['lastName'];
-        //     this.city = value['city'];
-        //   }
-        // });
+        final String url = 'https://long-market-default-rtdb.firebaseio.com/users.json';
+        final http.Response _res = await http.get(url);
+        final Map<String, dynamic> extractedData = json.decode(_res.body) as Map<String, dynamic>;
+        extractedData.forEach((idDatabase, value) {
+          if (value['uid'] == userCredential.user.uid) {
+            this.uidUserInformation = idDatabase;
+            this.idInDataBase = value['uid'];
+            this.username = value['userName'];
+            this.mobileNumber = value['mobileNumber'];
+            this.firstName = value['firstName'];
+            this.secondName = value['secondName'];
+            this.lastName = value['lastName'];
+            this.city = value['city'];
+          }
+        });
 
         this.idInDataBase = userCredential.user.uid;
         this.email = emailUserName;
         this._passwordUserName = passwordUser;
         this.validation = userCredential.user.emailVerified;
         this._token = await userCredential.user.getIdToken();
-        this._expiryDate =
-            DateTime.now().add(Duration(seconds: int.parse("3600")));
-        SharedPreferences _userInfoInSharedPref =
-            await SharedPreferences.getInstance();
+        this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
+        SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
+        _userInfoInSharedPref.setString('uidUserInformation', uidUserInformation);
         _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
         _userInfoInSharedPref.setString('email', email);
         _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
-        _userInfoInSharedPref.setString('username', 'New User');
-        _userInfoInSharedPref.setString('mobileNumber', '000000000');
-        _userInfoInSharedPref.setString('firstName', 'New User F');
-        _userInfoInSharedPref.setString('secondName', 'New User S');
-        _userInfoInSharedPref.setString('lastName', 'New User L');
-        _userInfoInSharedPref.setString('city', 'New User City');
+        _userInfoInSharedPref.setString('username', username);
+        _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
+        _userInfoInSharedPref.setString('firstName', firstName);
+        _userInfoInSharedPref.setString('secondName', secondName);
+        _userInfoInSharedPref.setString('lastName', lastName);
+        _userInfoInSharedPref.setString('city', city);
         _userInfoInSharedPref.setBool("validation", validation);
         _userInfoInSharedPref.setString('Token', _token);
-        _userInfoInSharedPref.setString(
-            'expiryDate', _expiryDate.toIso8601String());
+        _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
       } catch (e) {
         print(e);
         throw e;
@@ -202,47 +230,64 @@ class UserInformation with ChangeNotifier {
     @required String lastName,
     @required String city,
   }) async {
-
-
-    final String url =
-        'https://long-market-default-rtdb.firebaseio.com/users.json?auth=$_token';
+    final String url = 'https://long-market-default-rtdb.firebaseio.com/users/$uidUserInformation.json?auth=$_token';
     try {
-      http.Response res = await http.post(url,
-          body: json.encode({
-            'idInDataBase': idInDataBase,
-            'userName': userName,
-            'mobileNumber': mobileNumber,
-            'firstName': firstName,
-            'secondName': secondName,
-            'lastName': lastName,
-            'city': city,
-          }));
 
-      if (json.decode(res.body)['name'] != null) {
-        print(json.decode(res.body)['name']);
-        this.username = username;
-        this.mobileNumber = mobileNumber;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.lastName = lastName;
-        this.city = city;
-      }
+      await http.patch(url,
+              body: json.encode({
+                'userName': userName,
+                'mobileNumber': mobileNumber,
+                'firstName': firstName,
+                'secondName': secondName,
+                'lastName': lastName,
+                'city': city,
+              }));
+
+      this.username = userName;
+      this.mobileNumber = mobileNumber;
+      this.firstName = firstName;
+      this.secondName = secondName;
+      this.lastName = lastName;
+      this.city = city;
+
+      SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
+       _userInfoInSharedPref.setString('username', userName);
+      _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
+      _userInfoInSharedPref.setString('firstName', firstName);
+      _userInfoInSharedPref.setString('secondName', secondName);
+      _userInfoInSharedPref.setString('lastName', lastName);
+      _userInfoInSharedPref.setString('city', city);
+
+
+      // http.Response res = await http.post(url,
+      //     body: json.encode({
+      //       'idInDataBase': idInDataBase,
+      //       'userName': userName,
+      //       'mobileNumber': mobileNumber,
+      //       'firstName': firstName,
+      //       'secondName': secondName,
+      //       'lastName': lastName,
+      //       'city': city,
+      //     }));
+      //
+      // if (json.decode(res.body)['name'] != null) {
+      //   print(json.decode(res.body)['name']);
+      //
+      // }
       notifyListeners();
       print("+++ Done Edit user Information");
     } catch (error) {
       print("+++ Error Edit user Information" + error.toString());
       throw (error);
     }
-
-
   }
 
   Future<void> startApp() async {
-    SharedPreferences _userInfoInSharedPref =
-        await SharedPreferences.getInstance();
+    SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
     try {
       if (_userInfoInSharedPref.getString('expiryDate').isNotEmpty) {
         try {
+          uidUserInformation = _userInfoInSharedPref.getString('uidUserInformation');
           idInDataBase = _userInfoInSharedPref.getString('idInDataBase');
           email = _userInfoInSharedPref.getString('email');
           _passwordUserName = _userInfoInSharedPref.getString('passwordUser');
@@ -287,6 +332,7 @@ class UserInformation with ChangeNotifier {
   logOutUserInformation() async {
     try {
       await FirebaseAuth.instance.signOut();
+      uidUserInformation = null;
       idInDataBase = null;
       email = null;
       _passwordUserName = null;
