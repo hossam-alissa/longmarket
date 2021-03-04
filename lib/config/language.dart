@@ -4,14 +4,13 @@ bool isLeft = false;
 
 setLanguage ()async{
   SharedPreferences preferencesLanguage = await SharedPreferences.getInstance();
-  preferencesLanguage.setBool("language", isLeft);
-  print(preferencesLanguage.getBool("language").toString());
+  await preferencesLanguage.setBool("language", isLeft);
 
 }
 getLanguage()async{
   SharedPreferences preferencesLanguage = await SharedPreferences.getInstance();
 
-  if(preferencesLanguage.getBool("language") != null){
-    isLeft = preferencesLanguage.getBool("language");
+  if(await preferencesLanguage.getBool("language") != null){
+    isLeft = await preferencesLanguage.getBool("language");
   }
 }

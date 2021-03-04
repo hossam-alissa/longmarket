@@ -125,19 +125,19 @@ class UserInformation with ChangeNotifier {
       }
 
       SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
-      _userInfoInSharedPref.setString('uidUserInformation', uidUserInformation);
-      _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
-      _userInfoInSharedPref.setString('email', email);
-      _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
-      _userInfoInSharedPref.setString('username', username);
-      _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
-      _userInfoInSharedPref.setString('firstName', firstName);
-      _userInfoInSharedPref.setString('secondName', secondName);
-      _userInfoInSharedPref.setString('lastName', lastName);
-      _userInfoInSharedPref.setBool("validation", validation);
-      _userInfoInSharedPref.setString('city', city);
-      _userInfoInSharedPref.setString('Token', _token);
-      _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
+      await _userInfoInSharedPref.setString('uidUserInformation', uidUserInformation);
+      await _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
+      await _userInfoInSharedPref.setString('email', email);
+      await _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
+      await _userInfoInSharedPref.setString('username', username);
+      await _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
+      await _userInfoInSharedPref.setString('firstName', firstName);
+      await _userInfoInSharedPref.setString('secondName', secondName);
+      await _userInfoInSharedPref.setString('lastName', lastName);
+      await _userInfoInSharedPref.setBool("validation", validation);
+      await _userInfoInSharedPref.setString('city', city);
+      await _userInfoInSharedPref.setString('Token', _token);
+      await _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
       notifyListeners();
       print('+++++ +++++  Done SingUp');
     } catch (error) {
@@ -195,19 +195,19 @@ class UserInformation with ChangeNotifier {
         this._token = await userCredential.user.getIdToken();
         this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
         SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
-        _userInfoInSharedPref.setString('uidUserInformation', uidUserInformation);
-        _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
-        _userInfoInSharedPref.setString('email', email);
-        _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
-        _userInfoInSharedPref.setString('username', username);
-        _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
-        _userInfoInSharedPref.setString('firstName', firstName);
-        _userInfoInSharedPref.setString('secondName', secondName);
-        _userInfoInSharedPref.setString('lastName', lastName);
-        _userInfoInSharedPref.setString('city', city);
-        _userInfoInSharedPref.setBool("validation", validation);
-        _userInfoInSharedPref.setString('Token', _token);
-        _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
+        await _userInfoInSharedPref.setString('uidUserInformation', uidUserInformation);
+        await _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
+        await _userInfoInSharedPref.setString('email', email);
+        await _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
+        await _userInfoInSharedPref.setString('username', username);
+        await _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
+        await _userInfoInSharedPref.setString('firstName', firstName);
+        await _userInfoInSharedPref.setString('secondName', secondName);
+        await _userInfoInSharedPref.setString('lastName', lastName);
+        await _userInfoInSharedPref.setString('city', city);
+        await _userInfoInSharedPref.setBool("validation", validation);
+        await _userInfoInSharedPref.setString('Token', _token);
+        await _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
       } catch (e) {
         print(e);
         throw e;
@@ -251,12 +251,12 @@ class UserInformation with ChangeNotifier {
       this.city = city;
 
       SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
-       _userInfoInSharedPref.setString('username', userName);
-      _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
-      _userInfoInSharedPref.setString('firstName', firstName);
-      _userInfoInSharedPref.setString('secondName', secondName);
-      _userInfoInSharedPref.setString('lastName', lastName);
-      _userInfoInSharedPref.setString('city', city);
+      await _userInfoInSharedPref.setString('username', userName);
+      await _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
+      await _userInfoInSharedPref.setString('firstName', firstName);
+      await _userInfoInSharedPref.setString('secondName', secondName);
+      await _userInfoInSharedPref.setString('lastName', lastName);
+      await _userInfoInSharedPref.setString('city', city);
 
 
       // http.Response res = await http.post(url,
@@ -285,22 +285,22 @@ class UserInformation with ChangeNotifier {
   Future<void> startApp() async {
     SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
     try {
-      if (_userInfoInSharedPref.getString('expiryDate').isNotEmpty) {
+      if (await _userInfoInSharedPref.getString('expiryDate').isNotEmpty) {
         try {
-          uidUserInformation = _userInfoInSharedPref.getString('uidUserInformation');
-          idInDataBase = _userInfoInSharedPref.getString('idInDataBase');
-          email = _userInfoInSharedPref.getString('email');
-          _passwordUserName = _userInfoInSharedPref.getString('passwordUser');
-          username = _userInfoInSharedPref.getString('username');
-          mobileNumber = _userInfoInSharedPref.getString('mobileNumber');
-          firstName = _userInfoInSharedPref.getString('firstName');
-          secondName = _userInfoInSharedPref.getString('secondName');
-          lastName = _userInfoInSharedPref.getString('lastName');
-          city = _userInfoInSharedPref.getString('city');
-          validation = _userInfoInSharedPref.getBool("validation");
-          _token = _userInfoInSharedPref.getString('Token');
+          uidUserInformation = await _userInfoInSharedPref.getString('uidUserInformation');
+          idInDataBase =await  _userInfoInSharedPref.getString('idInDataBase');
+          email = await _userInfoInSharedPref.getString('email');
+          _passwordUserName = await _userInfoInSharedPref.getString('passwordUser');
+          username = await _userInfoInSharedPref.getString('username');
+          mobileNumber = await _userInfoInSharedPref.getString('mobileNumber');
+          firstName = await _userInfoInSharedPref.getString('firstName');
+          secondName =await  _userInfoInSharedPref.getString('secondName');
+          lastName = await _userInfoInSharedPref.getString('lastName');
+          city = await _userInfoInSharedPref.getString('city');
+          validation =await  _userInfoInSharedPref.getBool("validation");
+          _token =await  _userInfoInSharedPref.getString('Token');
           _expiryDate =
-              DateTime.tryParse(_userInfoInSharedPref.getString('expiryDate'));
+              DateTime.tryParse( await _userInfoInSharedPref.getString('expiryDate'));
 
           if (_expiryDate.isBefore(DateTime.now())) {
             print(_passwordUserName);
@@ -311,8 +311,8 @@ class UserInformation with ChangeNotifier {
             this._token = await userCredential.user.getIdToken();
             this._expiryDate =
                 DateTime.now().add(Duration(seconds: int.parse("3600")));
-            _userInfoInSharedPref.setString('Token', _token);
-            _userInfoInSharedPref.setString(
+            await _userInfoInSharedPref.setString('Token', _token);
+            await _userInfoInSharedPref.setString(
                 'expiryDate', _expiryDate.toIso8601String());
           }
           notifyListeners();
@@ -348,7 +348,7 @@ class UserInformation with ChangeNotifier {
 
       SharedPreferences _userInfoInSharedPref =
           await SharedPreferences.getInstance();
-      _userInfoInSharedPref.clear();
+      await  _userInfoInSharedPref.clear();
     } catch (e) {
       throw e;
     }
