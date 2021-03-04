@@ -35,20 +35,6 @@ class _NavScreenState extends State<NavScreen> {
         toastShow(isLeft ? 'Please SingUp or SingIn' : 'قم بستجيل الدخول أو إنشاء حساب جديد', context);
 
     }
-
-    // if (index == 0) {
-
-    //   await Provider.of<UserInformation>(context, listen: false).startApp();
-    // } else if (Provider.of<UserInformation>(context, listen: false).token != null) {
-    //   setState(() {
-    //     _selectedIndex = index;
-    //   });
-    //   if (_selectedIndex == 4) {
-    //     Provider.of<Advertisement>(providerContext, listen: false).getData(Provider.of<UserInformation>(providerContext, listen: false).idInDataBase);
-    //   }
-    // } else {
-    //   toastShow(getTranslated(context, "Please SingUp or SingIn"), context);
-    // }
   }
 
   @override
@@ -102,43 +88,43 @@ class _NavScreenState extends State<NavScreen> {
                     ),
                   ),
                   Expanded(child: SizedBox(width: double.maxFinite)),
-                  // if (Provider.of<UserInformation>(providerContext,
-                  //             listen: true)
-                  //         .isAuth ==
-                  //     true)
-                  //   Padding(
-                  //     padding: isLeft
-                  //         ? EdgeInsets.only(bottom: 5.0)
-                  //         : EdgeInsets.only(bottom: 10.0),
-                  //     child: InkWell(
-                  //       child: Icon(
-                  //         Icons.notifications_outlined,
-                  //         size: 30.0,
-                  //         color: Colors.white,
-                  //       ),
-                  //       onTap: () async {
-                  //         AlertDialog aDI = AlertDialog(
-                  //           insetPadding: EdgeInsets.only(top: 50.0),
-                  //           backgroundColor: Colors.white70.withOpacity(0.1),
-                  //           elevation: double.maxFinite,
-                  //           contentPadding: EdgeInsets.all(0),
-                  //           content: NotificationsScreen(),
-                  //         );
-                  //         showDialog(
-                  //           context: context,
-                  //           barrierDismissible: false,
-                  //           barrierColor: Colors.black.withOpacity(0.6),
-                  //           builder: (context) => aDI,
-                  //         );
-                  //         print("notifications" +
-                  //             Provider.of<UserInformation>(providerContext,
-                  //                     listen: false)
-                  //                 .isAuth
-                  //                 .toString());
-                  //         // MyBuildAlertDialog(context, NotificationsScreen());
-                  //       },
-                  //     ),
-                  //   ),
+                  if (Provider.of<UserInformation>(providerContext,
+                              listen: true)
+                          .isAuth ==
+                      true)
+                    Padding(
+                      padding: isLeft
+                          ? EdgeInsets.only(bottom: 5.0)
+                          : EdgeInsets.only(bottom: 10.0),
+                      child: InkWell(
+                        child: Icon(
+                          Icons.notifications_outlined,
+                          size: 30.0,
+                          color: Colors.white,
+                        ),
+                        onTap: () async {
+                          AlertDialog aDI = AlertDialog(
+                            insetPadding: EdgeInsets.only(top: 50.0),
+                            backgroundColor: Colors.white70.withOpacity(0.1),
+                            elevation: double.maxFinite,
+                            contentPadding: EdgeInsets.all(0),
+                            content: NotificationsScreen(),
+                          );
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            barrierColor: Colors.black.withOpacity(0.6),
+                            builder: (context) => aDI,
+                          );
+                          print("notifications" +
+                              Provider.of<UserInformation>(providerContext,
+                                      listen: false)
+                                  .isAuth
+                                  .toString());
+                          // MyBuildAlertDialog(context, NotificationsScreen());
+                        },
+                      ),
+                    ),
                   SizedBox(width: 46.0),
                 ],
               ),
