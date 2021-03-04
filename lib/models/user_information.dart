@@ -96,7 +96,7 @@ class UserInformation with ChangeNotifier {
 
       final String url = 'https://long-market-default-rtdb.firebaseio.com/users.json?auth=$_token';
       try {
-        http.Response res = await http.post(url,
+        http.Response res = await http.post(Uri.parse(url),
             body: json.encode({
               'uid': idInDataBase,
               'userName': username,
@@ -173,7 +173,7 @@ class UserInformation with ChangeNotifier {
 
       try {
         final String url = 'https://long-market-default-rtdb.firebaseio.com/users.json';
-        final http.Response _res = await http.get(url);
+        final http.Response _res = await http.get(Uri.parse(url));
         final Map<String, dynamic> extractedData = json.decode(_res.body) as Map<String, dynamic>;
         extractedData.forEach((idDatabase, value) {
           if (value['uid'] == userCredential.user.uid) {
@@ -233,7 +233,7 @@ class UserInformation with ChangeNotifier {
     final String url = 'https://long-market-default-rtdb.firebaseio.com/users/$uidUserInformation.json?auth=$_token';
     try {
 
-      await http.patch(url,
+      await http.patch(Uri.parse(url),
               body: json.encode({
                 'userName': userName,
                 'mobileNumber': mobileNumber,

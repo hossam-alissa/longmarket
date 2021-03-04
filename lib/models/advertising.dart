@@ -66,7 +66,7 @@ class Advertisement with ChangeNotifier {
     final String url =
         'https://long-market-default-rtdb.firebaseio.com/advertising.json';
     try {
-      http.Response res = await http.get(url);
+      http.Response res = await http.get(Uri.parse(url));
       final Map<String, dynamic> extractedData =
           json.decode(res.body) as Map<String, dynamic>;
       extractedData.forEach((idAdvertising, value) {
@@ -131,7 +131,7 @@ class Advertisement with ChangeNotifier {
       final String url =
           'https://long-market-default-rtdb.firebaseio.com/advertising.json?auth=$authToken';
       http.Response res = await http.post(
-        url,
+        Uri.parse(url),
         body: jsonEncode(
           {
             'idAddedAdvertising': idAddedAdvertising.toString(),
@@ -165,7 +165,7 @@ class Advertisement with ChangeNotifier {
       try {
         final String urlUpdate =
             'https://long-market-default-rtdb.firebaseio.com/advertising/${json.decode(res.body)['name']}.json?auth=$authToken';
-        await http.patch(urlUpdate,
+        await http.patch(Uri.parse(urlUpdate),
             body: json.encode({
               'imgUrl': newUrlImage.toString(),
             }));
@@ -229,7 +229,7 @@ class Advertisement with ChangeNotifier {
     final String url =
         'https://long-market-default-rtdb.firebaseio.com/reports.json?auth=$authToken';
     try {
-      await http.post(url,
+      await http.post(Uri.parse(url),
           body: json.encode({
             "idUserAddedReport": idAddedReport,
             'idAdvertising': idAdvertising.toString(),

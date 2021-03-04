@@ -35,7 +35,7 @@ class Comments with ChangeNotifier {
     final String url =
         'https://long-market-default-rtdb.firebaseio.com/comments.json';
     try {
-      final http.Response res = await http.get(url);
+      final http.Response res = await http.get(Uri.parse(url));
       final Map<String, dynamic> extractedData =
           json.decode(res.body) as Map<String, dynamic>;
 
@@ -83,7 +83,7 @@ class Comments with ChangeNotifier {
     final String url =
         'https://long-market-default-rtdb.firebaseio.com/comments.json?auth=$authToken';
     try {
-      http.Response res = await http.post(url,
+      http.Response res = await http.post(Uri.parse(url),
           body: json.encode({
             'idAdvertising': idAdvertising.toString(),
             'userIdAddedComment': userIdAddedComment.toString(),
@@ -127,7 +127,7 @@ class Comments with ChangeNotifier {
 
     if (commentIndex >= 0) {
       try {
-        await http.patch(url,
+        await http.patch(Uri.parse(url),
             body: json.encode({
               'idAdvertising': idAdvertising.toString(),
               'userIdAddedComment': userIdAddedComment.toString(),
@@ -160,7 +160,7 @@ class Comments with ChangeNotifier {
     notifyListeners();
 
     try {
-      var _res = await http.delete(url);
+      var _res = await http.delete(Uri.parse(url));
       if (_res.statusCode >= 400) {
         print('not deleted');
         commentList.insert(commentIndex, commentItem);
