@@ -47,7 +47,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
   List<bool> chBox = [false, false, false, false, true];
   File image;
   final picker = ImagePicker();
-  bool _isLoading = false;
+  bool _sendData = false;
 
   Future getImage() async {
     final pickedFile =
@@ -108,7 +108,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
   }
 
   Widget _infoAdvertising() {
-    return _isLoading
+    return _sendData
         ? Center(
             child: CircularProgressIndicator(),
           )
@@ -560,7 +560,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
                                                 chBox[3] == true &&
                                                 chBox[4] == true) {
                                               setState(() {
-                                                _isLoading = true;
+                                                _sendData = true;
                                               });
                                               try {
                                               await Provider.of<Advertisement>(providerContext, listen: false).addAdvertising(
@@ -610,7 +610,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
                                                       false,
                                                       false
                                                     ];
-                                                    _isLoading = false;
+                                                    _sendData = false;
                                                   },
                                                 );
                                                 toastShow(
@@ -620,7 +620,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
                                                     context);
                                               } catch (error) {
                                                 setState(() {
-                                                  _isLoading = false;
+                                                  _sendData = false;
                                                 });
                                                 toastShow(
                                                     isLeft
