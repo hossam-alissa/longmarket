@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:longmarket/models/models.dart';
 import 'package:provider/provider.dart';
 
+import '../config/config.dart';
+import '../models/models.dart';
 import '../widgets/widgets.dart';
 import '../screens/screens.dart';
-import '../config/config.dart';
 
 class NavScreen extends StatefulWidget {
   @override
@@ -98,11 +99,15 @@ class _NavScreenState extends State<NavScreen> {
                           : EdgeInsets.only(bottom: 10.0),
                       child: InkWell(
                         child: Icon(
-                          Icons.notifications_outlined,
+                          Provider.of<UserInformation>(providerContext,listen: true).notification ? Icons.notifications_active_outlined: Icons.notifications_outlined,
                           size: 30.0,
-                          color: Colors.white,
+                          color: Provider.of<UserInformation>(providerContext,listen: true).notification ? Colors.red[600]: Colors.white,
                         ),
                         onTap: () async {
+                          setState(() {
+                            Provider.of<UserInformation>(providerContext,listen: false).notification = false;
+                            Provider.of<Comments>(providerContext,listen: false).setNumberOfComments( Provider.of<Comments>(providerContext,listen: false).commentNotificationList.length);
+                          });
                           AlertDialog aDI = AlertDialog(
                             insetPadding: EdgeInsets.only(top: 50.0),
                             backgroundColor: Colors.white70.withOpacity(0.1),
@@ -121,7 +126,6 @@ class _NavScreenState extends State<NavScreen> {
                                       listen: false)
                                   .isAuth
                                   .toString());
-                          // MyBuildAlertDialog(context, NotificationsScreen());
                         },
                       ),
                     ),

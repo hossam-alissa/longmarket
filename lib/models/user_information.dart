@@ -20,6 +20,7 @@ class UserInformation with ChangeNotifier {
   bool validation;
   String _token;
   DateTime _expiryDate;
+  bool notification = false;
 
   DateTime get dateExp {
     return _expiryDate;

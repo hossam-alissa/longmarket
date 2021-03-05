@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../config/config.dart';
+import '../models/comments.dart';
 import '../models/models.dart';
 import '../screens/screens.dart';
 import '../widgets/widgets.dart';
-import '../config/config.dart';
 import '../helper/helper.dart';
 import '../models/advertising.dart';
 
@@ -16,15 +17,31 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String sortBy = "All";
 
+  _startApp()async{
+    try{
+      await Provider.of<Advertisement>(providerContext, listen: false).fetchData();
+      await Provider.of<UserInformation>(providerContext, listen: false).startApp();
+
+      Provider.of<Advertisement>(providerContext, listen: false).getAdvertisingForUser(
+          Provider.of<UserInformation>(providerContext, listen: false).idInDataBase);
+      print(  Provider.of<Advertisement>(providerContext, listen: false).listAdvertisingForUser.length.toString());
+
+      await Provider.of<Comments>(providerContext,listen: false).commentsNotification(
+          Provider.of<Advertisement>(providerContext, listen: false).listAdvertisingForUser);
+      print(Provider.of<Comments>(providerContext, listen: false).commentNotificationList.length.toString());
+
+    }catch(e){
+      throw e;
+    }
+  }
+
   @override
   void initState() {
     try{
-      Provider.of<Advertisement>(providerContext, listen: false).fetchData();
-      Provider.of<UserInformation>(providerContext, listen: false).startApp();
+      _startApp();
     }catch(e){
-
+      toastShow(isLeft ? "Connection is bad، check your connection." : "الإتصال سئ تأكد من إتصالك", context);
     }
-
     super.initState();
   }
 
@@ -198,12 +215,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(
-                            advertisingList[index - 1].title,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
+                          Expanded(
+                            child: Text(
+                              advertisingList[index - 1].title,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -268,7 +287,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 80,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-
                                 children: [
                                   Icon(Icons.article_outlined, size: 14),
                                   Expanded(
