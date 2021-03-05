@@ -17,10 +17,13 @@ class _SingInScreenState extends State<SingInScreen> {
   TextEditingController passwordUser = new TextEditingController();
   bool _secureText = true;
   bool _resetPassword = false;
+  bool sendData = false;
+
 
   @override
   Widget build(BuildContext context) {
-    return MyBuildAlertDialog(
+    return sendData == true ? Center(child: CircularProgressIndicator()):
+      MyBuildAlertDialog(
       context,
       SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
@@ -179,6 +182,9 @@ class _SingInScreenState extends State<SingInScreen> {
                           if (passwordUser.text != "") {
                             if (passwordUser.text.length >= 8) {
                               print("Sing IN");
+                              setState(() {
+                                sendData = true;
+                              });
                               try {
                                 await Provider.of<UserInformation>(
                                         providerContext,
@@ -186,6 +192,9 @@ class _SingInScreenState extends State<SingInScreen> {
                                     .singInInDataBase(
                                         emailUserName: emailUserName.text,
                                         passwordUser: passwordUser.text);
+                                setState(() {
+                                  sendData = false;
+                                });
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                                     builder: (BuildContext context) =>
                                         MyApp()) , (route) => false);
@@ -196,7 +205,11 @@ class _SingInScreenState extends State<SingInScreen> {
                                 //           MyApp()),
                                 //   ModalRoute.withName('/'),
                                 // );
+
                               } catch (e) {
+                                setState(() {
+                                  sendData = false;
+                                });
                                 toastShow(errorExceptionFireBase(e.toString()), context);
                                 print(e);
                               }

@@ -22,9 +22,12 @@ class _SingUpScreenState extends State<SingUpScreen> {
   bool ch = false;
   bool lawsCheckBox = false;
 
+  bool sendData = false;
+
   @override
   Widget build(BuildContext context) {
-    return MyBuildAlertDialog(
+    return sendData ?Center(child: CircularProgressIndicator()):
+    MyBuildAlertDialog(
       context,
       SingleChildScrollView(
         child: Container(
@@ -175,6 +178,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
                           textScaleFactor: 1.5,
                         ),
                         onPressed: () async {
+                          setState(() {
+                            sendData = true;
+                          });
                           FocusScope.of(context).unfocus();
                           if (emailUserName.text != "") {
                             if (passwordUser.text != "") {
@@ -192,7 +198,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                                 email: emailUserName.text,
                                                 passwordUser:
                                                     passwordUser.text);
-
+                                        setState(() {
+                                          sendData = false;
+                                        });
                                         Navigator.pushAndRemoveUntil(
                                           context,
                                           MaterialPageRoute(
@@ -201,6 +209,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                           ModalRoute.withName('/'),
                                         );
                                       } catch (e) {
+                                        setState(() {
+                                          sendData = false;
+                                        });
                                         toastShow(errorExceptionFireBase(e.toString()), context);
                                         print(e.toString());
                                       }
