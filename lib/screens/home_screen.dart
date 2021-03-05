@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String sortBy = "All";
 
-  _startApp() async {
+  Future <void> _startApp() async {
     try {
       await Provider.of<Advertisement>(providerContext, listen: false)
           .fetchData();
@@ -65,10 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(child: myBigList(sortBy)),
-        ],
+      body: RefreshIndicator(
+        onRefresh: _startApp,
+        child: Column(
+          children: [
+            Expanded(child: myBigList(sortBy)),
+          ],
+        ),
       ),
     );
   }
