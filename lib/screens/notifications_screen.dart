@@ -13,13 +13,13 @@ class NotificationsScreen extends StatefulWidget {
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
-
-  List<Advertising> listAdvertising = Provider.of<Advertisement>(providerContext,listen: false).listAdvertisingForUser;
+  List<Advertising> listAdvertising =
+      Provider.of<Advertisement>(providerContext, listen: false)
+          .listAdvertisingForUser;
   List<Comment> comment = Provider.of<Comments>(providerContext, listen: false)
       .commentNotificationList;
 
   @override
-
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -50,16 +50,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   bottomRight: Radius.circular(0),
                 ),
                 gradient: LinearGradient(
-
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.white12,
                     Colors.white12,
-                    Colors.white ,
-                    Colors.white ,
-                    Colors.white ,
-                    Colors.white12,
+                    Colors.white,
+                    Colors.white,
+                    Colors.white,
+                    Colors.white12.withOpacity(0.1),
                   ],
                 ),
               ),
@@ -103,10 +102,13 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 child: ListView.builder(
                   itemCount: comment.length,
                   itemBuilder: (BuildContext context, index) {
-
-                   final  Advertising  advertising = listAdvertising.firstWhere((advertising) => (
-                         advertising.idAdvertising == comment[index].idAdvertising));
-                    return _CustomNotification(comment: comment[index],advertising: (advertising),);
+                    final Advertising advertising = listAdvertising.firstWhere(
+                        (advertising) => (advertising.idAdvertising ==
+                            comment[index].idAdvertising));
+                    return _CustomNotification(
+                      comment: comment[index],
+                      advertising: (advertising),
+                    );
                   },
                 ),
               ),
@@ -122,14 +124,18 @@ class _CustomNotification extends StatelessWidget {
   final Comment comment;
   final Advertising advertising;
 
-  _CustomNotification({@required this.comment,@required this.advertising});
+  _CustomNotification({@required this.comment, @required this.advertising});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         print(comment.idAdvertising);
-        Navigator.push(context,MaterialPageRoute(builder: (BuildContext context) => ShowAdvertisingScreen(advertising: advertising)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    ShowAdvertisingScreen(advertising: advertising)));
       },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 6.0),
@@ -165,9 +171,9 @@ class _CustomNotification extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                    "${TimeAgo.timeAgoSinceDate(comment.dateAdded).toString()}",
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                      "${TimeAgo.timeAgoSinceDate(comment.dateAdded).toString()}",
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     Icon(Icons.access_time, size: 20.0),
                   ],
                 ),
@@ -203,10 +209,9 @@ class _CustomNotification extends StatelessWidget {
               child: Text(
                 comment.textComment.toString(),
                 style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.blue
-                ),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.blue),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
