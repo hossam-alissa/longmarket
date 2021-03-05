@@ -198,9 +198,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                                 email: emailUserName.text,
                                                 passwordUser:
                                                     passwordUser.text);
-                                        setState(() {
+
                                           sendData = false;
-                                        });
+
                                         Navigator.pushAndRemoveUntil(
                                           context,
                                           MaterialPageRoute(
