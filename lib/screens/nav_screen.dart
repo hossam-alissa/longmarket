@@ -43,11 +43,44 @@ class _NavScreenState extends State<NavScreen> {
     }
   }
 
+  _startApp() async {
+    try {
+      await Provider.of<Advertisement>(providerContext, listen: false)
+          .fetchData();
+      await Provider.of<UserInformation>(providerContext, listen: false)
+          .startApp();
+
+      Provider.of<Advertisement>(providerContext, listen: false)
+          .getAdvertisingForUser(
+              Provider.of<UserInformation>(providerContext, listen: false)
+                  .idInDataBase);
+      print(Provider.of<Advertisement>(providerContext, listen: false)
+          .listAdvertisingForUser
+          .length
+          .toString());
+
+      await Provider.of<Comments>(providerContext, listen: false)
+          .commentsNotification(
+              Provider.of<Advertisement>(providerContext, listen: false)
+                  .listAdvertisingForUser);
+      print(Provider.of<Comments>(providerContext, listen: false)
+          .commentNotificationList
+          .length
+          .toString());
+      setState(() {
+        startApp = false;
+      });
+    } catch (e) {
+      throw e;
+    }
+  }
+
   @override
   void initState() {
     setState(() {
       providerContext = context;
     });
+    _startApp();
     super.initState();
   }
 

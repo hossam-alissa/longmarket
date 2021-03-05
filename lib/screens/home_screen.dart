@@ -17,30 +17,47 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String sortBy = "All";
 
-  _startApp()async{
-    try{
-      await Provider.of<Advertisement>(providerContext, listen: false).fetchData();
-      await Provider.of<UserInformation>(providerContext, listen: false).startApp();
+  _startApp() async {
+    try {
+      await Provider.of<Advertisement>(providerContext, listen: false)
+          .fetchData();
+      await Provider.of<UserInformation>(providerContext, listen: false)
+          .startApp();
 
-      Provider.of<Advertisement>(providerContext, listen: false).getAdvertisingForUser(
-          Provider.of<UserInformation>(providerContext, listen: false).idInDataBase);
-      print(  Provider.of<Advertisement>(providerContext, listen: false).listAdvertisingForUser.length.toString());
+      Provider.of<Advertisement>(providerContext, listen: false)
+          .getAdvertisingForUser(
+              Provider.of<UserInformation>(providerContext, listen: false)
+                  .idInDataBase);
+      print(Provider.of<Advertisement>(providerContext, listen: false)
+          .listAdvertisingForUser
+          .length
+          .toString());
 
-      await Provider.of<Comments>(providerContext,listen: false).commentsNotification(
-          Provider.of<Advertisement>(providerContext, listen: false).listAdvertisingForUser);
-      print(Provider.of<Comments>(providerContext, listen: false).commentNotificationList.length.toString());
-
-    }catch(e){
+      await Provider.of<Comments>(providerContext, listen: false)
+          .commentsNotification(
+              Provider.of<Advertisement>(providerContext, listen: false)
+                  .listAdvertisingForUser);
+      print(Provider.of<Comments>(providerContext, listen: false)
+          .commentNotificationList
+          .length
+          .toString());
+    } catch (e) {
       throw e;
     }
   }
 
   @override
   void initState() {
-    try{
-      _startApp();
-    }catch(e){
-      toastShow(isLeft ? "Connection is bad، check your connection." : "الإتصال سئ تأكد من إتصالك", context);
+    try {
+      if (startApp == false) {
+        _startApp();
+      }
+    } catch (e) {
+      toastShow(
+          isLeft
+              ? "Connection is bad، check your connection."
+              : "الإتصال سئ تأكد من إتصالك",
+          context);
     }
     super.initState();
   }
@@ -55,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   Widget mainBarButton() {
     return Container(
       height: 35,
@@ -70,12 +88,12 @@ class _HomeScreenState extends State<HomeScreen> {
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           circleButton(isLeft ? 'All' : "الجميع"),
-          circleButton(isLeft ?  'Cars' :'سيارات'),
+          circleButton(isLeft ? 'Cars' : 'سيارات'),
           circleButton(isLeft ? 'Home' : 'عقارات'),
           circleButton(isLeft ? 'Mobile' : 'موبايلات'),
-          circleButton(isLeft ?  'Furniture' : 'مفروشات'),
+          circleButton(isLeft ? 'Furniture' : 'مفروشات'),
           circleButton(isLeft ? 'Electron' : 'الكترونيات'),
-          circleButton(isLeft ?  'Other' : 'آخرى'),
+          circleButton(isLeft ? 'Other' : 'آخرى'),
         ],
       ),
     );
@@ -111,7 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget myBigList(String sort) {
     List<Advertising> advertisingList;
     if (sort == "All" || sort == "الجميع") {
-      advertisingList = Provider.of<Advertisement>(context, listen: true).listAdvertising;
+      advertisingList =
+          Provider.of<Advertisement>(context, listen: true).listAdvertising;
     }
     if (sort == "Cars" || sort == "سيارات") {
       advertisingList = Provider.of<Advertisement>(context, listen: false)
@@ -143,15 +162,15 @@ class _HomeScreenState extends State<HomeScreen> {
       itemCount: advertisingList.length + 1,
       scrollDirection: Axis.vertical,
       itemBuilder: (ctx, index) {
-        if(index == 0 ){
-         return mainBarButton();
+        if (index == 0) {
+          return mainBarButton();
         }
         return GestureDetector(
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) =>
-                  ShowAdvertisingScreen(advertising: advertisingList[index - 1]),
+              builder: (_) => ShowAdvertisingScreen(
+                  advertising: advertisingList[index - 1]),
             ),
           ),
           child: Container(
@@ -232,7 +251,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Row(
                           children: [
                             Text(
-                              advertisingList[index - 1].userNameAddedAdvertising,
+                              advertisingList[index - 1]
+                                  .userNameAddedAdvertising,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 14.0, fontWeight: FontWeight.w500),
@@ -249,7 +269,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Icons.add_location,
                                     size: 14,
                                   ),
-                                  Text("${advertisingList[index - 1].city.toString()}",overflow: TextOverflow.visible,),
+                                  Text(
+                                    "${advertisingList[index - 1].city.toString()}",
+                                    overflow: TextOverflow.visible,
+                                  ),
                                 ],
                               ),
                             ),
