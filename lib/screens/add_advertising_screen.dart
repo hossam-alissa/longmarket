@@ -91,19 +91,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          // CustomAppBarMobile(),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return _infoAdvertising();
-              },
-              childCount: (1), //Number of length
-            ),
-          ),
-        ],
-      ),
+      body: _infoAdvertising(),
     );
   }
 
