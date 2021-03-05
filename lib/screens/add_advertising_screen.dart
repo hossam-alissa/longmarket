@@ -418,7 +418,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
                                         isLeft
                                             ? 'Select Other Model'
                                             : 'تصنيفات آخرى',
-                                        isLeft ? 'Animal' : '',
+                                        isLeft ? 'Animal' : 'حيوانات',
                                         isLeft ? 'Dogs' : "كلاب",
                                         isLeft ? "Cats" : "قطط",
                                       ];
@@ -563,7 +563,7 @@ class _AddAdvertisingScreenState extends State<AddAdvertisingScreen> {
                                                 _isLoading = true;
                                               });
                                               try {
-                                              await  Provider.of<Advertisement>(providerContext, listen: false).addAdvertising(
+                                              await Provider.of<Advertisement>(providerContext, listen: false).addAdvertising(
                                                     idAddedAdvertising:
                                                         Provider.of<UserInformation>(
                                                                 context,
