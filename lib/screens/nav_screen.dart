@@ -27,14 +27,19 @@ class _NavScreenState extends State<NavScreen> {
       setState(() {
         _selectedIndexScreen = index;
       });
-    } else if (index >= 2 && index <= 4 && Provider.of<UserInformation>(providerContext, listen: false).isAuth == true) {
-        setState(() {
-          _selectedIndexScreen = index;
-        });
-    }
-       else {
-        toastShow(isLeft ? 'Please SingUp or SingIn' : 'قم بستجيل الدخول أو إنشاء حساب جديد', context);
-
+    } else if (index >= 2 &&
+        index <= 4 &&
+        Provider.of<UserInformation>(providerContext, listen: false).isAuth ==
+            true) {
+      setState(() {
+        _selectedIndexScreen = index;
+      });
+    } else {
+      toastShow(
+          isLeft
+              ? 'Please SingUp or SingIn'
+              : 'قم بستجيل الدخول أو إنشاء حساب جديد',
+          context);
     }
   }
 
@@ -99,14 +104,32 @@ class _NavScreenState extends State<NavScreen> {
                           : EdgeInsets.only(bottom: 10.0),
                       child: InkWell(
                         child: Icon(
-                          Provider.of<UserInformation>(providerContext,listen: true).notification ? Icons.notifications_active_outlined: Icons.notifications_outlined,
+                          Provider.of<UserInformation>(providerContext,
+                                          listen: true)
+                                      .notification ==
+                                  true
+                              ? Icons.notifications_active_outlined
+                              : Icons.notifications_outlined,
                           size: 30.0,
-                          color: Provider.of<UserInformation>(providerContext,listen: true).notification ? Colors.red[600]: Colors.white,
+                          color: Provider.of<UserInformation>(providerContext,
+                                          listen: true)
+                                      .notification ==
+                                  true
+                              ? Colors.red[600]
+                              : Colors.white,
                         ),
                         onTap: () async {
                           setState(() {
-                            Provider.of<UserInformation>(providerContext,listen: false).notification = false;
-                            Provider.of<Comments>(providerContext,listen: false).setNumberOfComments( Provider.of<Comments>(providerContext,listen: false).commentNotificationList.length);
+                            Provider.of<UserInformation>(providerContext,
+                                    listen: false)
+                                .notification = false;
+                            Provider.of<Comments>(providerContext,
+                                    listen: false)
+                                .setNumberOfComments(Provider.of<Comments>(
+                                        providerContext,
+                                        listen: false)
+                                    .commentNotificationList
+                                    .length);
                           });
                           AlertDialog aDI = AlertDialog(
                             insetPadding: EdgeInsets.only(top: 50.0),
