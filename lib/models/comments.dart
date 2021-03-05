@@ -36,41 +36,43 @@ class Comments with ChangeNotifier {
     notifyListeners();
   }
 
-  setNumberOfComments(int numberOfComments)async{
+  setNumberOfComments(int numberOfComments) async {
     SharedPreferences _notification = await SharedPreferences.getInstance();
-    try{
+    try {
       await _notification.setInt("numberOfComments", numberOfComments);
-    }catch(e){
-      print("+++++ +++++ error set Number Of Comments");
+    } catch (e) {
+      print("+++ +++ error set Number Of Comments");
       print(e);
     }
   }
 
-  getNumberOfComments()async{
+  getNumberOfComments() async {
     SharedPreferences _notification = await SharedPreferences.getInstance();
     int numberOfComments = 0;
-    try{
-      if(await _notification.getInt("numberOfComments") != null)
-      numberOfComments =  await _notification.getInt("numberOfComments");
-    }catch(e){
-      print("+++++ +++++ error get Number Of Comments");
+    try {
+      if (await _notification.getInt("numberOfComments") != null)
+        numberOfComments = await _notification.getInt("numberOfComments");
+    } catch (e) {
+      print("+++ +++ error get Number Of Comments");
       print(e);
     }
     return numberOfComments;
   }
 
-  Future <void> commentsNotification (List<Advertising> listAdvertisingForUser)async {
-    final String url = 'https://long-market-default-rtdb.firebaseio.com/comments.json';
+  Future<void> commentsNotification(
+      List<Advertising> listAdvertisingForUser) async {
+    final String url =
+        'https://long-market-default-rtdb.firebaseio.com/comments.json';
     try {
       final http.Response res = await http.get(Uri.parse(url));
       final Map<String, dynamic> extractedData =
-      json.decode(res.body) as Map<String, dynamic>;
+          json.decode(res.body) as Map<String, dynamic>;
       listAdvertisingForUser.forEach((advertising) {
         extractedData.forEach((idComment, value) {
           if (value['idAdvertising'] == advertising.idAdvertising) {
-            final commentIndex = commentNotificationList.indexWhere((
-                element) => element.idComment == idComment);
-            if (commentIndex >= 0){
+            final commentIndex = commentNotificationList
+                .indexWhere((element) => element.idComment == idComment);
+            if (commentIndex >= 0) {
               commentNotificationList[commentIndex] = Comment(
                 idComment: idComment,
                 userIdAddedComment: value['userIdAddedComment'],
@@ -79,26 +81,30 @@ class Comments with ChangeNotifier {
                 userNameAddedAdvertising: value['userNameAddedAdvertising'],
                 dateAdded: value['dateAdded'],
               );
-            }else{
-              commentNotificationList.add( Comment(
-                idComment: idComment,
-                userIdAddedComment: value['userIdAddedComment'],
-                idAdvertising: value['idAdvertising'],
-                textComment: value['textComment'],
-                userNameAddedAdvertising: value['userNameAddedAdvertising'],
-                dateAdded: value['dateAdded'],
-              ),
+            } else {
+              commentNotificationList.add(
+                Comment(
+                  idComment: idComment,
+                  userIdAddedComment: value['userIdAddedComment'],
+                  idAdvertising: value['idAdvertising'],
+                  textComment: value['textComment'],
+                  userNameAddedAdvertising: value['userNameAddedAdvertising'],
+                  dateAdded: value['dateAdded'],
+                ),
               );
             }
           }
         });
       });
 
-      commentNotificationList.sort((a,b)=> b.dateAdded.compareTo(a.dateAdded));
+      commentNotificationList
+          .sort((a, b) => b.dateAdded.compareTo(a.dateAdded));
 
-      if(commentNotificationList.length > await getNumberOfComments()) {
-        Provider.of<UserInformation>(providerContext, listen: false).notification = true;
-        print("++++++commentNotificationList"+commentNotificationList.length.toString());
+      if (commentNotificationList.length > await getNumberOfComments()) {
+        Provider.of<UserInformation>(providerContext, listen: false)
+            .notification = true;
+        print("+++ +++ commentNotificationList" +
+            commentNotificationList.length.toString());
       }
       notifyListeners();
     } catch (error) {
@@ -170,9 +176,9 @@ class Comments with ChangeNotifier {
           }));
 
       if (json.decode(res.body)['name'] != null) {
-        print(json.decode(res.body)['name']);
-        print(commentList.length);
-        commentList.insert(0,
+        // print(json.decode(res.body)['name']);
+        commentList.insert(
+            0,
             Comment(
               idComment: json.decode(res.body)['name'],
               userIdAddedComment: userIdAddedComment,
@@ -181,11 +187,10 @@ class Comments with ChangeNotifier {
               userNameAddedAdvertising: userNameAddedAdvertising,
               dateAdded: DateTime.now().toIso8601String(),
             ));
-        print(commentList.length);
         notifyListeners();
       }
       notifyListeners();
-      print("+++ Done Added Comment"+ authToken.toString());
+      print("+++ Done Added Comment");
     } catch (error) {
       print("+++ Error in Added Comment" + error.toString());
       throw (error);
