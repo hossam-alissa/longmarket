@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String sortBy = "All";
-
   Future <void> _startApp() async {
     try {
       await Provider.of<Advertisement>(providerContext, listen: false)
