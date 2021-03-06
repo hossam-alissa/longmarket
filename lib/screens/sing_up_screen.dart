@@ -178,9 +178,6 @@ class _SingUpScreenState extends State<SingUpScreen> {
                           textScaleFactor: 1.5,
                         ),
                         onPressed: () async {
-                          setState(() {
-                            sendData = true;
-                          });
                           FocusScope.of(context).unfocus();
                           if (emailUserName.text != "") {
                             if (passwordUser.text != "") {
@@ -190,6 +187,9 @@ class _SingUpScreenState extends State<SingUpScreen> {
                                   if (lawsCheckBox == true) {
                                     if (passwordUser.text.length >= 8) {
                                       print("Sing Up");
+                                      setState(() {
+                                        sendData = true;
+                                      });
                                       try {
                                         await Provider.of<UserInformation>(
                                                 providerContext,
