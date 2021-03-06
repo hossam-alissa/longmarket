@@ -125,7 +125,8 @@ class _SingInScreenState extends State<SingInScreen> {
                       });
                     },
                     child: Text(
-                      isLeft ? 'Reset password !' : "! إستعادة الرقم السري",
+                      _resetPassword ?
+                      isLeft ? 'Sing In !' : "! تسجيل الدخول" :isLeft ? 'Reset password !' : "! إستعادة الرقم السري" ,
                       style: TextStyle(
                           fontSize: 13,
                           color: Colors.lightBlueAccent,
@@ -158,6 +159,9 @@ class _SingInScreenState extends State<SingInScreen> {
                       if (_resetPassword == true) {
                         if (emailUserName.text != "") {
                           print("reset Password");
+                          setState(() {
+                            sendData = true;
+                          });
                           try{
                             await Provider.of<UserInformation>(providerContext,listen: false).resetPassword(email: emailUserName.text);
                             toastShow(
@@ -165,7 +169,13 @@ class _SingInScreenState extends State<SingInScreen> {
                                     ? "Done, Send message to email address, Open the Link to change your Password"
                                     : "تم إرسال رسالة إلى بريدك الإلكتروني،قم بفتح الرابط وقم بتغير كلمة السر",
                                 context);
+                            setState(() {
+                              sendData = false;
+                            });
                           }catch(e){
+                            setState(() {
+                              sendData = false;
+                            });
                             toastShow(errorExceptionFireBase(e.toString()), context);
                             print(e);
                           }

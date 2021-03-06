@@ -123,6 +123,26 @@ class _CustomHeader extends StatelessWidget {
             ),
           ),
           IconButton(
+            icon: Icon(Icons.verified_outlined),
+            iconSize: 30.0,
+            color: Provider.of<UserInformation>(providerContext,listen: false).validation == true? Colors.green : Colors.red,
+            onPressed: () {
+              AlertDialog aDI = AlertDialog(
+                insetPadding: EdgeInsets.all(20),
+                backgroundColor: Colors.white70.withOpacity(0.1),
+                elevation: double.maxFinite,
+                contentPadding: EdgeInsets.all(0),
+                content: VerifiedEmail(),
+              );
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                barrierColor: Colors.black.withOpacity(0.6),
+                builder: (context) => aDI,
+              );
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.settings),
             iconSize: 30.0,
             onPressed: () {

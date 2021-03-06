@@ -151,8 +151,7 @@ class UserInformation with ChangeNotifier {
   Future<void> singInInDataBase(
       {@required String emailUserName, @required String passwordUser}) async {
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailUserName,
         password: passwordUser,
       );
@@ -169,6 +168,17 @@ class UserInformation with ChangeNotifier {
       // currentUser.getIdToken().then((id){
       //   print(  id.token);
       // }) ;
+
+      if(userCredential.user.emailVerified == false){
+        try {
+          userCredential.user.sendEmailVerification();
+          print("+++++ +++++ Done in user information sendEmailVerification");
+        } catch (error) {
+          print("+++++ +++++ error in user information sendEmailVerification");
+          print(error);
+          throw error;
+        }
+      }
 
 
 
