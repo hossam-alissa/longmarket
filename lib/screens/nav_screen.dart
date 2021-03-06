@@ -249,16 +249,16 @@ class _NavScreenState extends State<NavScreen> {
                   flex: 1,
                   child: SizedBox(width: 1),
                 ),
-                // Expanded(
-                //   flex: 2,
-                //   child: columnX(
-                //     _selectedIndexScreen == 3 ? Icons.message : Icons.message_outlined,
-                //   isLeft ? "Message" : "الرسائل",
-                //     3,
-                //   ),
-                // ),
                 Expanded(
-                  flex: 4,
+                  flex: 2,
+                  child: columnX(
+                    _selectedIndexScreen == 3 ? Icons.message : Icons.message_outlined,
+                  isLeft ? "Message" : "الرسائل",
+                    3,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
                   child: columnX(
                     _selectedIndexScreen == 4
                         ? Icons.person

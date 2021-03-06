@@ -91,7 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       listen: false)
                                   .username ==
                               null
+                          ?     isLeft
                           ? ""
+                          : ""
                           : Provider.of<UserInformation>(providerContext,
                                   listen: false)
                               .username
