@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../config/config.dart';
 import '../helper/helper.dart';
 import '../models/advertising.dart';
@@ -98,13 +97,7 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
             ),
           ),
         ),
-        body:
-            // _isLoading
-            //     ? Center(
-            //         child: CircularProgressIndicator(),
-            //       )
-            //     :
-            Container(
+        body: Container(
           child: SingleChildScrollView(
             child: Container(
               child: Column(
@@ -262,59 +255,19 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                       //     child: Icon(Icons.email_outlined)),
                       InkWell(
                           onTap: () {
-                            // AlertDialog aDialog = myMainADI(Container(
-                            //   padding: EdgeInsets.all(20),
-                            //   height: 130,
-                            //   width: 180,
-                            //   color: Colors.white,
-                            //   child: Column(
-                            //     children: [
-                            //       Text('do you want send report ?\n'),
-                            //       ElevatedButton(
-                            //           child: Text(
-                            //             "Send report",
-                            //             style: TextStyle(color: Colors.redAccent),
-                            //           ),
-                            //           onPressed: () {
-                            //             try {
-                            //               Provider.of<Advertisement>(providerContext,
-                            //                   listen: false)
-                            //                   .addReport(
-                            //                 idAddedReport:
-                            //                 Provider.of<UserInformation>(
-                            //                     providerContext,
-                            //                     listen: false)
-                            //                     .idInDataBase,
-                            //                 idAdvertising: widget.advertising.idAdvertising,
-                            //                 comment: "comment",
-                            //               );
-                            //               toastShow("done", context);
-                            //             } catch (error) {
-                            //               print(error);
-                            //               toastShow("No add", context);
-                            //             }
-                            //           }),
-                            //     ],
-                            //   ),
-                            // ));
-                            // showDialog(
-                            //   context: context,
-                            //   barrierDismissible: true,
-                            //   barrierColor: Colors.black.withOpacity(0.6),
-                            //   builder: (ctx) => aDialog,
-                            // );
-
-                            // try{
-                            //   Provider.of<Advertisement>(widget.ctx, listen: false).addReport(
-                            //       idAddedReport: Provider.of<UserInformation>(widget.ctx, listen: false).idInDataBase,
-                            //       idAdvertising: widget.idAdvertising,
-                            //     comment: "comment",
-                            //   );
-                            //   toastShow("done", context);
-                            // } catch(error){
-                            //   print(error);
-                            //   toastShow("No add", context);
-                            // }
+                            AlertDialog aDialog =  AlertDialog(
+                              insetPadding: EdgeInsets.all(20),
+                              backgroundColor: Colors.white70.withOpacity(0.1),
+                              elevation: double.maxFinite,
+                              contentPadding: EdgeInsets.all(0),
+                               content: AddReportAdvertising(idAdvertising: widget.advertising.idAdvertising,idAddedAdvertising: widget.advertising.idAddedAdvertising,)
+                            );
+                            showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              barrierColor: Colors.black.withOpacity(0.6),
+                              builder: (ctx) => aDialog,
+                            );
                           },
                           child: Icon(
                             Icons.report_gmailerrorred_outlined,

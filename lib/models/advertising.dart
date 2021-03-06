@@ -225,7 +225,9 @@ class Advertisement with ChangeNotifier {
   void addReport(
       {@required String idAddedReport,
       @required String idAdvertising,
-      @required String comment}) async {
+      @required String comment,
+        @required String idAddedAdvertising,
+      }) async {
     final String url =
         'https://long-market-default-rtdb.firebaseio.com/reports.json?auth=$authToken';
     try {
@@ -234,6 +236,7 @@ class Advertisement with ChangeNotifier {
             "idUserAddedReport": idAddedReport,
             'idAdvertising': idAdvertising.toString(),
             "comment": comment,
+            "idAddedAdvertising": idAddedAdvertising,
           }));
       print("+++++ +++++ Done in advertising Add Report");
     } catch (error) {
