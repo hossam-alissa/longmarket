@@ -22,7 +22,7 @@ class _NavScreenState extends State<NavScreen> {
   ];
 
   onTapped(int index) async {
-    if (index == 0) {
+    if (index == 0 || index == 1) {
       setState(() {
         _selectedIndexScreen = index;
       });
@@ -236,14 +236,14 @@ class _NavScreenState extends State<NavScreen> {
                     0,
                   ),
                 ),
-                // Expanded(
-                //   flex: 2,
-                //   child: columnX(
-                //     _selectedIndexScreen == 1 ? Icons.explore : Icons.explore_outlined,
-                //    isLeft ? "Explore" : "المستكشف",
-                //     1,
-                //   ),
-                // ),
+                Expanded(
+                  flex: 2,
+                  child: columnX(
+                    _selectedIndexScreen == 1 ? Icons.saved_search : Icons.search,
+                   isLeft ? "Search" : "البحث",
+                    1,
+                  ),
+                ),
                 //Location Floating Action Button
                 Expanded(
                   flex: 1,
@@ -258,7 +258,7 @@ class _NavScreenState extends State<NavScreen> {
                 //   ),
                 // ),
                 Expanded(
-                  flex: 2,
+                  flex: 4,
                   child: columnX(
                     _selectedIndexScreen == 4
                         ? Icons.person

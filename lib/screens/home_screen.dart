@@ -16,7 +16,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String sortBy = "All";
-  Future <void> _startApp() async {
+
+  Future<void> _startApp() async {
     try {
       await Provider.of<Advertisement>(providerContext, listen: false)
           .fetchData();
@@ -72,20 +73,37 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 11.0),
               height: 21.0,
               color: Colors.lightGreenAccent.withOpacity(0.4),
-              child: Row(children: [
-                Expanded(
-                  child: Text(isLeft ? "Welcome in Long Market..." : "مرحبا بك في السوق الطويل...",
-                    style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w600),
-                    overflow: TextOverflow.ellipsis,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      isLeft
+                          ? "Welcome in Long Market..."
+                          : "مرحبا بك في السوق الطويل...",
+                      style: TextStyle(
+                          fontSize: 14.0, fontWeight: FontWeight.w600),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Text(Provider.of<UserInformation>(providerContext,listen: false).username == null ? "" : Provider.of<UserInformation>(providerContext,listen: false).username.toString(),
-                    style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w600),
-                    overflow: TextOverflow.ellipsis,
+                  Expanded(
+                    child: Text(
+                      Provider.of<UserInformation>(providerContext,
+                                      listen: false)
+                                  .username ==
+                              null
+                          ? ""
+                          : Provider.of<UserInformation>(providerContext,
+                                  listen: false)
+                              .username
+                              .toString(),
+                      style: TextStyle(
+                          fontSize: 14.0, fontWeight: FontWeight.w600),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-              ],),),
+                ],
+              ),
+            ),
             Expanded(child: myBigList(sortBy)),
           ],
         ),
@@ -183,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
       scrollDirection: Axis.vertical,
       itemBuilder: (ctx, index) {
         if (index == 0) {
-          return mainBarButton();
+          return SizedBox(height: 1.0);
         }
         return GestureDetector(
           onTap: () => Navigator.push(
