@@ -234,18 +234,18 @@ class _CustomBody extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 28,
-                        width: 28,
-                        child: IconButton(
-                          padding: const EdgeInsets.all(0.0),
-                            icon: Icon(Icons.delete_forever_outlined),
-                            color: Colors.red,
-                            iconSize: 32,
-                            onPressed: () {
-                              print("Delete ADV");
-                            }),
-                      ),
+                      // Container(
+                      //   height: 28,
+                      //   width: 28,
+                      //   child: IconButton(
+                      //     padding: const EdgeInsets.all(0.0),
+                      //       icon: Icon(Icons.delete_forever_outlined),
+                      //       color: Colors.red,
+                      //       iconSize: 32,
+                      //       onPressed: () {
+                      //         print("Delete ADV");
+                      //       }),
+                      // ),
                     ],
                   ),
                   myDivider(),
