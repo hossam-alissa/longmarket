@@ -104,6 +104,20 @@ class _EditUserInformationState extends State<EditUserInformation> {
                   Expanded(
                     child: Padding(
                       padding:
+                      EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+                      child: Text(
+                          (isLeft ? 'Email :' : "البريد الإلكتروني : "+ Provider.of<UserInformation>(providerContext,listen: false).email.toString()),
+                      overflow: TextOverflow.visible,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding:
                           EdgeInsets.symmetric(vertical: 0, horizontal: 15),
                       child: TextField(
                         maxLength: 25,

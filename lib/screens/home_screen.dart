@@ -69,6 +69,24 @@ class _HomeScreenState extends State<HomeScreen> {
         onRefresh: _startApp,
         child: Column(
           children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 11.0),
+              height: 21.0,
+              color: Colors.lightGreenAccent.withOpacity(0.4),
+              child: Row(children: [
+                Expanded(
+                  child: Text(isLeft ? "Welcome in Long Market..." : "مرحبا بك في السوق الطويل...",
+                    style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w600),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Expanded(
+                  child: Text(Provider.of<UserInformation>(providerContext,listen: false).username == null ? "" : Provider.of<UserInformation>(providerContext,listen: false).username.toString(),
+                    style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w600),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],),),
             Expanded(child: myBigList(sortBy)),
           ],
         ),

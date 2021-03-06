@@ -94,6 +94,29 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                         padding: EdgeInsets.zero,
                         children: <Widget>[
                           if (Provider.of<UserInformation>(providerContext,
+                              listen: true)
+                              .token != null)
+                            Container(
+                              height: 47.0,
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(isLeft ? "Welcome in Long Market..." : "مرحبا بك في السوق الطويل...",
+                                style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w600),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(Provider.of<UserInformation>(providerContext,listen: false).username.toString(),
+                                style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w600),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),),
+                          if (Provider.of<UserInformation>(providerContext,
+                              listen: true)
+                              .token != null)
+                            myDivider(),
+                          if (Provider.of<UserInformation>(providerContext,
                                       listen: true)
                                   .token ==
                               null)
