@@ -202,9 +202,7 @@ class _SingInScreenState extends State<SingInScreen> {
                                     .singInInDataBase(
                                         emailUserName: emailUserName.text,
                                         passwordUser: passwordUser.text);
-
                                   sendData = false;
-
                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
                                     builder: (BuildContext context) =>
                                         MyApp()) , (route) => false);
