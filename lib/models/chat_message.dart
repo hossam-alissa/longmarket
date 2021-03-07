@@ -6,7 +6,7 @@ class ChatMessage{
   String userName;
   bool isMe;
 
-  chatDesing ({@required Key key,@required String textMessage,@required String  userName,@required bool isMe}){
+  chatDesign ({@required Key key,@required String textMessage,@required String  userName,@required bool isMe}){
     return Row(
       mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
