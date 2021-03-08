@@ -50,6 +50,9 @@ class UserInformation with ChangeNotifier {
         password: passwordUser,
       );
 
+      // UserCredential userCredentialPhoneNumber =
+      // await FirebaseAuth.instance.
+
       // Firebase.initializeApp();
       // final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
       //   email: 'an email',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import '../config/config.dart';
 import '../main.dart';
@@ -17,12 +18,16 @@ class _SingUpScreenState extends State<SingUpScreen> {
   TextEditingController passwordUser = new TextEditingController();
   TextEditingController passwordUserValidation = new TextEditingController();
   bool _secureText = true;
+  // PhoneNumber _phoneNumber;
 
   TextEditingController validationMobileNumber = new TextEditingController();
   bool ch = false;
   bool lawsCheckBox = false;
-
   bool sendData = false;
+  TextEditingController smsController  = TextEditingController();
+  // bool _isSendSMS = false;
+  String verificationsId;
+  // String _message = "The value of the field";
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +64,23 @@ class _SingUpScreenState extends State<SingUpScreen> {
                 ],
               ),
               //End title New Account
+              // Row(
+              //   children: <Widget>[
+              //     Expanded(
+              //       child: Padding(
+              //         padding:
+              //         EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+              //         child: InternationalPhoneNumberInput(
+              //           onInputChanged: (phoneNumberTxt){
+              //             _phoneNumber = phoneNumberTxt;
+              //             print(_phoneNumber);
+              //           },
+              //           locale: 'US' "en",
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
               Row(
                 children: <Widget>[
                   Expanded(
