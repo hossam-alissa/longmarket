@@ -107,9 +107,9 @@ class Advertisement with ChangeNotifier {
         }
       });
       notifyListeners();
-      print('Done fetch data');
+      print('+++ +++ Done fetch data');
     } catch (error) {
-      print("+++++ +++++ error in fetch Data advertising models");
+      print("+++ +++ error in fetch Data advertising models");
       print(error);
       throw error;
     }
@@ -169,9 +169,9 @@ class Advertisement with ChangeNotifier {
             body: json.encode({
               'imgUrl': newUrlImage.toString(),
             }));
-        print("+++++ +++++ Done upData url Image");
+        print("+++ +++ Done upData url Image");
       } catch (ee) {
-        print("+++++ +++++ Error upData url Image");
+        print("+++ +++ Error upData url Image");
         print(ee);
       }
 
@@ -208,9 +208,9 @@ class Advertisement with ChangeNotifier {
         );
       }
       notifyListeners();
-      print("+++++ +++++ Done in Add Advertising models");
+      print("+++ +++++ Done in Add Advertising models");
     } catch (error) {
-      print("+++++ +++++ Error in Add Advertising models");
+      print("+++ +++++ Error in Add Advertising models");
       print(error);
       throw error;
     }
@@ -238,9 +238,9 @@ class Advertisement with ChangeNotifier {
             "comment": comment,
             "idAddedAdvertising": idAddedAdvertising,
           }));
-      print("+++++ +++++ Done in advertising Add Report");
+      print("+++ +++ Done in advertising Add Report");
     } catch (error) {
-      print("+++++ +++++ Error in advertising Add Report ");
+      print("+++ +++ Error in advertising Add Report ");
       print(error);
       throw (error);
     }
