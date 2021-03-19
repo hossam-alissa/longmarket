@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class UserInformation with ChangeNotifier {
   String idInDataBase;
@@ -198,7 +196,7 @@ class UserInformation with ChangeNotifier {
         // });
 
         print(userCredential.user.uid);
-        var x = await FirebaseFirestore.instance
+        var userInformation = await FirebaseFirestore.instance
             .collection("/Users")
             .doc(userCredential.user.uid)
             .get();
@@ -206,12 +204,12 @@ class UserInformation with ChangeNotifier {
         // print(x.data());
 
         this.idInDataBase = userCredential.user.uid;
-        this.username = x.data()['userName'].toString();
-        this.mobileNumber = x.data()['mobileNumber'].toString();
-        this.firstName = x.data()['firstName'].toString();
-        this.secondName = x.data()['secondName'].toString();
-        this.lastName = x.data()['lastName'].toString();
-        this.city = x.data()['city'];
+        this.username = userInformation.data()['userName'].toString();
+        this.mobileNumber = userInformation.data()['mobileNumber'].toString();
+        this.firstName = userInformation.data()['firstName'].toString();
+        this.secondName = userInformation.data()['secondName'].toString();
+        this.lastName = userInformation.data()['lastName'].toString();
+        this.city = userInformation.data()['city'];
 
         this.idInDataBase = userCredential.user.uid;
         this.email = emailUserName;
