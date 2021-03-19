@@ -97,7 +97,7 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                               listen: true)
                               .token != null)
                             Container(
-                              height: 47.0,
+                              height: 53.0,
                               padding: const EdgeInsets.symmetric(horizontal: 15.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,9 +106,11 @@ class _CustomEndDrawerState extends State<CustomEndDrawer> {
                                 style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w600),
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                Text(Provider.of<UserInformation>(providerContext,listen: false).username.toString(),
-                                style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w600),
-                                  overflow: TextOverflow.ellipsis,
+                                Expanded(
+                                  child: Text(Provider.of<UserInformation>(providerContext,listen: false).username.toString(),
+                                  style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w600),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
                               ],
                             ),),

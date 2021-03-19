@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class UserInformation with ChangeNotifier {
-  String uidUserInformation;
   String idInDataBase;
   String email;
   String _passwordUserName;
@@ -96,31 +96,25 @@ class UserInformation with ChangeNotifier {
       this.city = "New User City";
       this.validation = false;
       this._token = await userCredential.user.getIdToken();
-      this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
+      this._expiryDate =
+          DateTime.now().add(Duration(seconds: int.parse("3600")));
 
-      final String url = 'https://long-market-default-rtdb.firebaseio.com/users.json?auth=$_token';
       try {
-        http.Response res = await http.post(Uri.parse(url),
-            body: json.encode({
-              'uid': idInDataBase,
-              'userName': username,
-              'mobileNumber': mobileNumber,
-              'firstName': firstName,
-              'secondName': secondName,
-              'lastName': lastName,
-              'city': city,
-            }));
+        await FirebaseFirestore.instance
+            .collection('/Users')
+            .doc(userCredential.user.uid.toString())
+            .set(
+          {
+            'email': email.toString(),
+            'userName': username.toString(),
+            'mobileNumber': mobileNumber.toString(),
+            'firstName': firstName.toString(),
+            'secondName': secondName.toString(),
+            'lastName': lastName,
+            'city': city,
+          },
+        );
 
-        if (json.decode(res.body)['name'] != null) {
-          print(json.decode(res.body)['name']);
-          this.uidUserInformation = json.decode(res.body)['name'];
-          this.username = username;
-          this.mobileNumber = mobileNumber;
-          this.firstName = firstName;
-          this.secondName = secondName;
-          this.lastName = lastName;
-          this.city = city;
-        }
         notifyListeners();
         print("+++ Done Edit user Information");
       } catch (error) {
@@ -128,8 +122,8 @@ class UserInformation with ChangeNotifier {
         throw (error);
       }
 
-      SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
-      await _userInfoInSharedPref.setString('uidUserInformation', uidUserInformation);
+      SharedPreferences _userInfoInSharedPref =
+          await SharedPreferences.getInstance();
       await _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
       await _userInfoInSharedPref.setString('email', email);
       await _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
@@ -141,7 +135,8 @@ class UserInformation with ChangeNotifier {
       await _userInfoInSharedPref.setBool("validation", validation);
       await _userInfoInSharedPref.setString('city', city);
       await _userInfoInSharedPref.setString('Token', _token);
-      await _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
+      await _userInfoInSharedPref.setString(
+          'expiryDate', _expiryDate.toIso8601String());
       notifyListeners();
       print('+++++ +++++  Done SingUp');
     } catch (error) {
@@ -154,7 +149,8 @@ class UserInformation with ChangeNotifier {
   Future<void> singInInDataBase(
       {@required String emailUserName, @required String passwordUser}) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailUserName,
         password: passwordUser,
       );
@@ -172,7 +168,7 @@ class UserInformation with ChangeNotifier {
       //   print(  id.token);
       // }) ;
 
-      if(userCredential.user.emailVerified == false){
+      if (userCredential.user.emailVerified == false) {
         try {
           userCredential.user.sendEmailVerification();
           print("+++++ +++++ Done in user information sendEmailVerification");
@@ -183,36 +179,53 @@ class UserInformation with ChangeNotifier {
         }
       }
 
-
-
       try {
-        final String url = 'https://long-market-default-rtdb.firebaseio.com/users.json';
-        final http.Response _res = await http.get(Uri.parse(url));
-        final Map<String, dynamic> extractedData = json.decode(_res.body) as Map<String, dynamic>;
-        extractedData.forEach((idDatabase, value) {
-          if (value['uid'] == userCredential.user.uid) {
-            this.uidUserInformation = idDatabase;
-            this.idInDataBase = value['uid'];
-            this.username = value['userName'];
-            this.mobileNumber = value['mobileNumber'];
-            this.firstName = value['firstName'];
-            this.secondName = value['secondName'];
-            this.lastName = value['lastName'];
-            this.city = value['city'];
-          }
-        });
+        //
+        // final String url = 'https://long-market-default-rtdb.firebaseio.com/users.json';
+        // final http.Response _res = await http.get(Uri.parse(url));
+        // final Map<String, dynamic> extractedData = json.decode(_res.body) as Map<String, dynamic>;
+        // extractedData.forEach((idDatabase, value) {
+        //   if (value['uid'] == userCredential.user.uid) {
+        //     this.uidUserInformation = idDatabase;
+        //     this.idInDataBase = value['uid'];
+        //     this.username = value['userName'];
+        //     this.mobileNumber = value['mobileNumber'];
+        //     this.firstName = value['firstName'];
+        //     this.secondName = value['secondName'];
+        //     this.lastName = value['lastName'];
+        //     this.city = value['city'];
+        //   }
+        // });
+
+        print(userCredential.user.uid);
+        var x = await FirebaseFirestore.instance
+            .collection("/Users")
+            .doc(userCredential.user.uid)
+            .get();
+
+        // print(x.data());
+
+        this.idInDataBase = userCredential.user.uid;
+        this.username = x.data()['userName'].toString();
+        this.mobileNumber = x.data()['mobileNumber'].toString();
+        this.firstName = x.data()['firstName'].toString();
+        this.secondName = x.data()['secondName'].toString();
+        this.lastName = x.data()['lastName'].toString();
+        this.city = x.data()['city'];
 
         this.idInDataBase = userCredential.user.uid;
         this.email = emailUserName;
         this._passwordUserName = passwordUser;
         this.validation = userCredential.user.emailVerified;
         this._token = await userCredential.user.getIdToken();
-        this._expiryDate = DateTime.now().add(Duration(seconds: int.parse("3600")));
-        SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
-        await _userInfoInSharedPref.setString('uidUserInformation', uidUserInformation);
+        this._expiryDate =
+            DateTime.now().add(Duration(seconds: int.parse("3600")));
+        SharedPreferences _userInfoInSharedPref =
+            await SharedPreferences.getInstance();
         await _userInfoInSharedPref.setString('idInDataBase', idInDataBase);
         await _userInfoInSharedPref.setString('email', email);
-        await _userInfoInSharedPref.setString('passwordUser', _passwordUserName);
+        await _userInfoInSharedPref.setString(
+            'passwordUser', _passwordUserName);
         await _userInfoInSharedPref.setString('username', username);
         await _userInfoInSharedPref.setString('mobileNumber', mobileNumber);
         await _userInfoInSharedPref.setString('firstName', firstName);
@@ -221,7 +234,8 @@ class UserInformation with ChangeNotifier {
         await _userInfoInSharedPref.setString('city', city);
         await _userInfoInSharedPref.setBool("validation", validation);
         await _userInfoInSharedPref.setString('Token', _token);
-        await _userInfoInSharedPref.setString('expiryDate', _expiryDate.toIso8601String());
+        await _userInfoInSharedPref.setString(
+            'expiryDate', _expiryDate.toIso8601String());
       } catch (e) {
         print(e);
         throw e;
@@ -244,18 +258,32 @@ class UserInformation with ChangeNotifier {
     @required String lastName,
     @required String city,
   }) async {
-    final String url = 'https://long-market-default-rtdb.firebaseio.com/users/$uidUserInformation.json?auth=$_token';
+    // final String url = 'https://long-market-default-rtdb.firebaseio.com/users/$uidUserInformation.json?auth=$_token';
     try {
+      // await http.patch(Uri.parse(url),
+      //         body: json.encode({
+      //           'userName': userName,
+      //           'mobileNumber': mobileNumber,
+      //           'firstName': firstName,
+      //           'secondName': secondName,
+      //           'lastName': lastName,
+      //           'city': city,
+      //         }));
 
-      await http.patch(Uri.parse(url),
-              body: json.encode({
-                'userName': userName,
-                'mobileNumber': mobileNumber,
-                'firstName': firstName,
-                'secondName': secondName,
-                'lastName': lastName,
-                'city': city,
-              }));
+      await FirebaseFirestore.instance
+          .collection('/Users')
+          .doc(idInDataBase)
+          .set(
+        {
+          'email': email.toString(),
+          'userName': userName.toString(),
+          'mobileNumber': mobileNumber.toString(),
+          'firstName': firstName.toString(),
+          'secondName': secondName.toString(),
+          'lastName': lastName,
+          'city': city,
+        },
+      );
 
       this.username = userName;
       this.mobileNumber = mobileNumber;
@@ -271,7 +299,6 @@ class UserInformation with ChangeNotifier {
       await _userInfoInSharedPref.setString('secondName', secondName);
       await _userInfoInSharedPref.setString('lastName', lastName);
       await _userInfoInSharedPref.setString('city', city);
-
 
       // http.Response res = await http.post(url,
       //     body: json.encode({
@@ -297,24 +324,25 @@ class UserInformation with ChangeNotifier {
   }
 
   Future<void> startApp() async {
-    SharedPreferences _userInfoInSharedPref = await SharedPreferences.getInstance();
+    SharedPreferences _userInfoInSharedPref =
+        await SharedPreferences.getInstance();
     try {
       if (await _userInfoInSharedPref.getString('expiryDate').isNotEmpty) {
         try {
-          uidUserInformation = await _userInfoInSharedPref.getString('uidUserInformation');
-          idInDataBase =await  _userInfoInSharedPref.getString('idInDataBase');
+          idInDataBase = await _userInfoInSharedPref.getString('idInDataBase');
           email = await _userInfoInSharedPref.getString('email');
-          _passwordUserName = await _userInfoInSharedPref.getString('passwordUser');
+          _passwordUserName =
+              await _userInfoInSharedPref.getString('passwordUser');
           username = await _userInfoInSharedPref.getString('username');
           mobileNumber = await _userInfoInSharedPref.getString('mobileNumber');
           firstName = await _userInfoInSharedPref.getString('firstName');
-          secondName =await  _userInfoInSharedPref.getString('secondName');
+          secondName = await _userInfoInSharedPref.getString('secondName');
           lastName = await _userInfoInSharedPref.getString('lastName');
           city = await _userInfoInSharedPref.getString('city');
-          validation =await  _userInfoInSharedPref.getBool("validation");
-          _token =await  _userInfoInSharedPref.getString('Token');
-          _expiryDate =
-              DateTime.tryParse( await _userInfoInSharedPref.getString('expiryDate'));
+          validation = await _userInfoInSharedPref.getBool("validation");
+          _token = await _userInfoInSharedPref.getString('Token');
+          _expiryDate = DateTime.tryParse(
+              await _userInfoInSharedPref.getString('expiryDate'));
 
           if (_expiryDate.isBefore(DateTime.now())) {
             print(_passwordUserName);
@@ -346,7 +374,6 @@ class UserInformation with ChangeNotifier {
   logOutUserInformation() async {
     try {
       await FirebaseAuth.instance.signOut();
-      uidUserInformation = null;
       idInDataBase = null;
       email = null;
       _passwordUserName = null;
@@ -362,7 +389,7 @@ class UserInformation with ChangeNotifier {
 
       SharedPreferences _userInfoInSharedPref =
           await SharedPreferences.getInstance();
-      await  _userInfoInSharedPref.clear();
+      await _userInfoInSharedPref.clear();
     } catch (e) {
       throw e;
     }
