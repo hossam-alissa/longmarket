@@ -1,11 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:longmarket/screens/screens.dart';
 import 'package:provider/provider.dart';
 import '../config/config.dart';
 import '../helper/helper.dart';
 import '../models/advertising.dart';
 import '../models/models.dart';
 import '../widgets/widgets.dart';
+
 class ShowAdvertisingScreen extends StatefulWidget {
   final Advertising advertising;
 
@@ -30,11 +32,10 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
 
   _getData() async {
     try {
-        Provider.of<Comments>(providerContext, listen: false).commentList.clear();
-        await Provider.of<Comments>(providerContext, listen: false).fetchData(idAdvertising: widget.advertising.idAdvertising);
-        setState(() {
-
-        });
+      Provider.of<Comments>(providerContext, listen: false).commentList.clear();
+      await Provider.of<Comments>(providerContext, listen: false)
+          .fetchData(idAdvertising: widget.advertising.idAdvertising);
+      setState(() {});
       // await Provider.of<UserInformation>(providerContext, listen: false).startApp();
     } catch (e) {
       toastShow(
@@ -43,6 +44,14 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
               : "الرجاء التأكد من اتصالك ، لا يمكن التحميل",
           context);
       print(e);
+    }
+  }
+
+  getChatRoomIdByUserNames(String a, String b) {
+    if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
+      return "$b\_$a";
+    } else {
+      return "$a\_$b";
     }
   }
 
@@ -57,7 +66,6 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
       imgUrlList.clear();
       imgUrlList.add(widget.advertising.imgUrl.toString());
       mobileNumber = widget.advertising.mobileNumber;
-
     });
     _getData();
     super.initState();
@@ -134,7 +142,12 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                                 ),
                               ),
                             )
-                          : Expanded(child: Image.asset("images/download_image.png",height: 300,width: 400,)),
+                          : Expanded(
+                              child: Image.asset(
+                              "images/download_image.png",
+                              height: 300,
+                              width: 400,
+                            )),
                     ],
                   ), //Images View
                   myDivider(),
@@ -215,7 +228,8 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                     ),
                   ), //End Information publisher
                   myDivider(),
-                  _buildRowTitleAndDetails(isLeft ? "Title :" : "العنوان :", title),
+                  _buildRowTitleAndDetails(
+                      isLeft ? "Title :" : "العنوان :", title),
                   //End Advertising Title
                   _buildRowTitleAndDetails(
                       isLeft ? "Details :" : "التفاصيل :", details),
@@ -225,9 +239,9 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                     children: [
                       Expanded(
                         child: Container(
-                          height:
-                              Provider.of<Comments>(providerContext, listen: true)
-                                  .sizeContainerBox(),
+                          height: Provider.of<Comments>(providerContext,
+                                  listen: true)
+                              .sizeContainerBox(),
                           width: double.maxFinite,
                           child: _myBigList(),
                         ),
@@ -239,29 +253,47 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       // InkWell(onTap: () {}, child: Icon(Icons.favorite_border)),
-                      // InkWell(
-                      //     onTap: () async {
-                      //       // if (addComment.text != "") {
-                      //       //   await
-                      //       //   FirebaseFirestore.instance.collection('/chats')
-                      //       //       .add({
-                      //       //       'text': '${addComment.text.toString()}',
-                      //       //     'createdAt': Timestamp.now(),
-                      //       //
-                      //       //   },
-                      //       //   );
-                      //       // }
-                      //     },
-                      //     child: Icon(Icons.email_outlined)),
+                      InkWell(
+                          onTap: () async {
+                            if(Provider.of<UserInformation>(providerContext,listen: false).isAuth == true){
+                              if(Provider.of<UserInformation>(providerContext,listen: false).idInDataBase != widget.advertising.idAddedAdvertising){
+                                var chatRoomId = getChatRoomIdByUserNames(Provider.of<UserInformation>(providerContext,listen: false).idInDataBase, widget.advertising.idAddedAdvertising);
+                                Map<String, dynamic> chatRoomInfoMap = {
+                                  "users": [Provider.of<UserInformation>(providerContext,listen: false).idInDataBase, widget.advertising.idAddedAdvertising],
+                                };
+                                ChatMessageDataBase().createChatRoom(chatRoomId, chatRoomInfoMap);
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChatScreen(
+                                          uidUserNameSend: Provider.of<UserInformation>(providerContext,listen: false).idInDataBase,
+                                          uidUserNameReceive: widget.advertising.idAddedAdvertising,
+                                          otherUserName: widget.advertising.userNameAddedAdvertising,
+                                        )));
+                              }else{
+                                toastShow(isLeft ? "no" : "لا يمكن إرسال رسالة على نفس حسابك", context);
+                              }
+
+                            }else{
+                              toastShow(isLeft ? "Please LogIn" : "قم بستجيل الدخول أولا", context);
+                            }
+                          },
+                          child: Icon(Icons.email_outlined)),
                       InkWell(
                           onTap: () {
-                            AlertDialog aDialog =  AlertDialog(
-                              insetPadding: EdgeInsets.all(20),
-                              backgroundColor: Colors.white70.withOpacity(0.1),
-                              elevation: double.maxFinite,
-                              contentPadding: EdgeInsets.all(0),
-                               content: AddReportAdvertising(idAdvertising: widget.advertising.idAdvertising,idAddedAdvertising: widget.advertising.idAddedAdvertising,)
-                            );
+                            AlertDialog aDialog = AlertDialog(
+                                insetPadding: EdgeInsets.all(20),
+                                backgroundColor:
+                                    Colors.white70.withOpacity(0.1),
+                                elevation: double.maxFinite,
+                                contentPadding: EdgeInsets.all(0),
+                                content: AddReportAdvertising(
+                                  idAdvertising:
+                                      widget.advertising.idAdvertising,
+                                  idAddedAdvertising:
+                                      widget.advertising.idAddedAdvertising,
+                                ));
                             showDialog(
                               context: context,
                               barrierDismissible: false,
@@ -318,11 +350,11 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                                             .add(
                                                 idAdvertising: widget
                                                     .advertising.idAdvertising,
-                                                userIdAddedComment:
-                                                    Provider.of<UserInformation>(
-                                                            providerContext,
-                                                            listen: false)
-                                                        .idInDataBase,
+                                                userIdAddedComment: Provider.of<
+                                                            UserInformation>(
+                                                        providerContext,
+                                                        listen: false)
+                                                    .idInDataBase,
                                                 textComment:
                                                     addComment.text.toString(),
                                                 userNameAddedAdvertising:
@@ -341,7 +373,8 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                                       } catch (error) {
                                         return showDialog<Null>(
                                           context: context,
-                                          builder: (innerContext) => AlertDialog(
+                                          builder: (innerContext) =>
+                                              AlertDialog(
                                             title: Text('An Error'),
                                             content: Text(isLeft
                                                 ? "Connection is bad ,Please check your Connection."
@@ -349,8 +382,8 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
                                                     '\n ${error.toString()}'),
                                             actions: [
                                               TextButton(
-                                                child:
-                                                    Text(isLeft ? "Done" : "تم"),
+                                                child: Text(
+                                                    isLeft ? "Done" : "تم"),
                                                 onPressed: () =>
                                                     Navigator.pop(innerContext),
                                               )
@@ -399,13 +432,15 @@ class _ShowAdvertisingScreenState extends State<ShowAdvertisingScreen> {
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15 , vertical: 9),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 9),
                   child: Row(
                     children: [Text(txtTitle)],
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15 , vertical: 9),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 9),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,

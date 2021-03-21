@@ -36,6 +36,7 @@ dependencies:
   multi_image_picker: ^4.7.14
   image_picker: ^0.7.2
   carousel_slider: ^2.3.1
+  random_string:
 
 dev_dependencies:
   flutter_test:
