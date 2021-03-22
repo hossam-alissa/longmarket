@@ -86,7 +86,7 @@ class UserInformation with ChangeNotifier {
       this.idInDataBase = userCredential.user.uid;
       this.email = email;
       this._passwordUserName = passwordUser;
-      this.username = "New User";
+      this.username = email;
       this.mobileNumber = '0000000000';
       this.firstName = "New User F";
       this.secondName = 'New User S';
