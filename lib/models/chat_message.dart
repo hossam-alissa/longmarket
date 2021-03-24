@@ -47,7 +47,7 @@ class ChatMessageDataBase{
   Future<Stream<QuerySnapshot>> getChatRooms(String idUserName) async {
     return  FirebaseFirestore.instance
         .collection("chatRooms")
-        // .orderBy("lastMessageSendTs", descending: true)
+        // .orderBy("ts", descending: true)
         .where("users", arrayContains: idUserName)
         .snapshots();
   }
