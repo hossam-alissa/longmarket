@@ -29,7 +29,6 @@ class _MessageScreenState extends State<MessageScreen> {
                   DocumentSnapshot ds = snapshot.data.docs[index];
                   return Column(
                     children: [
-                      SizedBox(height: 10.0),
                       ChatRoomListTitle(otherUidUserName: (ds.id.replaceAll(
                           Provider.of<UserInformation>(providerContext, listen: false).idInDataBase,
                           "").replaceAll("_", ""))),
@@ -66,7 +65,12 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: chatRoomsList(),
+      body: Column(
+        children: [
+          SizedBox(height: 10.0),
+          Expanded(child: chatRoomsList()),
+        ],
+      ),
     );
   }
 }
@@ -105,16 +109,28 @@ class _ChatRoomListTitleState extends State<ChatRoomListTitle> {
         Provider.of<UserInformation>(providerContext,listen: false).idInDataBase, uidUserNameReceive: widget.otherUidUserName,otherUserName: otherUserName)));
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 15.0),
-        padding: const EdgeInsets.all(8.0),
-        color: Colors.redAccent,
+        margin: const EdgeInsets.symmetric(vertical: 5.0,horizontal: 0.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 16.0),
         height: 60.0,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              isLeft == true ? Colors.grey[400] : Colors.white,
+              isLeft == true ? Colors.white : Colors.grey[400],
+            ],
+          ),
+        ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              otherUserName,
-              overflow: TextOverflow.ellipsis,
+            Icon(Icons.message),
+            SizedBox(width: 10.0),
+            Expanded(
+              child: Text(
+                otherUserName ,
+                style: TextStyle(fontSize: 18.0 ,fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
