@@ -34,7 +34,7 @@ class _ChatScreenState extends State<ChatScreen> {
       children: [
         Container(
           margin: const EdgeInsets.symmetric(vertical: 4.0),
-         width: MediaQuery.of(context).size.width - 60.0,
+          width: MediaQuery.of(context).size.width - 80.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25.0),
@@ -42,23 +42,33 @@ class _ChatScreenState extends State<ChatScreen> {
               topRight: Radius.circular(25.0),
               bottomLeft:isLeft ?  sendByMy ? Radius.circular(25.0):Radius.circular(0.0): sendByMy ? Radius.circular(0.0):Radius.circular(25.0),
             ),
-            color: Colors.lightBlue[600],
+            color: Colors.grey[300],
+            // gradient: LinearGradient(
+            //   colors: [
+            //     sendByMy ?  isLeft  ? Colors.white : Colors.grey[400] : isLeft  ? Colors.grey[400] : Colors.white,
+            //     sendByMy ?  isLeft  ? Colors.grey[400] : Colors.white : isLeft  ? Colors.white : Colors.grey[400],
+            //     // isLeft  ? Colors.white : Colors.grey[400],
+            //   ],
+            // ),
           ),
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
               Expanded(
-                flex: 8,
+                flex: 7,
                 child: Text(
                   message,
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.black,fontSize: 15.0,fontWeight: FontWeight.bold),
                   overflow: TextOverflow.visible,
                 ),
               ),
               SizedBox(width: 8.0),
               Expanded(
-                flex: 1,
-                  child: Text(TimeAgo.timeAgoSinceDate(ts.toString()))),
+                  flex: 1,
+                  child: Text(TimeAgo.timeAgoSinceDate(ts.toString(),
+                  ),
+                    style: TextStyle(color: Colors.black,fontSize: 15.0,fontWeight: FontWeight.bold),
+                  )),
             ],
           ),
         ),
