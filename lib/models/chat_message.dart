@@ -41,7 +41,6 @@ class ChatMessageDataBase{
         .doc(chatRoomId)
         .collection("chats")
         .orderBy("ts", descending: true)
-    // .orderBy("ts")
         .snapshots();
   }
 

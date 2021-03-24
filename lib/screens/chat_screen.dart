@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:longmarket/config/config.dart';
+import 'package:longmarket/helper/helper.dart';
 import 'package:longmarket/models/models.dart';
 import 'package:provider/provider.dart';
 import 'package:random_string/random_string.dart';
@@ -27,12 +28,13 @@ class _ChatScreenState extends State<ChatScreen> {
   String myName, myUserName, myEmail;
   TextEditingController messageTextEditingController = TextEditingController();
 
-  Widget chatMessageTitle(String message, bool sendByMy) {
+  Widget chatMessageTitle(String message, bool sendByMy,var ts) {
     return Row(
       mainAxisAlignment: sendByMy ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Container(
           margin: const EdgeInsets.symmetric(vertical: 4.0),
+         width: MediaQuery.of(context).size.width - 60.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25.0),
@@ -40,12 +42,24 @@ class _ChatScreenState extends State<ChatScreen> {
               topRight: Radius.circular(25.0),
               bottomLeft:isLeft ?  sendByMy ? Radius.circular(25.0):Radius.circular(0.0): sendByMy ? Radius.circular(0.0):Radius.circular(25.0),
             ),
-            color: Colors.blue,
+            color: Colors.lightBlue[600],
           ),
           padding: const EdgeInsets.all(16.0),
-          child: Text(
-            message,
-            style: TextStyle(color: Colors.white),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 8,
+                child: Text(
+                  message,
+                  style: TextStyle(color: Colors.white),
+                  overflow: TextOverflow.visible,
+                ),
+              ),
+              SizedBox(width: 8.0),
+              Expanded(
+                flex: 1,
+                  child: Text(TimeAgo.timeAgoSinceDate(ts.toString()))),
+            ],
           ),
         ),
       ],
@@ -64,7 +78,9 @@ class _ChatScreenState extends State<ChatScreen> {
               itemBuilder: (context, index) {
                 DocumentSnapshot ds = snapshot.data.docs[index];
                 return chatMessageTitle(ds["message"].toString(),
-                    Provider.of<UserInformation>(providerContext,listen: false).idInDataBase == ds["sendBy"].toString());
+                    Provider.of<UserInformation>(providerContext,listen: false).idInDataBase == ds["sendBy"].toString(),
+                  ds["ts"],
+                );
               })
               : Center(child: CircularProgressIndicator());
         });
@@ -90,7 +106,7 @@ class _ChatScreenState extends State<ChatScreen> {
   addMessage(bool sendClicked) async {
     if (messageTextEditingController.text != "") {
       String message = messageTextEditingController.text;
-      var lastMessageTs = DateTime.now();
+      var lastMessageTs = DateTime.now().toIso8601String();
 
       Map<String, dynamic> messageInfoMap = {
         "message": message,
