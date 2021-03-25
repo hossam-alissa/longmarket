@@ -55,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Row(
             children: [
               Expanded(
-                flex: 7,
+                flex: 10,
                 child: Text(
                   message,
                   style: TextStyle(color: Colors.black,fontSize: 15.0,fontWeight: FontWeight.bold),
@@ -64,7 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               SizedBox(width: 8.0),
               Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Text(TimeAgo.timeAgoSinceDate(ts.toString(),
                   ),
                     style: TextStyle(color: Colors.black,fontSize: 15.0,fontWeight: FontWeight.bold),
